@@ -1,0 +1,7 @@
+[flake8]
+exclude =
+    .git,
+    .gitignore,
+    __pycache__,
+    .cph
+max-line-length = 120
