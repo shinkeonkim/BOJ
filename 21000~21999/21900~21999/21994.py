@@ -9,7 +9,7 @@ from math import sqrt
 
 
 def getPerimeterOfHexagon(area: int) -> int:
-    """ 육각형의 넓이를 받아 모든 변의 길이의 합을 반화합니다.
+    """ 육각형의 넓이를 받아 모든 변의 길이의 합을 반환합니다.
 
     Args:
         area (int): 육각형의 넓이
