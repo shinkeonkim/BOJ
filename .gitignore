@@ -3,3 +3,6 @@ __pycache__
 
 # cph extension
 .cph
+
+# cpp
+*.bin
