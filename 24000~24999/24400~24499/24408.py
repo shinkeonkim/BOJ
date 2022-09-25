@@ -1,20 +1,20 @@
-"""
+'''
 [24408: Mult](https://www.acmicpc.net/problem/24408)
 
 Tier: Bronze 3
 Category: 구현
-"""
+'''
 
 
 def solution(numbers: list) -> list:
-    """ Return numbers that shout of Mult!
+    ''' Return numbers that shout of Mult!
 
     Args:
         numbers (list): numbers
 
     Returns:
         list: numbers that shout of Mult!
-    """
+    '''
     answer = []
     crt = -1
 
