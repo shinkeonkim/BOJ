@@ -1,5 +1,5 @@
 [flake8]
-ignore = E111, E741
+ignore = E111, E722, E741
 exclude =
     .git,
     .gitignore,
