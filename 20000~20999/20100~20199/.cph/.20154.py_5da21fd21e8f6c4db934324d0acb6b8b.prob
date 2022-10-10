@@ -1,0 +1,1 @@
+{"name":"Local: 20154","url":"/Users/shinkeonkim/BOJ/20000~20999/20100~20199/20154.py","tests":[{"id":1664700226625,"input":"ABCDE","output":"I'm a winner!"},{"id":1664700230740,"input":"AECF","output":"You're the winner?"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/Users/shinkeonkim/BOJ/20000~20999/20100~20199/20154.py","group":"local","local":true}

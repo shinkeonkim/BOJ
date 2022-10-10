@@ -1,0 +1,1 @@
+{"name":"Local: 20336","url":"/Users/shinkeonkim/BOJ/20000~20999/20300~20399/20336.py","tests":[{"id":1663777697699,"input":"3\n2 bigburger fries\n2 pizza garlicbread\n2 macaroni cheese","output":"2\nbigburger\nfries"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/Users/shinkeonkim/BOJ/20000~20999/20300~20399/20336.py","group":"local","local":true}

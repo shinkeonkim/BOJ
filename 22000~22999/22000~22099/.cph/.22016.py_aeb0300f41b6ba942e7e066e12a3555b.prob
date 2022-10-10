@@ -1,0 +1,1 @@
+{"name":"Local: 22016","url":"/Users/shinkeonkim/BOJ/22000~22999/22000~22099/22016.py","tests":[{"id":1663905321820,"input":"3 2\nJoi","output":"JOI"},{"id":1663905327512,"input":"1 1\nO","output":"o"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/Users/shinkeonkim/BOJ/22000~22999/22000~22099/22016.py","group":"local","local":true}

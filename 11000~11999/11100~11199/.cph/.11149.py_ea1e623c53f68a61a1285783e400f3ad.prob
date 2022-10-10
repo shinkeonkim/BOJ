@@ -1,0 +1,1 @@
+{"name":"Local: 11149","url":"/Users/shinkeonkim/BOJ/11000~11999/11100~11199/11149.py","tests":[{"id":1663991366020,"input":"2\na b c d e f\nit is late o green wrong whole","output":"abcdef\na horse"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/Users/shinkeonkim/BOJ/11000~11999/11100~11199/11149.py","group":"local","local":true}

@@ -1,0 +1,1 @@
+{"name":"Local: 16969","url":"/Users/shinkeonkim/BOJ/16000~16999/16900~16999/16969.py","tests":[{"id":1664194198765,"input":"ccdccccdcdddcdcdcccdcc","output":"978919018"},{"id":1664194203136,"input":"dcdd","output":"23400"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/Users/shinkeonkim/BOJ/16000~16999/16900~16999/16969.py","group":"local","local":true}

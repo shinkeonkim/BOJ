@@ -1,8 +1,5 @@
 # python
 __pycache__
 
-# cph extension
-.cph
-
 # cpp
 *.bin

@@ -1,0 +1,1 @@
+{"name":"Local: 18309","url":"/Users/shinkeonkim/BOJ/18000~18999/18300~18399/18309.py","tests":[{"id":1664112308987,"input":"2020-01-15 5 4 6 8 12 13 12 9 7\n2020-01-16 6 3 4 6 10 12 11 7","output":"3 13"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/Users/shinkeonkim/BOJ/18000~18999/18300~18399/18309.py","group":"local","local":true}

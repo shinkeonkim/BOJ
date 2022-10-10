@@ -11,6 +11,7 @@ repos:
     - id: detect-private-key
     - id: double-quote-string-fixer
     - id: end-of-file-fixer
+      exclude: .prob
     - id: trailing-whitespace
   - repo: https://gitlab.com/PyCQA/flake8
     rev: 3.9.2

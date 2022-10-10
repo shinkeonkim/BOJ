@@ -1,0 +1,1 @@
+{"name":"Local: 17392","url":"/Users/shinkeonkim/BOJ/17000~17999/17300~17399/17392.py","tests":[{"id":1663437035241,"input":"3 10\n2 2 1","output":"2"},{"id":1663437647227,"input":"0 10","output":"385"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/Users/shinkeonkim/BOJ/17000~17999/17300~17399/17392.py","group":"local","local":true}

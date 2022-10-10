@@ -1,0 +1,1 @@
+{"name":"Local: 22966","url":"/Users/shinkeonkim/BOJ/22000~22999/22900~22999/22966.py","tests":[{"id":1664110151802,"input":"3\nABCDE 4\nBCDEF 2\nCDEFG 3","output":"BCDEF"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/Users/shinkeonkim/BOJ/22000~22999/22900~22999/22966.py","group":"local","local":true}

@@ -1,0 +1,1 @@
+{"name":"Local: 24569","url":"/Users/shinkeonkim/BOJ/24000~24999/24500~24599/24569.py","tests":[{"id":1663586511088,"input":"3\n12\n4\n10\n3\n9\n1","output":"3+"},{"id":1663586514025,"input":"2\n8\n0\n12\n1","output":"1"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/Users/shinkeonkim/BOJ/24000~24999/24500~24599/24569.py","group":"local","local":true}
