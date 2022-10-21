@@ -1,0 +1,1 @@
+{"name":"Local: 22061","url":"/Users/shinkeonkim/BOJ/22000~22999/22000~22099/22061.py","tests":[{"id":1666268500683,"input":"4\n1 2 4\n2 1 4\n1 2 3\n3 1 6","output":"YES\nYES\nYES\nNO"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/Users/shinkeonkim/BOJ/22000~22999/22000~22099/22061.py","group":"local","local":true}

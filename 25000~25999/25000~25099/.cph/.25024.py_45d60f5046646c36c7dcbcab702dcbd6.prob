@@ -1,0 +1,1 @@
+{"name":"Local: 25024","url":"/Users/shinkeonkim/BOJ/25000~25999/25000~25099/25024.py","tests":[{"id":1666178809977,"input":"3\n8 14\n23 59\n98 76","output":"Yes Yes\nYes No\nNo No"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/Users/shinkeonkim/BOJ/25000~25999/25000~25099/25024.py","group":"local","local":true}
