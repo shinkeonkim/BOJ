@@ -1,0 +1,1 @@
+{"name":"Local: 17435","url":"/Users/shinkeonkim/BOJ/17000~17999/17400~17499/17435.cpp","tests":[{"id":1665811247979,"input":"5\n3 3 5 4 3\n5\n1 1\n2 1\n11 3\n1000 4\n5 1","output":"3\n5\n5\n4\n3"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/Users/shinkeonkim/BOJ/17000~17999/17400~17499/17435.cpp","group":"local","local":true}
