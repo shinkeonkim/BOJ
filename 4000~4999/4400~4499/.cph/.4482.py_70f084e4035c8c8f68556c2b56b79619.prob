@@ -1,0 +1,1 @@
+{"name":"Local: 4482","url":"/Users/shinkeonkim/BOJ/4000~4999/4400~4499/4482.py","tests":[{"id":1667216113435,"input":"6\n1\n2\n3\n5\n27\n999","output":"1: 1 1\n2: 2 4\n3: 3 10\n4: 5 35\n5: 27 3654\n6: 999 166666500"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/Users/shinkeonkim/BOJ/4000~4999/4400~4499/4482.py","group":"local","local":true}

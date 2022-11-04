@@ -1,0 +1,1 @@
+{"name":"Local: 4589","url":"/Users/shinkeonkim/BOJ/4000~4999/4500~4599/4589.py","tests":[{"id":1666972855654,"input":"3\n40 62 77\n88 62 77\n91 33 18","output":"Gnomes:\nOrdered\nUnordered\nOrdered"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/Users/shinkeonkim/BOJ/4000~4999/4500~4599/4589.py","group":"local","local":true}
