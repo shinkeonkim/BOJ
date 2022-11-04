@@ -1,0 +1,1 @@
+{"name":"Local: 24484","url":"/Users/shinkeonkim/BOJ/24000~24999/24400~24499/24484.cpp","tests":[{"id":1667057793501,"input":"5 5 1\n1 4\n1 2\n2 3\n2 4\n3 4","output":"20"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/Users/shinkeonkim/BOJ/24000~24999/24400~24499/24484.cpp","group":"local","local":true}
