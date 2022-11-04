@@ -1,0 +1,1 @@
+{"name":"Local: 4225","url":"/Users/shinkeonkim/BOJ/4000~4999/4200~4299/4225.cpp","tests":[{"id":1667054484944,"input":"3\n0 0\n3 0\n0 4\n4\n0 10\n10 0\n20 10\n10 20\n0","output":"Case 1: 2.40\nCase 2: 14.15"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/Users/shinkeonkim/BOJ/4000~4999/4200~4299/4225.cpp","group":"local","local":true}

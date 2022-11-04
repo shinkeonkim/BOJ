@@ -1,0 +1,1 @@
+{"name":"Local: 2254","url":"/Users/shinkeonkim/BOJ/2000~2999/2200~2299/2254.cpp","tests":[{"id":1666499277147,"input":"8 -1 0\n2 2\n2 -2\n-2 2\n-2 -2\n0 10\n8 0\n-12 1\n1 -5","output":"2"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/Users/shinkeonkim/BOJ/2000~2999/2200~2299/2254.cpp","group":"local","local":true}
