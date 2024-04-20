@@ -3,3 +3,5 @@ __pycache__
 
 # cpp
 *.bin
+
+*.cph
