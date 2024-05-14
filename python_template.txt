@@ -9,23 +9,32 @@ Category: {tags}
 import sys
 from math import sqrt, pi, sin, factorial, ceil, floor
 from datetime import datetime, timedelta
-sys.setrecursionlimit(10**7)
 
+SYS_INPUT = True
+RECURSION_LIMIT = 10 ** 7
+SET_RECURSION = False
 BLANK = " "
 
-# inp = input
-inp = lambda : sys.stdin.readline().rstrip()
-mii = lambda x = BLANK : [*map(int,inp().split(x))]
-mfi = lambda x = BLANK : [*map(float,inp().split(x))]
+if SET_RECURSION:
+    sys.setrecursionlimit(RECURSION_LIMIT)
+
+inp = lambda : sys.stdin.readline().rstrip() if SYS_INPUT else input()
+mii = lambda : [*map(int,inp().split())]
+mfi = lambda : [*map(float,inp().split())]
 ii = lambda : int(inp())
 fi = lambda : float(inp())
+isplit = lambda : inp().split()
 p = print
 
+def gcd(a, b): return gcd(b, a % b) if b > 0 else a
+def lcm(a, b): return a * b // gcd(a, b)
+
+
 def solve():
-  
+    p("test")
+
 
 if __name__ == "__main__":
-  tc = 1
-
-  for t in range(1, tc+1):
-    ret = solve()
+    tc = 1
+    for t in range(1, tc+1):
+        ret = solve()
