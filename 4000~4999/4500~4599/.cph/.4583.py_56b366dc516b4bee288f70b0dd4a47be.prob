@@ -1,1 +1,0 @@
-{"name":"Local: 4583","url":"/Users/shinkeonkim/BOJ/4000~4999/4500~4599/4583.py","tests":[{"id":1666180732143,"input":"boowxod\nbidi\nbed\nbbb\n#","output":"boxwood\nibid\nINVALID\nddd"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/Users/shinkeonkim/BOJ/4000~4999/4500~4599/4583.py","group":"local","local":true}
