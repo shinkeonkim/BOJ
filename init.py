@@ -1,6 +1,5 @@
-# requriements: pip install requests beatifulsoup4 html5lib
-from bs4 import BeautifulSoup
-import requests
+# requriements: pip install requests
+from requests import get
 import sys
 from os import path, getcwd
 
@@ -10,9 +9,9 @@ LANGUAGE_MAPPING = {
 }
 
 
-def get_cpp_template(problem_number, problem_name) -> str:
+def get_cpp_template(problem_number, title) -> str:
   template = '/*\n' \
-      f'  [{problem_number}: {problem_name}](https://www.acmicpc.net/problem/{problem_number})\n' \
+      f'  [{problem_number}: {title}](https://www.acmicpc.net/problem/{problem_number})\n' \
       '\n' \
       '  Tier: ??\n' \
       '  Category: ??\n' \
@@ -44,34 +43,32 @@ def get_cpp_template(problem_number, problem_name) -> str:
   return template
 
 
-def get_python_template(problem_number, problem_name) -> str:
-  template = "\"\"\"\n" \
-      f'[{problem_number}: {problem_name}](https://www.acmicpc.net/problem/{problem_number})\n' \
-      '\n' \
-      'Tier: ??\n' \
-      'Category: ??\n' \
-      "\"\"\"\n" \
-      '\n' \
-      '\n' \
-      'def solution():\n' \
-      "  return \"\"\n" \
-      '\n' \
-      '\n' \
-      "if __name__ == '__main__':\n" \
-      '  print(solution())\n' \
+def get_python_template(problem_number, title, tier, tags) -> str:
+  f = open('./python_template.txt', 'r')
+  template = "".join(f.readlines())
+
+  template = template.format(
+    title = title,
+    problem_number = problem_number,
+    tier = tier,
+    tags = tags
+  )
+  f.close()
 
   return template
 
 
-def get_templates(problem_number, problem_name) -> dict:
+def get_templates(problem_number, title, tier, tags) -> dict:
   return {
     'cpp': get_cpp_template(
       problem_number=problem_number,
-      problem_name=problem_name,
+      title=title,
     ),
     'py': get_python_template(
       problem_number=problem_number,
-      problem_name=problem_name,
+      title=title,
+      tier=tier,
+      tags=tags
     ),
   }
 
@@ -100,15 +97,28 @@ def is_already_exist_file(file_path: str) -> bool:
   return path.isfile(file_path)
 
 
-def get_problem_name(problem_number):
-  html = requests.get(f'https://www.acmicpc.net/problem/{problem_number}').text
-  soup = BeautifulSoup(html, 'html5lib')
+def get_tier_string(level: int) -> str:
+  return "bron"
 
-  return soup.find('span', {'id': 'problem_title'}).text
+
+def get_abstract_tag_strings(tags):
+  return [item['key'] for item in tags]
+
+
+def get_problem_info(problem_number):
+  json_response = get(
+    f'https://solved.ac/api/v3/problem/show?problemId={problem_number}',
+  ).json()
+  
+  return {
+    'title': json_response['titleKo'],
+    'tier': get_tier_string(json_response['level']),
+    'tags': get_abstract_tag_strings(json_response['tags'])
+  }
 
 
 def create_file(file_path, content):
-  f = open(file_path, 'w')
+  f = open(file_path, 'w', encoding='UTF-8')
   f.write(content)
   f.close()
 
@@ -128,11 +138,13 @@ if __name__ == '__main__':
     if chk != 'y':
       sys.exit()
 
-  problem_name = get_problem_name(problem_number)
+  problem_info = get_problem_info(problem_number)
 
   templates = get_templates(
     problem_number=problem_number,
-    problem_name=problem_name
+    title=problem_info['title'],
+    tier=problem_info['tier'],
+    tags=", ".join(problem_info['tags'])
   )
 
   create_file(
