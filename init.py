@@ -8,43 +8,8 @@ LANGUAGE_MAPPING = {
   1: 'py'
 }
 
-
-def get_cpp_template(problem_number, title) -> str:
-  template = '/*\n' \
-      f'  [{problem_number}: {title}](https://www.acmicpc.net/problem/{problem_number})\n' \
-      '\n' \
-      '  Tier: ??\n' \
-      '  Category: ??\n' \
-      '*/\n' \
-      '#include <bits/stdc++.h>\n' \
-      '\n' \
-      '#define for1(s,n) for(int i = s; i < n; i++)\n' \
-      '#define for1j(s,n) for(int j = s; j < n; j++)\n' \
-      '#define foreach(k) for(auto i : k)\n' \
-      '#define foreachj(k) for(auto j : k)\n' \
-      '#define pb(a) push_back(a)\n' \
-      '#define sz(a) a.size()\n' \
-      '\n' \
-      'using namespace std;\n' \
-      'typedef unsigned long long ull;\n' \
-      'typedef long long ll;\n' \
-      'typedef vector <int> iv1;\n' \
-      'typedef vector <vector<int> > iv2;\n' \
-      'typedef vector <ll> llv1;\n' \
-      'typedef unsigned int uint;\n' \
-      'typedef vector <ull> ullv1;\n' \
-      'typedef vector <vector <ull> > ullv2;\n' \
-      '\n' \
-      'int main() {\n' \
-      '  ios::sync_with_stdio(0);cin.tie(0);cout.tie(0);\n' \
-      '  \n' \
-      '}\n' \
-
-  return template
-
-
-def get_python_template(problem_number, title, tier, tags) -> str:
-  f = open('./python_template.txt', 'r')
+def get_template(file_path, problem_number, title, tier, tags) -> str:
+  f = open(file_path, 'r')
   template = "".join(f.readlines())
 
   template = template.format(
@@ -58,19 +23,23 @@ def get_python_template(problem_number, title, tier, tags) -> str:
   return template
 
 
-def get_templates(problem_number, title, tier, tags) -> dict:
+def get_templates_by_language(language, problem_number, title, tier, tags) -> dict:
   return {
-    'cpp': get_cpp_template(
-      problem_number=problem_number,
-      title=title,
-    ),
-    'py': get_python_template(
+    'cpp': get_template(
+      file_path='./templates/cpp_template.txt',
       problem_number=problem_number,
       title=title,
       tier=tier,
       tags=tags
     ),
-  }
+    'py': get_template(
+      file_path='./templates/python_template.txt',
+      problem_number=problem_number,
+      title=title,
+      tier=tier,
+      tags=tags
+    ),
+  }[language]
 
 
 def get_problem_directory(problem_number: int) -> str:
@@ -150,7 +119,8 @@ if __name__ == '__main__':
 
   problem_info = get_problem_info(problem_number)
 
-  templates = get_templates(
+  template = get_templates_by_language(
+    language=LANGUAGE_MAPPING[language],
     problem_number=problem_number,
     title=problem_info['title'],
     tier=problem_info['tier'],
@@ -159,7 +129,7 @@ if __name__ == '__main__':
 
   create_file(
     file_path=file_path,
-    content=templates[LANGUAGE_MAPPING[language]]
+    content=template
   )
 
   print(file_path)
