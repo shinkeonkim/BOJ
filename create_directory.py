@@ -19,7 +19,7 @@ def create_git_keep_file(path):
 for i in range(PROBLEM_START, PROBLEM_END, FIRST_DIFF):
   start = i
   end = i + FIRST_DIFF - 1
-  path = os.path.join(os.getcwd(), f'{start}~{end}')
+  path = os.path.join(os.getcwd(), f'{start:05d}~{end:05d}')
 
   create_directory_if_not_exist(path)
 
@@ -28,7 +28,6 @@ for i in range(PROBLEM_START, PROBLEM_END, FIRST_DIFF):
     end = j + SECOND_DIFF - 1
 
     child_path = os.path.join(path, f'{start}~{end}')
-
     create_directory_if_not_exist(child_path)
 
     if os.listdir(child_path):

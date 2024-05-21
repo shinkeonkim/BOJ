@@ -50,7 +50,7 @@ def get_problem_directory(problem_number: int) -> str:
 
   return path.join(
     getcwd(),
-    f'{first_depth_start}~{first_depth_end}',
+    f'{first_depth_start:05d}~{first_depth_end:05d}',
     f'{second_depth_start}~{second_depth_end}'
   )
 
