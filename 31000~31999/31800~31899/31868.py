@@ -1,8 +1,8 @@
 """
-[4291: Brownie Points I](https://www.acmicpc.net/problem/4291)
+[31868: 수박 게임](https://www.acmicpc.net/problem/31868)
 
-Tier: Bronze 1 
-Category: implementation, simulation
+Tier: Bronze 3 
+Category: math
 """
 
 
@@ -31,30 +31,14 @@ def lcm(a, b): return a * b // gcd(a, b)
 
 
 def solve():
-  while 1:
-    n = ii()
-    
-    if n == 0:
-      break
-
-    l = [mii() for _ in range(n)]
-    
-    center = l[n // 2]
-    A = B = 0
-
-    for x, y in l:
-      x -= center[0]
-      y -= center[1]
-      
-      if x == 0 or y == 0:
-        continue
-    
-      if (x > 0) == (y > 0):
-        A += 1
-      else:
-        B += 1
-    
-    p(A, B)
+  n, k = mii()
+  
+  # n 단계, k개의 체리
+  
+  for _ in range(n - 1):
+    k //= 2
+  
+  p(k)
 
 
 if __name__ == "__main__":

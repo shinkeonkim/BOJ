@@ -1,8 +1,8 @@
 """
-[4291: Brownie Points I](https://www.acmicpc.net/problem/4291)
+[31867: 홀짝홀짝](https://www.acmicpc.net/problem/31867)
 
-Tier: Bronze 1 
-Category: implementation, simulation
+Tier: Bronze 4 
+Category: implementation, math, string
 """
 
 
@@ -31,30 +31,21 @@ def lcm(a, b): return a * b // gcd(a, b)
 
 
 def solve():
-  while 1:
-    n = ii()
-    
-    if n == 0:
-      break
+  n = ii()
 
-    l = [mii() for _ in range(n)]
-    
-    center = l[n // 2]
-    A = B = 0
-
-    for x, y in l:
-      x -= center[0]
-      y -= center[1]
-      
-      if x == 0 or y == 0:
-        continue
-    
-      if (x > 0) == (y > 0):
-        A += 1
-      else:
-        B += 1
-    
-    p(A, B)
+  l = [*map(int, list(inp()))]
+  
+  cnt = [0, 0]  
+  
+  for i in l:
+    cnt[i % 2] += 1
+  
+  if cnt[0] > cnt[1]:
+    p(0)
+  elif cnt[0] < cnt[1]:
+    p(1)
+  else:
+    p(-1)
 
 
 if __name__ == "__main__":
