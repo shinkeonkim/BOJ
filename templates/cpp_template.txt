@@ -14,7 +14,7 @@ using namespace std;
 #define for1j(s, e) for(int j = s; j < e; j++)
 #define forEach(k) for(auto i : k)
 #define forEachj(k) for(auto j : k)
-#define sz(vct) a.size())
+#define sz(vct) vct.size()
 #define all(vct) vct.begin(), vct.end()
 #define uniq(vct) sort(all(vct));vct.erase(unique(all(vct)), vct.end())
 #define fi first
@@ -23,11 +23,15 @@ using namespace std;
 typedef unsigned long long ull;
 typedef long long ll;
 typedef unsigned int uint;
+
 typedef pair<int, int> pii;
 typedef pair<ll, ll> pll;
 typedef pair<double, double> pdd;
 typedef pair<double, int> pdi;
 typedef pair<string, string> pss;
+
+typedef vector<ll> llv1;
+
 
 const double EPS = 1e-8;
 const double PI = acos(-1);
