@@ -7,38 +7,82 @@
 
 #include <bits/stdc++.h>
 
-#define for1(s,n) for(int i = s; i < n; i++)
-#define for1j(s,n) for(int j = s; j < n; j++)
-#define foreach(k) for(auto i : k)
-#define foreachj(k) for(auto j : k)
-#define pb(a) push_back(a)
-#define sz(a) a.size()
-
 using namespace std;
+
+#define for1(s, e) for(int i = s; i < e; i++)
+#define for1j(s, e) for(int j = s; j < e; j++)
+#define forEach(k) for(auto i : k)
+#define forEachj(k) for(auto j : k)
+#define sz(vct) vct.size()
+#define all(vct) vct.begin(), vct.end()
+#define sortv(vct) sort(vct.begin(), vct.end())
+#define uniq(vct) sort(all(vct));vct.erase(unique(all(vct)), vct.end())
+#define fi first
+#define se second
+#define INF (1ll << 60ll)
+
 typedef unsigned long long ull;
 typedef long long ll;
-typedef vector <int> iv1;
-typedef vector <vector<int> > iv2;
-typedef vector <ll> llv1;
+typedef ll llint;
 typedef unsigned int uint;
-typedef vector <ull> ullv1;
-typedef vector <vector <ull> > ullv2;
+typedef unsigned long long int ull;
+typedef ull ullint;
 
-#define ROOT 1
-#define MAX_N 110000
+typedef pair<int, int> pii;
+typedef pair<ll, ll> pll;
+typedef pair<double, double> pdd;
+typedef pair<double, int> pdi;
+typedef pair<string, string> pss;
+
+typedef vector<int> iv1;
+typedef vector<iv1> iv2;
+typedef vector<ll> llv1;
+typedef vector<llv1> llv2;
+
+typedef vector<pii> piiv1;
+typedef vector<piiv1> piiv2;
+typedef vector<pll> pllv1;
+typedef vector<pllv1> pllv2;
+typedef vector<pdd> pddv1;
+typedef vector<pddv1> pddv2;
+
+const double EPS = 1e-8;
+const double PI = acos(-1);
+
+template<typename T>
+T sq(T x) { return x * x; }
+
+int sign(ll x) { return x < 0 ? -1 : x > 0 ? 1 : 0; }
+int sign(int x) { return x < 0 ? -1 : x > 0 ? 1 : 0; }
+int sign(double x) { return abs(x) < EPS ? 0 : x < 0 ? -1 : 1; }
+
 #define MAX_DEGREE 20
 
-ll N;
-ll depth[MAX_N];
-llv1 adj[MAX_N];
-ll parent[MAX_N][MAX_DEGREE];
-
 struct LCA {
+  // root: 트리의 루트 설정, n: 트리의 노드 개수
+  // addEdge -> init -> query(O(log(n))
+
+  ll root, n;
+  llv1 depth;
+  llv2 adj;
+  llv2 parent; // n X MAX_DEGREE
+
+  LCA(ll root, ll n) : root(root), n(n) {
+    depth.resize(n + 1);
+    adj.resize(n + 1);
+    parent.resize(n + 1, llv1(MAX_DEGREE, 0));
+  }
+
+  void addEdge(ll a, ll b) {
+    adj[a].push_back(b);
+    adj[b].push_back(a);
+  }
+
   void init() {
-    dfs(ROOT, 0, 1);
+    dfs(root, 0, 1);
 
     for(int i = 1; i < MAX_DEGREE; i++) {
-      for(int j = 1; j <= N; j++) {
+      for(int j = 1; j <= n; j++) {
         parent[j][i] = parent[parent[j][i-1]][i-1];
       }
     }
@@ -83,18 +127,17 @@ struct LCA {
   }
 };
 
-ll Q, a, b;
+void solve() {
+  ll Q, n, a, b;
 
-int main() {
-  ios::sync_with_stdio(0);cin.tie(0);cout.tie(0);
+  cin >> n;
 
-  LCA lca;
+  LCA lca(1, n);
 
-  cin >> N;
-  for1(0, N - 1) {
+  for1(0, n - 1) {
     cin >> a >> b;
-    adj[a].push_back(b);
-    adj[b].push_back(a);
+
+    lca.addEdge(a, b);
   }
 
   lca.init();
@@ -105,4 +148,11 @@ int main() {
     cin >> a >> b;
     cout << lca.query(a, b) << '\n';
   }
+}
+
+int main() {
+  ios::sync_with_stdio(0);
+  cin.tie(NULL);cout.tie(NULL);
+  int tc = 1; // cin >> tc;
+  while(tc--) solve();
 }
