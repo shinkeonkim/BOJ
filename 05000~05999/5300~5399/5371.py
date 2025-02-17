@@ -1,8 +1,8 @@
 """
-[32571: Leg Day](https://www.acmicpc.net/problem/32571)
+[5371: Annoying Mosquitos](https://www.acmicpc.net/problem/5371)
 
-Tier: Bronze 2 
-Category: implementation, string
+Tier: Bronze 1 
+Category: bruteforcing, implementation
 """
 
 
@@ -29,37 +29,25 @@ p = print
 def gcd(a, b): return gcd(b, a % b) if b > 0 else a
 def lcm(a, b): return a * b // gcd(a, b)
 
-REST = 0
-LEG = 1
-ARM = 2
 
 def solve():
   n = ii()
-
-  d = []
-  ch = ["😎", "🦵", "💪"]
-
-  for i in range(n):
-    s = inp()
-
-    if "rest" in s:
-      d.append(REST)
-    elif "leg" in s:
-      d.append(LEG)
-    else:
-      d.append(ARM)
+  target = [mii() for _ in range(n)]
   
-  ans = ""
-  for i in range(31):
-    ans += ch[d[i % n]]
+  m = ii()
+  hits = [mii() for _ in range(m)]
+
+  chk = [0] * n
+  for y, x in hits:
+    for i in range(n):
+      if abs(target[i][0] - y) <= 50 and abs(target[i][1] - x) <= 50:
+        chk[i] = 1
   
-  for i in range(5):
-    print(i + 1, ans[i * 7 : i * 7 + 7])
-
-
+  p(sum(chk))
+    
 
 
 if __name__ == "__main__":
-  tc = 1
+  tc = ii()
   for t in range(1, tc+1):
     ret = solve()

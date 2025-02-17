@@ -1,8 +1,8 @@
 """
-[32571: Leg Day](https://www.acmicpc.net/problem/32571)
+[33167: じゃんけん (Rock-Scissors-Paper)](https://www.acmicpc.net/problem/33167)
 
-Tier: Bronze 2 
-Category: implementation, string
+Tier: Bronze 3 
+Category: implementation, math, string
 """
 
 
@@ -29,33 +29,28 @@ p = print
 def gcd(a, b): return gcd(b, a % b) if b > 0 else a
 def lcm(a, b): return a * b // gcd(a, b)
 
-REST = 0
-LEG = 1
-ARM = 2
 
 def solve():
   n = ii()
+  A = inp()
+  B = inp()
 
-  d = []
-  ch = ["😎", "🦵", "💪"]
+  k = "RSP"
 
+  a, b = 0, 0
   for i in range(n):
-    s = inp()
-
-    if "rest" in s:
-      d.append(REST)
-    elif "leg" in s:
-      d.append(LEG)
+    if A[i] == B[i]:
+      continue
+    if A[i] == "R" and B[i] == "S":
+      a += 1
+    elif A[i] == "S" and B[i] == "P":
+      a += 1
+    elif A[i] == "P" and B[i] == "R":
+      a += 1
     else:
-      d.append(ARM)
+      b += 1
   
-  ans = ""
-  for i in range(31):
-    ans += ch[d[i % n]]
-  
-  for i in range(5):
-    print(i + 1, ans[i * 7 : i * 7 + 7])
-
+  print(a, b)
 
 
 

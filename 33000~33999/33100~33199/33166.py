@@ -1,8 +1,8 @@
 """
-[32571: Leg Day](https://www.acmicpc.net/problem/32571)
+[33166: 鉄道旅行 3 (Railway Trip 3)](https://www.acmicpc.net/problem/33166)
 
-Tier: Bronze 2 
-Category: implementation, string
+Tier: Bronze 4 
+Category: arithmetic, implementation, math
 """
 
 
@@ -29,34 +29,15 @@ p = print
 def gcd(a, b): return gcd(b, a % b) if b > 0 else a
 def lcm(a, b): return a * b // gcd(a, b)
 
-REST = 0
-LEG = 1
-ARM = 2
 
 def solve():
-  n = ii()
+  p, q = mii()
+  a, b = mii()
 
-  d = []
-  ch = ["😎", "🦵", "💪"]
-
-  for i in range(n):
-    s = inp()
-
-    if "rest" in s:
-      d.append(REST)
-    elif "leg" in s:
-      d.append(LEG)
-    else:
-      d.append(ARM)
-  
-  ans = ""
-  for i in range(31):
-    ans += ch[d[i % n]]
-  
-  for i in range(5):
-    print(i + 1, ans[i * 7 : i * 7 + 7])
-
-
+  if q > p:
+    print(p * a + (q - p) * b)
+  else:
+    print(q * a)
 
 
 if __name__ == "__main__":

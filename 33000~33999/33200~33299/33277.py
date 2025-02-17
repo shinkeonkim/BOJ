@@ -1,8 +1,8 @@
 """
-[32571: Leg Day](https://www.acmicpc.net/problem/32571)
+[33277: 국방시계](https://www.acmicpc.net/problem/33277)
 
-Tier: Bronze 2 
-Category: implementation, string
+Tier: Bronze 3 
+Category: arithmetic, implementation, math
 """
 
 
@@ -29,34 +29,18 @@ p = print
 def gcd(a, b): return gcd(b, a % b) if b > 0 else a
 def lcm(a, b): return a * b // gcd(a, b)
 
-REST = 0
-LEG = 1
-ARM = 2
 
 def solve():
-  n = ii()
+  total, current = mii()
 
-  d = []
-  ch = ["😎", "🦵", "💪"]
+  total_time = 24 * 60
 
-  for i in range(n):
-    s = inp()
+  current_time = current * total_time // total
 
-    if "rest" in s:
-      d.append(REST)
-    elif "leg" in s:
-      d.append(LEG)
-    else:
-      d.append(ARM)
-  
-  ans = ""
-  for i in range(31):
-    ans += ch[d[i % n]]
-  
-  for i in range(5):
-    print(i + 1, ans[i * 7 : i * 7 + 7])
+  hour = current_time // 60
+  minute = current_time % 60
 
-
+  p("%02d:%02d" % (hour, minute))
 
 
 if __name__ == "__main__":

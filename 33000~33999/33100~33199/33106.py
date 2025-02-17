@@ -1,7 +1,7 @@
 """
-[32571: Leg Day](https://www.acmicpc.net/problem/32571)
+[33106: Problem C](https://www.acmicpc.net/problem/33106)
 
-Tier: Bronze 2 
+Tier: Bronze 1 
 Category: implementation, string
 """
 
@@ -29,37 +29,30 @@ p = print
 def gcd(a, b): return gcd(b, a % b) if b > 0 else a
 def lcm(a, b): return a * b // gcd(a, b)
 
-REST = 0
-LEG = 1
-ARM = 2
 
 def solve():
-  n = ii()
-
-  d = []
-  ch = ["😎", "🦵", "💪"]
-
-  for i in range(n):
-    s = inp()
-
-    if "rest" in s:
-      d.append(REST)
-    elif "leg" in s:
-      d.append(LEG)
-    else:
-      d.append(ARM)
-  
+  s = inp()
   ans = ""
-  for i in range(31):
-    ans += ch[d[i % n]]
+  for idx, i in enumerate(s):
+    if i == 'c':
+      if idx == len(s) - 1 or (s[idx + 1] in 'aou') or (s[idx + 1] not in 'aeiou' and s[idx + 1] not in 'hy'):
+        ans += "k"
+      elif s[idx + 1] in 'eiy':
+        ans += "s"
+      else:
+        ans += "c"
+    else:
+      if i == 'h' and idx > 0 and s[idx - 1] == 'c':
+        continue
+      ans += i
   
-  for i in range(5):
-    print(i + 1, ans[i * 7 : i * 7 + 7])
+  print(ans)
+
 
 
 
 
 if __name__ == "__main__":
-  tc = 1
+  tc = ii()
   for t in range(1, tc+1):
     ret = solve()

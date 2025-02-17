@@ -1,8 +1,8 @@
 """
-[32571: Leg Day](https://www.acmicpc.net/problem/32571)
+[32364: Hat Circle](https://www.acmicpc.net/problem/32364)
 
-Tier: Bronze 2 
-Category: implementation, string
+Tier: Bronze 3 
+Category: arithmetic, implementation, math
 """
 
 
@@ -29,35 +29,17 @@ p = print
 def gcd(a, b): return gcd(b, a % b) if b > 0 else a
 def lcm(a, b): return a * b // gcd(a, b)
 
-REST = 0
-LEG = 1
-ARM = 2
 
 def solve():
   n = ii()
-
-  d = []
-  ch = ["😎", "🦵", "💪"]
-
-  for i in range(n):
-    s = inp()
-
-    if "rest" in s:
-      d.append(REST)
-    elif "leg" in s:
-      d.append(LEG)
-    else:
-      d.append(ARM)
+  l =[ii() for _ in range(n)]
   
-  ans = ""
-  for i in range(31):
-    ans += ch[d[i % n]]
+  cnt = 0
+  for i in range(n // 2):
+    if l[i] == l[n // 2+ i]:
+      cnt += 2
   
-  for i in range(5):
-    print(i + 1, ans[i * 7 : i * 7 + 7])
-
-
-
+  print(cnt)
 
 if __name__ == "__main__":
   tc = 1

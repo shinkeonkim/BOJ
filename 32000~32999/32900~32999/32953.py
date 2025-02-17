@@ -1,8 +1,8 @@
 """
-[32571: Leg Day](https://www.acmicpc.net/problem/32571)
+[32953: 회상](https://www.acmicpc.net/problem/32953)
 
-Tier: Bronze 2 
-Category: implementation, string
+Tier: Bronze 1 
+Category: data_structures, hash_set, implementation
 """
 
 
@@ -29,35 +29,25 @@ p = print
 def gcd(a, b): return gcd(b, a % b) if b > 0 else a
 def lcm(a, b): return a * b // gcd(a, b)
 
-REST = 0
-LEG = 1
-ARM = 2
 
 def solve():
-  n = ii()
+  n, m = mii()
 
-  d = []
-  ch = ["😎", "🦵", "💪"]
+  d = {}
 
-  for i in range(n):
-    s = inp()
+  for _ in range(n):
+    inp()
+    l = mii()
 
-    if "rest" in s:
-      d.append(REST)
-    elif "leg" in s:
-      d.append(LEG)
-    else:
-      d.append(ARM)
+    for i in l:
+      d[i] = d.get(i, 0) + 1
   
-  ans = ""
-  for i in range(31):
-    ans += ch[d[i % n]]
-  
-  for i in range(5):
-    print(i + 1, ans[i * 7 : i * 7 + 7])
+  ans = 0
+  for i in d:
+    if d[i] >= m:
+      ans += 1
 
-
-
+  p(ans)
 
 if __name__ == "__main__":
   tc = 1

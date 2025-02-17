@@ -1,8 +1,8 @@
 """
-[32571: Leg Day](https://www.acmicpc.net/problem/32571)
+[32803: Ruffians](https://www.acmicpc.net/problem/32803)
 
 Tier: Bronze 2 
-Category: implementation, string
+Category: bruteforcing, implementation
 """
 
 
@@ -29,37 +29,40 @@ p = print
 def gcd(a, b): return gcd(b, a % b) if b > 0 else a
 def lcm(a, b): return a * b // gcd(a, b)
 
-REST = 0
-LEG = 1
-ARM = 2
 
 def solve():
-  n = ii()
+  A = mii()
+  B = mii()
 
-  d = []
-  ch = ["😎", "🦵", "💪"]
+  a = {}
+  b = {}
 
-  for i in range(n):
-    s = inp()
-
-    if "rest" in s:
-      d.append(REST)
-    elif "leg" in s:
-      d.append(LEG)
-    else:
-      d.append(ARM)
+  for idx, i in enumerate(A):
+    a[i] = a.get(i, set())
+    a[i].add(idx)
   
-  ans = ""
-  for i in range(31):
-    ans += ch[d[i % n]]
+  for idx, i in enumerate(B):
+    b[i] = b.get(i, set())
+    b[i].add(idx)
   
-  for i in range(5):
-    print(i + 1, ans[i * 7 : i * 7 + 7])
+  for i in A:
+    x = a.get(i, set())
+    y = b.get(i, set())
+
+    flag = len(x - y) > 0 and len(y - x) > 0
+
+    if (len(x) > 1 and len(y) > 0) or (len(y) > 1 and len(x) > 0):
+      flag = True
 
 
+    if flag:
+      return "YES"
+  return "NO"
 
 
 if __name__ == "__main__":
-  tc = 1
+  tc = ii()
   for t in range(1, tc+1):
     ret = solve()
+
+    print(ret)

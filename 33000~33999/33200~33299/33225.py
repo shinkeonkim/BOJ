@@ -1,5 +1,5 @@
 """
-[32571: Leg Day](https://www.acmicpc.net/problem/32571)
+[33225: Glass Reflection](https://www.acmicpc.net/problem/33225)
 
 Tier: Bronze 2 
 Category: implementation, string
@@ -29,34 +29,25 @@ p = print
 def gcd(a, b): return gcd(b, a % b) if b > 0 else a
 def lcm(a, b): return a * b // gcd(a, b)
 
-REST = 0
-LEG = 1
-ARM = 2
 
 def solve():
-  n = ii()
+  s = inp()
 
-  d = []
-  ch = ["😎", "🦵", "💪"]
-
-  for i in range(n):
-    s = inp()
-
-    if "rest" in s:
-      d.append(REST)
-    elif "leg" in s:
-      d.append(LEG)
-    else:
-      d.append(ARM)
-  
   ans = ""
-  for i in range(31):
-    ans += ch[d[i % n]]
+  crt = s[0]
+  cnt = 1
+
+  for i in s[1:]:
+    if i == crt:
+      cnt += 1
+    else:
+      ans += (cnt - 1) * crt
+      crt = i
+      cnt = 1
   
-  for i in range(5):
-    print(i + 1, ans[i * 7 : i * 7 + 7])
+  ans += (cnt - 1) * crt
 
-
+  p(ans)
 
 
 if __name__ == "__main__":

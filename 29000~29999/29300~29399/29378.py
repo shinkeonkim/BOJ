@@ -1,8 +1,8 @@
 """
-[32571: Leg Day](https://www.acmicpc.net/problem/32571)
+[29378: Гарри Поттер и нос Волан-де-Морта](https://www.acmicpc.net/problem/29378)
 
-Tier: Bronze 2 
-Category: implementation, string
+Tier: Silver 5 
+Category: implementation
 """
 
 
@@ -29,34 +29,22 @@ p = print
 def gcd(a, b): return gcd(b, a % b) if b > 0 else a
 def lcm(a, b): return a * b // gcd(a, b)
 
-REST = 0
-LEG = 1
-ARM = 2
 
 def solve():
-  n = ii()
+  n, m = mii()
+  l = [inp() for _ in range(n)]
 
-  d = []
-  ch = ["😎", "🦵", "💪"]
+  ans = 0
 
   for i in range(n):
-    s = inp()
-
-    if "rest" in s:
-      d.append(REST)
-    elif "leg" in s:
-      d.append(LEG)
-    else:
-      d.append(ARM)
+    for j in range(m):
+      if l[i][j] == '.':
+        if i + 1 < n and l[i+1][j] == '.':
+          ans += 1
+        if j + 1 < m and l[i][j+1] == '.':
+          ans += 1
   
-  ans = ""
-  for i in range(31):
-    ans += ch[d[i % n]]
-  
-  for i in range(5):
-    print(i + 1, ans[i * 7 : i * 7 + 7])
-
-
+  print(ans)
 
 
 if __name__ == "__main__":

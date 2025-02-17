@@ -1,8 +1,8 @@
 """
-[32571: Leg Day](https://www.acmicpc.net/problem/32571)
+[33213: Fermatovi Fakini](https://www.acmicpc.net/problem/33213)
 
-Tier: Bronze 2 
-Category: implementation, string
+Tier: Bronze 3 
+Category: implementation
 """
 
 
@@ -29,33 +29,38 @@ p = print
 def gcd(a, b): return gcd(b, a % b) if b > 0 else a
 def lcm(a, b): return a * b // gcd(a, b)
 
-REST = 0
-LEG = 1
-ARM = 2
 
 def solve():
   n = ii()
+  l = mii()
 
-  d = []
-  ch = ["😎", "🦵", "💪"]
+  odd = []
+  even = []
 
-  for i in range(n):
-    s = inp()
-
-    if "rest" in s:
-      d.append(REST)
-    elif "leg" in s:
-      d.append(LEG)
+  for i in l:
+    if i % 2 == 0:
+      even.append(i)
     else:
-      d.append(ARM)
-  
-  ans = ""
-  for i in range(31):
-    ans += ch[d[i % n]]
-  
-  for i in range(5):
-    print(i + 1, ans[i * 7 : i * 7 + 7])
+      odd.append(i)
 
+  start = -1
+  z = []
+  if len(odd) < len(even):
+    z = even
+    start = 2
+  else:
+    z = odd
+    start = 1
+  
+
+  z.sort()
+  for i in z:
+    if i == start:
+      start += 2
+    else:
+      return start
+  return start
+    
 
 
 
@@ -63,3 +68,4 @@ if __name__ == "__main__":
   tc = 1
   for t in range(1, tc+1):
     ret = solve()
+    print(ret)

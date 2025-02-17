@@ -1,8 +1,8 @@
 """
-[32571: Leg Day](https://www.acmicpc.net/problem/32571)
+[32905: RACI](https://www.acmicpc.net/problem/32905)
 
-Tier: Bronze 2 
-Category: implementation, string
+Tier: Bronze 4 
+Category: implementation
 """
 
 
@@ -29,37 +29,29 @@ p = print
 def gcd(a, b): return gcd(b, a % b) if b > 0 else a
 def lcm(a, b): return a * b // gcd(a, b)
 
-REST = 0
-LEG = 1
-ARM = 2
 
 def solve():
-  n = ii()
+  n, m = mii()
+  l = [isplit() for _ in range(n)]
 
-  d = []
-  ch = ["😎", "🦵", "💪"]
+  for items in l:
+    i_cnt = 0
 
-  for i in range(n):
-    s = inp()
+    for item in items:
+      if item.upper() == 'A':
+        i_cnt += 1
+    
+    if i_cnt == 1:
+      continue
+    
+    return "No"
 
-    if "rest" in s:
-      d.append(REST)
-    elif "leg" in s:
-      d.append(LEG)
-    else:
-      d.append(ARM)
-  
-  ans = ""
-  for i in range(31):
-    ans += ch[d[i % n]]
-  
-  for i in range(5):
-    print(i + 1, ans[i * 7 : i * 7 + 7])
-
-
+  return "Yes"
 
 
 if __name__ == "__main__":
   tc = 1
   for t in range(1, tc+1):
     ret = solve()
+
+    p(ret)

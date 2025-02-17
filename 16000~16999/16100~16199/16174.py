@@ -1,8 +1,8 @@
 """
-[32571: Leg Day](https://www.acmicpc.net/problem/32571)
+[16173: 점프왕 쩰리 (Small)](https://www.acmicpc.net/problem/16173)
 
-Tier: Bronze 2 
-Category: implementation, string
+Tier: Silver 4 
+Category: bfs, bruteforcing, dfs, graphs, graph_traversal, implementation
 """
 
 
@@ -29,37 +29,33 @@ p = print
 def gcd(a, b): return gcd(b, a % b) if b > 0 else a
 def lcm(a, b): return a * b // gcd(a, b)
 
-REST = 0
-LEG = 1
-ARM = 2
-
 def solve():
   n = ii()
+  l = [mii() for _ in range(n)]
 
-  d = []
-  ch = ["😎", "🦵", "💪"]
-
-  for i in range(n):
-    s = inp()
-
-    if "rest" in s:
-      d.append(REST)
-    elif "leg" in s:
-      d.append(LEG)
-    else:
-      d.append(ARM)
+  D = [[-1] * n for _ in range(n)]
   
-  ans = ""
-  for i in range(31):
-    ans += ch[d[i % n]]
+  Q = [[0, 0]]
+
+  while Q:
+    y, x  = Q.pop(0)
+
+    if D[y][x] == 0:
+      continue
+
+    D[y][x] = 0 
+
+    if y + l[y][x] < n:
+      Q.append([y + l[y][x], x])
+    
+    if x + l[y][x] < n:
+      Q.append([y, x + l[y][x]])
   
-  for i in range(5):
-    print(i + 1, ans[i * 7 : i * 7 + 7])
-
-
+  return "HaruHaru" if D[n-1][n-1] == 0 else "Hing"
 
 
 if __name__ == "__main__":
   tc = 1
   for t in range(1, tc+1):
     ret = solve()
+    p(ret)

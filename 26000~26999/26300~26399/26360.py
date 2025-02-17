@@ -1,8 +1,8 @@
 """
-[32571: Leg Day](https://www.acmicpc.net/problem/32571)
+[26360: Basket](https://www.acmicpc.net/problem/26360)
 
-Tier: Bronze 2 
-Category: implementation, string
+Tier: Bronze 3 
+Category: arithmetic, implementation, math
 """
 
 
@@ -29,34 +29,29 @@ p = print
 def gcd(a, b): return gcd(b, a % b) if b > 0 else a
 def lcm(a, b): return a * b // gcd(a, b)
 
-REST = 0
-LEG = 1
-ARM = 2
 
 def solve():
-  n = ii()
+  points_per_shot = int(input())
+  shot_made = int(input())
+  foul_committed = int(input())
 
-  d = []
-  ch = ["😎", "🦵", "💪"]
+  total_points = 0
 
-  for i in range(n):
-    s = inp()
+  if shot_made == 1:
+      total_points += points_per_shot
 
-    if "rest" in s:
-      d.append(REST)
-    elif "leg" in s:
-      d.append(LEG)
-    else:
-      d.append(ARM)
-  
-  ans = ""
-  for i in range(31):
-    ans += ch[d[i % n]]
-  
-  for i in range(5):
-    print(i + 1, ans[i * 7 : i * 7 + 7])
+  if foul_committed == 1:
+      if shot_made == 1:
+          free_throw = int(input())
+          if free_throw == 1:
+              total_points += 1
+      else:
+          for _ in range(points_per_shot):
+              free_throw = int(input())
+              if free_throw == 1:
+                  total_points += 1
 
-
+  print(total_points)
 
 
 if __name__ == "__main__":

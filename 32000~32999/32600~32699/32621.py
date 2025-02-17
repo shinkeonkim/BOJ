@@ -1,8 +1,8 @@
 """
-[32571: Leg Day](https://www.acmicpc.net/problem/32571)
+[32621: 동아리비 횡령](https://www.acmicpc.net/problem/32621)
 
 Tier: Bronze 2 
-Category: implementation, string
+Category: case_work, implementation, string
 """
 
 
@@ -29,33 +29,28 @@ p = print
 def gcd(a, b): return gcd(b, a % b) if b > 0 else a
 def lcm(a, b): return a * b // gcd(a, b)
 
-REST = 0
-LEG = 1
-ARM = 2
 
 def solve():
-  n = ii()
+  # n+n 형식의 문자열인가 n 은 양의 정수
 
-  d = []
-  ch = ["😎", "🦵", "💪"]
+  s = inp()
 
-  for i in range(n):
-    s = inp()
-
-    if "rest" in s:
-      d.append(REST)
-    elif "leg" in s:
-      d.append(LEG)
-    else:
-      d.append(ARM)
+  if "+" not in s:
+    return False
   
-  ans = ""
-  for i in range(31):
-    ans += ch[d[i % n]]
-  
-  for i in range(5):
-    print(i + 1, ans[i * 7 : i * 7 + 7])
+  a, b = s.split("+")
 
+  if a != b:
+    return False
+
+  a = int(a)
+  b = int(b)
+
+  
+  if a > 0 and b > 0 and a == b:
+    return True
+
+  return False
 
 
 
@@ -63,3 +58,7 @@ if __name__ == "__main__":
   tc = 1
   for t in range(1, tc+1):
     ret = solve()
+    if ret:
+      print("CUTE")
+    else:
+      print("No Money")

@@ -1,8 +1,8 @@
 """
-[32571: Leg Day](https://www.acmicpc.net/problem/32571)
+[15779: Zigzag](https://www.acmicpc.net/problem/15779)
 
-Tier: Bronze 2 
-Category: implementation, string
+Tier: Silver 5 
+Category: bruteforcing, implementation
 """
 
 
@@ -29,35 +29,27 @@ p = print
 def gcd(a, b): return gcd(b, a % b) if b > 0 else a
 def lcm(a, b): return a * b // gcd(a, b)
 
-REST = 0
-LEG = 1
-ARM = 2
+
+def is_zig_zag(l): # l's length is 3
+  if l[0] <= l[1] <= l[2]: return False
+  if l[0] >= l[1] >= l[2]: return False
+  return True
+
 
 def solve():
   n = ii()
+  l = mii()
 
-  d = []
-  ch = ["😎", "🦵", "💪"]
+  ans = 2
 
-  for i in range(n):
-    s = inp()
-
-    if "rest" in s:
-      d.append(REST)
-    elif "leg" in s:
-      d.append(LEG)
+  crt = 0
+  for i in range(1, n-1):
+    if is_zig_zag(l[i-1:i+2]):
+      crt += 1
+      ans = max(ans, crt + 2)
     else:
-      d.append(ARM)
-  
-  ans = ""
-  for i in range(31):
-    ans += ch[d[i % n]]
-  
-  for i in range(5):
-    print(i + 1, ans[i * 7 : i * 7 + 7])
-
-
-
+      crt = 0
+  print(ans)
 
 if __name__ == "__main__":
   tc = 1

@@ -1,8 +1,8 @@
 """
-[32571: Leg Day](https://www.acmicpc.net/problem/32571)
+[5947: Book Club](https://www.acmicpc.net/problem/5947)
 
-Tier: Bronze 2 
-Category: implementation, string
+Tier: Bronze 1 
+Category: bruteforcing, implementation
 """
 
 
@@ -29,34 +29,27 @@ p = print
 def gcd(a, b): return gcd(b, a % b) if b > 0 else a
 def lcm(a, b): return a * b // gcd(a, b)
 
-REST = 0
-LEG = 1
-ARM = 2
 
 def solve():
-  n = ii()
+  n, nq, p = mii()
+  l = [mii() for _ in range(n)]
 
-  d = []
-  ch = ["😎", "🦵", "💪"]
+  questions = [mii() for _ in range(p)]
 
-  for i in range(n):
-    s = inp()
+  crt = [i for i in range(n)]
 
-    if "rest" in s:
-      d.append(REST)
-    elif "leg" in s:
-      d.append(LEG)
-    else:
-      d.append(ARM)
-  
-  ans = ""
-  for i in range(31):
-    ans += ch[d[i % n]]
-  
-  for i in range(5):
-    print(i + 1, ans[i * 7 : i * 7 + 7])
+  for a, b in questions:
+    a -= 1
 
+    nxt = []
 
+    for i in crt:
+      if l[i][a] == b:
+        nxt.append(i)
+
+    crt = nxt
+
+  print(len(crt))
 
 
 if __name__ == "__main__":
