@@ -1,8 +1,8 @@
 """
-[32729: Sõnasnäki lahendamine](https://www.acmicpc.net/problem/32729)
+[29263: Штурм](https://www.acmicpc.net/problem/29263)
 
 Tier: Bronze 2 
-Category: implementation, string
+Category: implementation
 """
 
 
@@ -31,27 +31,30 @@ def lcm(a, b): return a * b // gcd(a, b)
 
 
 def solve():
-  s = inp()
-  n = ii()
+  n, m = mii()
 
-  d = {}
+  l = [mii() for _ in range(n)]
 
-  for i in s:
-    d[i] = d.get(i, 0) + 1
+  dy = [0, 1, 0, -1]
+  dx = [1, 0, -1, 0]
+  ans = 0
+  for i in range(n):
+    for j in range(m):
+      chk = True
+      for d in range(4):
+        ni, nj = i + dy[d], j + dx[d]
+        
+        if ni < 0 or ni >= n or nj < 0 or nj >= m:
+          continue
+        
+        if l[i][j] <= l[ni][nj]:
+          chk = False
+          break
+      if chk:
+        # print(i, j)
+        ans += 1
 
-  l = [inp() for _ in range(n)]
-
-  for i in l:
-    d2 = {}
-
-    for j in i:
-      d2[j] = d2.get(j, 0) + 1
-    
-    for k, v in d2.items():
-      if d.get(k, 0) < v:
-        break
-    else:
-      print(i)
+  p(ans)
 
 
 if __name__ == "__main__":

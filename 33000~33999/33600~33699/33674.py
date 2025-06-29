@@ -1,8 +1,8 @@
 """
-[32729: Sõnasnäki lahendamine](https://www.acmicpc.net/problem/32729)
+[33674: 하늘에서 떨어지는 $N$개의 별](https://www.acmicpc.net/problem/33674)
 
 Tier: Bronze 2 
-Category: implementation, string
+Category: implementation, simulation
 """
 
 
@@ -31,27 +31,28 @@ def lcm(a, b): return a * b // gcd(a, b)
 
 
 def solve():
-  s = inp()
-  n = ii()
+  N, D, K = mii()
 
-  d = {}
+  l = [0] + mii()
 
-  for i in s:
-    d[i] = d.get(i, 0) + 1
+  ans = 0
+  stars = [0] * (N + 1)
 
-  l = [inp() for _ in range(n)]
-
-  for i in l:
-    d2 = {}
-
-    for j in i:
-      d2[j] = d2.get(j, 0) + 1
+  for _ in range(D):
+    chk = False
+    for i in range(1, N + 1):
+      if stars[i] + l[i] > K:
+        chk = True
     
-    for k, v in d2.items():
-      if d.get(k, 0) < v:
-        break
-    else:
-      print(i)
+    if chk:
+      ans += 1
+
+      stars = [0] * (N + 1)
+    
+    for i in range(1, N + 1):
+      stars[i] += l[i]
+
+  print(ans)
 
 
 if __name__ == "__main__":

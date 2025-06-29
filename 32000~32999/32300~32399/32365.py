@@ -1,5 +1,5 @@
 """
-[32729: Sõnasnäki lahendamine](https://www.acmicpc.net/problem/32729)
+[32365: Heavy-Light Composition](https://www.acmicpc.net/problem/32365)
 
 Tier: Bronze 2 
 Category: implementation, string
@@ -31,27 +31,24 @@ def lcm(a, b): return a * b // gcd(a, b)
 
 
 def solve():
-  s = inp()
-  n = ii()
+  n, m = mii()
 
-  d = {}
-
-  for i in s:
-    d[i] = d.get(i, 0) + 1
-
-  l = [inp() for _ in range(n)]
-
-  for i in l:
-    d2 = {}
-
-    for j in i:
-      d2[j] = d2.get(j, 0) + 1
+  for _ in range(n):
+    s = inp()
+    d = {}
+    for i in s:
+      d[i] = d.get(i, 0) + 1
     
-    for k, v in d2.items():
-      if d.get(k, 0) < v:
+    k = [d[i] % 2 for i in s]
+
+    ret = True
+    for i in range(m - 1):
+      if k[i] == k[i + 1]:
+        ret = False
         break
-    else:
-      print(i)
+    
+    print("T" if ret else "F")
+
 
 
 if __name__ == "__main__":

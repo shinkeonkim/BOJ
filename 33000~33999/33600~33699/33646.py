@@ -1,8 +1,8 @@
 """
-[32729: Sõnasnäki lahendamine](https://www.acmicpc.net/problem/32729)
+[33646: Pencil Crayons](https://www.acmicpc.net/problem/33646)
 
-Tier: Bronze 2 
-Category: implementation, string
+Tier: Bronze 1 
+Category: greedy, implementation
 """
 
 
@@ -31,28 +31,22 @@ def lcm(a, b): return a * b // gcd(a, b)
 
 
 def solve():
-  s = inp()
-  n = ii()
+  n, k = mii()
 
-  d = {}
+  l = [isplit() for _ in range(n)]
 
-  for i in s:
-    d[i] = d.get(i, 0) + 1
-
-  l = [inp() for _ in range(n)]
-
+  ans = 0
   for i in l:
-    d2 = {}
-
+    d = {}
     for j in i:
-      d2[j] = d2.get(j, 0) + 1
+      d[j] = d.get(j, 0) + 1
     
-    for k, v in d2.items():
-      if d.get(k, 0) < v:
+    for k, v in d.items():
+      if v > 1:
+        ans += v - 1
         break
-    else:
-      print(i)
-
+  
+  print(ans)
 
 if __name__ == "__main__":
   tc = 1

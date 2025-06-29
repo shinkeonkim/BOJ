@@ -1,8 +1,8 @@
 """
-[32729: Sõnasnäki lahendamine](https://www.acmicpc.net/problem/32729)
+[34009: Bob부 멍충이](https://www.acmicpc.net/problem/34009)
 
 Tier: Bronze 2 
-Category: implementation, string
+Category: ad_hoc
 """
 
 
@@ -31,28 +31,30 @@ def lcm(a, b): return a * b // gcd(a, b)
 
 
 def solve():
-  s = inp()
   n = ii()
+  l = mii()
+  
+  if n % 2:
+    print("Bob")
+    return 
+  
+  l.sort()
+  
+  alice = 0
+  bob = 0
+  i = 0
+  j = n - 1
+  while i < j:
+    alice += l[j]
+    bob += l[i]
 
-  d = {}
+    if alice <= bob:
+      print("Bob")
+      return
+    i += 1
+    j -= 1
 
-  for i in s:
-    d[i] = d.get(i, 0) + 1
-
-  l = [inp() for _ in range(n)]
-
-  for i in l:
-    d2 = {}
-
-    for j in i:
-      d2[j] = d2.get(j, 0) + 1
-    
-    for k, v in d2.items():
-      if d.get(k, 0) < v:
-        break
-    else:
-      print(i)
-
+  print("Alice")
 
 if __name__ == "__main__":
   tc = 1

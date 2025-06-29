@@ -1,8 +1,8 @@
 """
-[32729: Sõnasnäki lahendamine](https://www.acmicpc.net/problem/32729)
+[15027: Alien Sunset](https://www.acmicpc.net/problem/15027)
 
-Tier: Bronze 2 
-Category: implementation, string
+Tier: Bronze 1 
+Category: arithmetic, bruteforcing, math
 """
 
 
@@ -31,27 +31,27 @@ def lcm(a, b): return a * b // gcd(a, b)
 
 
 def solve():
-  s = inp()
   n = ii()
+  l = [mii() for _ in range(n)]
 
-  d = {}
+  mx_day_time = max(l[i][0] for i in range(n))
 
-  for i in s:
-    d[i] = d.get(i, 0) + 1
-
-  l = [inp() for _ in range(n)]
-
-  for i in l:
-    d2 = {}
-
-    for j in i:
-      d2[j] = d2.get(j, 0) + 1
-    
-    for k, v in d2.items():
-      if d.get(k, 0) < v:
-        break
+  def is_night(cur_time, day_time, start_day, end_day):
+    tm = cur_time % day_time
+    if start_day <= end_day:
+      return tm <= start_day or tm >= end_day
     else:
-      print(i)
+      return tm <= start_day and tm >= end_day
+    
+
+  for t in range(1825 * mx_day_time+1):
+    all_night = all(is_night(t, l[i][0], l[i][1], l[i][2]) for i in range(n))
+
+    if all_night:
+      print(t)
+      break
+  else:
+    print("impossible")
 
 
 if __name__ == "__main__":

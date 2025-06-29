@@ -1,8 +1,8 @@
 """
-[32729: Sõnasnäki lahendamine](https://www.acmicpc.net/problem/32729)
+[33964: 레퓨닛의 덧셈](https://www.acmicpc.net/problem/33964)
 
-Tier: Bronze 2 
-Category: implementation, string
+Tier: Bronze 4 
+Category: math, arithmetic
 """
 
 
@@ -31,27 +31,11 @@ def lcm(a, b): return a * b // gcd(a, b)
 
 
 def solve():
-  s = inp()
-  n = ii()
+  X, Y = mii()
+  X, Y = min(X, Y), max(X, Y)
 
-  d = {}
-
-  for i in s:
-    d[i] = d.get(i, 0) + 1
-
-  l = [inp() for _ in range(n)]
-
-  for i in l:
-    d2 = {}
-
-    for j in i:
-      d2[j] = d2.get(j, 0) + 1
-    
-    for k, v in d2.items():
-      if d.get(k, 0) < v:
-        break
-    else:
-      print(i)
+  s = "2" * X + "1" * (Y - X)
+  print(s[::-1])
 
 
 if __name__ == "__main__":

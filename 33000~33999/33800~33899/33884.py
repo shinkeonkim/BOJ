@@ -1,8 +1,8 @@
 """
-[32729: Sõnasnäki lahendamine](https://www.acmicpc.net/problem/32729)
+[33884: 클리크 조절](https://www.acmicpc.net/problem/33884)
 
-Tier: Bronze 2 
-Category: implementation, string
+Tier: Bronze 1 
+Category: ad_hoc, geometry
 """
 
 
@@ -31,27 +31,11 @@ def lcm(a, b): return a * b // gcd(a, b)
 
 
 def solve():
-  s = inp()
   n = ii()
+  l = sorted([mii() for _ in range(n)])
+  l2 = sorted([mii() for _ in range(n)])
 
-  d = {}
-
-  for i in s:
-    d[i] = d.get(i, 0) + 1
-
-  l = [inp() for _ in range(n)]
-
-  for i in l:
-    d2 = {}
-
-    for j in i:
-      d2[j] = d2.get(j, 0) + 1
-    
-    for k, v in d2.items():
-      if d.get(k, 0) < v:
-        break
-    else:
-      print(i)
+  print(l2[0][0] - l[0][0], l2[0][1] - l[0][1])
 
 
 if __name__ == "__main__":

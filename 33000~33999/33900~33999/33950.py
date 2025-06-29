@@ -1,7 +1,7 @@
 """
-[32729: Sõnasnäki lahendamine](https://www.acmicpc.net/problem/32729)
+[33950: 어게인 포닉스](https://www.acmicpc.net/problem/33950)
 
-Tier: Bronze 2 
+Tier: Bronze 3 
 Category: implementation, string
 """
 
@@ -32,29 +32,11 @@ def lcm(a, b): return a * b // gcd(a, b)
 
 def solve():
   s = inp()
-  n = ii()
 
-  d = {}
-
-  for i in s:
-    d[i] = d.get(i, 0) + 1
-
-  l = [inp() for _ in range(n)]
-
-  for i in l:
-    d2 = {}
-
-    for j in i:
-      d2[j] = d2.get(j, 0) + 1
-    
-    for k, v in d2.items():
-      if d.get(k, 0) < v:
-        break
-    else:
-      print(i)
+  print(s.replace("PO", "PHO"))
 
 
 if __name__ == "__main__":
-  tc = 1
+  tc = ii()
   for t in range(1, tc+1):
     ret = solve()

@@ -1,5 +1,5 @@
 """
-[32729: Sõnasnäki lahendamine](https://www.acmicpc.net/problem/32729)
+[33869: 일기 암호화하기](https://www.acmicpc.net/problem/33869)
 
 Tier: Bronze 2 
 Category: implementation, string
@@ -31,28 +31,23 @@ def lcm(a, b): return a * b // gcd(a, b)
 
 
 def solve():
+  key = inp()
   s = inp()
-  n = ii()
 
-  d = {}
-
+  l = []
+  for i in key:
+    if i in l:
+      continue
+    l.append(i)
+  
+  for i in range(ord('A'), ord('Z') + 1):
+    if chr(i) not in l:
+      l.append(chr(i))
+  
   for i in s:
-    d[i] = d.get(i, 0) + 1
-
-  l = [inp() for _ in range(n)]
-
-  for i in l:
-    d2 = {}
-
-    for j in i:
-      d2[j] = d2.get(j, 0) + 1
-    
-    for k, v in d2.items():
-      if d.get(k, 0) < v:
-        break
-    else:
-      print(i)
-
+    idx = ord(i) - ord('A')
+    p(l[idx], end="")
+  
 
 if __name__ == "__main__":
   tc = 1

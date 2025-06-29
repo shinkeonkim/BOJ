@@ -1,8 +1,8 @@
 """
-[32729: Sõnasnäki lahendamine](https://www.acmicpc.net/problem/32729)
+[33868: 스티커 나눠주기](https://www.acmicpc.net/problem/33868)
 
-Tier: Bronze 2 
-Category: implementation, string
+Tier: Bronze 3 
+Category: implementation
 """
 
 
@@ -31,27 +31,21 @@ def lcm(a, b): return a * b // gcd(a, b)
 
 
 def solve():
-  s = inp()
   n = ii()
+  T = []
+  B = []
 
-  d = {}
+  for i in range(n):
+    t, b = mii()
+    T.append(t)
+    B.append(b)
+  
+  T = max(T)
+  B = min(B)
 
-  for i in s:
-    d[i] = d.get(i, 0) + 1
+  ret = T * B
 
-  l = [inp() for _ in range(n)]
-
-  for i in l:
-    d2 = {}
-
-    for j in i:
-      d2[j] = d2.get(j, 0) + 1
-    
-    for k, v in d2.items():
-      if d.get(k, 0) < v:
-        break
-    else:
-      print(i)
+  print(ret % 7 + 1)
 
 
 if __name__ == "__main__":

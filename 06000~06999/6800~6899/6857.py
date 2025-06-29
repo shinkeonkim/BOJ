@@ -1,8 +1,8 @@
 """
-[32729: Sõnasnäki lahendamine](https://www.acmicpc.net/problem/32729)
+[6857: Cell-Phone Messaging](https://www.acmicpc.net/problem/6857)
 
-Tier: Bronze 2 
-Category: implementation, string
+Tier: Bronze 1 
+Category: implementation, simulation
 """
 
 
@@ -31,28 +31,32 @@ def lcm(a, b): return a * b // gcd(a, b)
 
 
 def solve():
-  s = inp()
-  n = ii()
+  while 1:
+    s = input()
 
-  d = {}
+    if s == "halt":
+      break
 
-  for i in s:
-    d[i] = d.get(i, 0) + 1
+    l = ["abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"]
 
-  l = [inp() for _ in range(n)]
+    prev = -1
+    ans = 0
 
-  for i in l:
-    d2 = {}
+    for ch in s:
+      idx = -1
+      cnt = -1
 
-    for j in i:
-      d2[j] = d2.get(j, 0) + 1
-    
-    for k, v in d2.items():
-      if d.get(k, 0) < v:
-        break
-    else:
-      print(i)
-
+      for i in range(len(l)):
+        if ch in l[i]:
+          idx = i
+          cnt = l[i].index(ch) + 1
+          break
+      
+      if prev == idx:
+        ans += 2
+      ans += cnt
+      prev = idx
+    print(ans)
 
 if __name__ == "__main__":
   tc = 1

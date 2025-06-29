@@ -1,8 +1,8 @@
 """
-[32729: Sõnasnäki lahendamine](https://www.acmicpc.net/problem/32729)
+[30349: Taikinys](https://www.acmicpc.net/problem/30349)
 
 Tier: Bronze 2 
-Category: implementation, string
+Category: bruteforcing, implementation, math
 """
 
 
@@ -31,27 +31,18 @@ def lcm(a, b): return a * b // gcd(a, b)
 
 
 def solve():
-  s = inp()
-  n = ii()
+  n, m = mii()
+  a, b = mii()
 
-  d = {}
+  c, d = mii()
 
-  for i in s:
-    d[i] = d.get(i, 0) + 1
-
-  l = [inp() for _ in range(n)]
-
-  for i in l:
-    d2 = {}
-
-    for j in i:
-      d2[j] = d2.get(j, 0) + 1
-    
-    for k, v in d2.items():
-      if d.get(k, 0) < v:
-        break
-    else:
-      print(i)
+  ans = 1e30
+  for i in range(n + 1):
+    for j in range(m + 1):
+      if 0 <= i + c < a and 0 <= j + d < b:
+        ans = min(ans, abs(i + c) + abs(j + d))
+  
+  p(ans if ans < 1e30 else "NEPATAIKYS")
 
 
 if __name__ == "__main__":

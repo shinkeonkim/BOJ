@@ -1,8 +1,8 @@
 """
-[32729: Sõnasnäki lahendamine](https://www.acmicpc.net/problem/32729)
+[27025: Morning Exercises](https://www.acmicpc.net/problem/27025)
 
 Tier: Bronze 2 
-Category: implementation, string
+Category: implementation
 """
 
 
@@ -31,27 +31,21 @@ def lcm(a, b): return a * b // gcd(a, b)
 
 
 def solve():
-  s = inp()
   n = ii()
+  l = [mii() for _ in range(n)]
 
-  d = {}
+  ans = 0
+  crt = 0
 
-  for i in s:
-    d[i] = d.get(i, 0) + 1
-
-  l = [inp() for _ in range(n)]
-
-  for i in l:
-    d2 = {}
-
-    for j in i:
-      d2[j] = d2.get(j, 0) + 1
-    
-    for k, v in d2.items():
-      if d.get(k, 0) < v:
-        break
+  for i in range(n):
+    if l[i][0] == l[i][1] == 0:
+      crt += 1
     else:
-      print(i)
+      crt = 0
+    
+    ans = max(ans, crt)
+  
+  print(ans * 2)
 
 
 if __name__ == "__main__":

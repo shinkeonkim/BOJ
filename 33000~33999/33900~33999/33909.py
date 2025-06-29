@@ -1,8 +1,8 @@
 """
-[32729: Sõnasnäki lahendamine](https://www.acmicpc.net/problem/32729)
+[33909: 알파벳 블록](https://www.acmicpc.net/problem/33909)
 
-Tier: Bronze 2 
-Category: implementation, string
+Tier: Bronze 3 
+Category: math, implementation, arithmetic
 """
 
 
@@ -31,28 +31,39 @@ def lcm(a, b): return a * b // gcd(a, b)
 
 
 def solve():
-  s = inp()
-  n = ii()
+  # SCON
+  # S=N 상호 치환
+  # O = 2 * C
 
-  d = {}
+  S, C, O, N = mii()
 
-  for i in s:
-    d[i] = d.get(i, 0) + 1
+  A = S + N
+  B = C + 2 * O
 
-  l = [inp() for _ in range(n)]
+  # SCON = 2개의 a, 3개의 b , SCCC 1개의 a, 3개의 b
 
-  for i in l:
-    d2 = {}
+  ans = 0
 
-    for j in i:
-      d2[j] = d2.get(j, 0) + 1
+  for i in range(A + 1):
+    # SCCC
+    sccc_count = i
+    need_b = 3 * sccc_count
+
+    if need_b > B:
+      continue
     
-    for k, v in d2.items():
-      if d.get(k, 0) < v:
-        break
-    else:
-      print(i)
+    _A = A - sccc_count
+    _B = B - need_b
 
+    # SCON
+    scon_count = min(_A // 2, _B // 3)
+
+    # print(i, scon_count, sccc_count)
+
+    ans = max(ans, min(scon_count, sccc_count))
+    
+  print(ans)
+    
 
 if __name__ == "__main__":
   tc = 1

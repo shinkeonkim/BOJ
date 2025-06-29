@@ -1,8 +1,8 @@
 """
-[32729: Sõnasnäki lahendamine](https://www.acmicpc.net/problem/32729)
+[34021: [T] 스코어보드가 121분 남은 시점에서 프리즈되었습니다.](https://www.acmicpc.net/problem/34021)
 
-Tier: Bronze 2 
-Category: implementation, string
+Tier: Bronze 3 
+Category: math, implementation, arithmetic
 """
 
 
@@ -31,30 +31,28 @@ def lcm(a, b): return a * b // gcd(a, b)
 
 
 def solve():
-  s = inp()
-  n = ii()
+  N, M, L = mii()
+  S = mii()
 
-  d = {}
-
-  for i in s:
-    d[i] = d.get(i, 0) + 1
-
-  l = [inp() for _ in range(n)]
-
-  for i in l:
-    d2 = {}
-
-    for j in i:
-      d2[j] = d2.get(j, 0) + 1
-    
-    for k, v in d2.items():
-      if d.get(k, 0) < v:
-        break
-    else:
-      print(i)
+  mn = 2000
+  for i in S:
+    if i == -1:
+      continue
+    mn = min(mn, i)
+  
+  ans = 0
+  if mn == 2000:
+    ans = L
+  else:
+    ans = max(M - mn, L)
+  
+  if ans == 1:
+    print("The scoreboard has been frozen with 1 minute remaining.")
+  else:
+    print(f"The scoreboard has been frozen with {ans} minutes remaining.")
 
 
 if __name__ == "__main__":
-  tc = 1
+  tc = ii()
   for t in range(1, tc+1):
     ret = solve()

@@ -1,7 +1,7 @@
 """
-[32729: Sõnasnäki lahendamine](https://www.acmicpc.net/problem/32729)
+[33883: Acentuación del idioma español](https://www.acmicpc.net/problem/33883)
 
-Tier: Bronze 2 
+Tier: Bronze 3 
 Category: implementation, string
 """
 
@@ -29,29 +29,21 @@ p = print
 def gcd(a, b): return gcd(b, a % b) if b > 0 else a
 def lcm(a, b): return a * b // gcd(a, b)
 
+def is_vowel(c):
+  return c in "aeiou"
 
 def solve():
-  s = inp()
-  n = ii()
+  s = input()
+  idx = []
 
-  d = {}
+  for i in range(len(s)):
+    if is_vowel(s[i]):
+      idx.append(i + 1)
 
-  for i in s:
-    d[i] = d.get(i, 0) + 1
-
-  l = [inp() for _ in range(n)]
-
-  for i in l:
-    d2 = {}
-
-    for j in i:
-      d2[j] = d2.get(j, 0) + 1
-    
-    for k, v in d2.items():
-      if d.get(k, 0) < v:
-        break
-    else:
-      print(i)
+  if s[-1] not in "ns" and not is_vowel(s[-1]):
+    print(idx[-1] if len(idx) > 0 else -1)
+  else:
+    print(idx[-2] if len(idx) > 1 else -1)
 
 
 if __name__ == "__main__":

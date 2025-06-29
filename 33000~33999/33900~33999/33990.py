@@ -1,8 +1,8 @@
 """
-[32729: Sõnasnäki lahendamine](https://www.acmicpc.net/problem/32729)
+[33990: 3대 512](https://www.acmicpc.net/problem/33990)
 
-Tier: Bronze 2 
-Category: implementation, string
+Tier: Bronze 3 
+Category: math, implementation, arithmetic
 """
 
 
@@ -31,27 +31,17 @@ def lcm(a, b): return a * b // gcd(a, b)
 
 
 def solve():
-  s = inp()
-  n = ii()
+  l = []
 
-  d = {}
+  for i in range(ii()):
+    s = sum(mii())
 
-  for i in s:
-    d[i] = d.get(i, 0) + 1
+    if s >= 512:
+      l.append(s)
+  
+  l.sort()
 
-  l = [inp() for _ in range(n)]
-
-  for i in l:
-    d2 = {}
-
-    for j in i:
-      d2[j] = d2.get(j, 0) + 1
-    
-    for k, v in d2.items():
-      if d.get(k, 0) < v:
-        break
-    else:
-      print(i)
+  print(l[0] if l else -1)
 
 
 if __name__ == "__main__":

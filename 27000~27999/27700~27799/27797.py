@@ -1,8 +1,8 @@
 """
-[32729: Sõnasnäki lahendamine](https://www.acmicpc.net/problem/32729)
+[27797: Vestigium](https://www.acmicpc.net/problem/27797)
 
-Tier: Bronze 2 
-Category: implementation, string
+Tier: Bronze 1 
+Category: arithmetic, implementation, math
 """
 
 
@@ -31,30 +31,28 @@ def lcm(a, b): return a * b // gcd(a, b)
 
 
 def solve():
-  s = inp()
   n = ii()
+  
+  l = [mii() for _ in range(n)]
 
-  d = {}
+  ans = [0, 0, 0]
+  for i in range(n):
+    ans[0] += l[i][i]
 
-  for i in s:
-    d[i] = d.get(i, 0) + 1
-
-  l = [inp() for _ in range(n)]
-
-  for i in l:
-    d2 = {}
-
-    for j in i:
-      d2[j] = d2.get(j, 0) + 1
-    
-    for k, v in d2.items():
-      if d.get(k, 0) < v:
-        break
-    else:
-      print(i)
+  for i in range(n):
+    if n != len(set(l[i])):
+      ans[1] += 1
+  
+  for i in range(n):
+    if n != len(set([l[j][i] for j in range(n)])):
+      ans[2] += 1
+  
+  return ans
 
 
 if __name__ == "__main__":
-  tc = 1
+  tc = ii()
   for t in range(1, tc+1):
     ret = solve()
+
+    p(f"Case #{t}: {ret[0]} {ret[1]} {ret[2]}")

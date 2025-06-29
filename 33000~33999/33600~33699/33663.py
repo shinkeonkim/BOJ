@@ -1,8 +1,8 @@
 """
-[32729: Sõnasnäki lahendamine](https://www.acmicpc.net/problem/32729)
+[33663: 루미의 진정한™ 보라색 찾기](https://www.acmicpc.net/problem/33663)
 
-Tier: Bronze 2 
-Category: implementation, string
+Tier: Bronze 3 
+Category: math, implementation, arithmetic
 """
 
 
@@ -31,28 +31,34 @@ def lcm(a, b): return a * b // gcd(a, b)
 
 
 def solve():
-  s = inp()
-  n = ii()
+  h = mii()
+  s = mii()
+  v = mii()
 
-  d = {}
+  R, G, B = mii()
 
-  for i in s:
-    d[i] = d.get(i, 0) + 1
+  M = max([R, G, B])
+  m = min([R, G, B])
 
-  l = [inp() for _ in range(n)]
+  V = M
+  S = 255 * (V - m) / V
 
-  for i in l:
-    d2 = {}
+  H = -1
 
-    for j in i:
-      d2[j] = d2.get(j, 0) + 1
-    
-    for k, v in d2.items():
-      if d.get(k, 0) < v:
-        break
-    else:
-      print(i)
-
+  if V == R:
+    H = 60 * (G - B) / (V - m)
+  elif V == G:
+    H = 120 + 60 * (B - R) / (V - m)
+  elif V == B:
+    H = 240 + 60 * (R - G) / (V - m)
+  
+  if H < 0:
+    H += 360
+  
+  if h[0] <= H <= h[1] and s[0] <= S <= s[1] and v[0] <= V <= v[1]:
+    print("Lumi will like it.")
+  else:
+    print("Lumi will not like it.")
 
 if __name__ == "__main__":
   tc = 1
