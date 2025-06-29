@@ -87,7 +87,13 @@ def get_abstract_tag_strings(tags):
 def get_problem_info(problem_number):
   json_response = get(
     f'https://solved.ac/api/v3/problem/show?problemId={problem_number}',
-  ).json()
+    headers={
+      'Accept': 'application/json',
+      'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3'
+    }
+  )
+
+  json_response = json_response.json()
   
   return {
     'title': json_response['titleKo'],

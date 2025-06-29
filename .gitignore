@@ -5,3 +5,15 @@ __pycache__
 *.bin
 
 *.cph
+
+.vscode
+
+.DS_Store
+
+# cpp
+*.o
+*.out
+*.exe
+*.dSYM
+*.so
+*.a

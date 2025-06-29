@@ -9,6 +9,13 @@ Category: {tags}
 import sys
 from math import sqrt, pi, sin, factorial, ceil, floor
 from datetime import datetime, timedelta
+from collections import deque, defaultdict, Counter
+from itertools import permutations, combinations, product
+from bisect import bisect_left, bisect_right
+from heapq import heappush, heappop, heapify
+from functools import reduce, lru_cache
+from operator import itemgetter, attrgetter, mul, add, sub, truediv
+from typing import List, Tuple, Dict, Set, Any, Union
 
 SYS_INPUT = True
 RECURSION_LIMIT = 10 ** 7
