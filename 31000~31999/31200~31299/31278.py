@@ -1,8 +1,8 @@
 """
-[29145: Можно и отдохнуть](https://www.acmicpc.net/problem/29145)
+[31278: ПАРКИРАНЕ](https://www.acmicpc.net/problem/31278)
 
 Tier: Bronze 2 
-Category: arithmetic, math
+Category: case_work, implementation, string
 """
 
 
@@ -38,22 +38,25 @@ def lcm(a, b): return a * b // gcd(a, b)
 
 
 def solve():
-  n, k = mii()
+  n = ii()
+  l = [inp() for _ in range(n)]
+  ans = [0] * n
 
-  groups = [mii() for _ in range(n)]
+  for idx in range(n):
+    board = l[idx]
+    for i in range(len(board)):
+      if board[i] in'DBS':
+        continue
 
-  # a: 시작, b : 한번 이동시 거리, c: 그 그룹에 속한 펭귄 수
+      if (i > 0 and board[i-1] == 'S') or (i < len(board)-1 and board[i+1] == 'S'):
+        continue
+      
+      if (i + 2 < len(board) and board[i+2] == 'B') or (i + 1 < len(board) and board[i+1] == 'B'):
+        continue
 
-  ans = 0
-
-  for a, b, c in groups:
-    if k < a:
-      continue
-    
-    if (k - a) % b == 0:
-      ans += c
+      ans[idx] += 1
   
-  print(ans)
+  print(*ans)
 
 
 if __name__ == "__main__":

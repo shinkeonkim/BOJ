@@ -1,8 +1,8 @@
 """
-[29145: Можно и отдохнуть](https://www.acmicpc.net/problem/29145)
+[28652: Японский кроссворд](https://www.acmicpc.net/problem/28652)
 
-Tier: Bronze 2 
-Category: arithmetic, math
+Tier: Bronze 1 
+Category: implementation, string
 """
 
 
@@ -38,23 +38,51 @@ def lcm(a, b): return a * b // gcd(a, b)
 
 
 def solve():
-  n, k = mii()
+  n, m = mii()
 
-  groups = [mii() for _ in range(n)]
+  grid = [inp() for _ in range(n)]
 
-  # a: 시작, b : 한번 이동시 거리, c: 그 그룹에 속한 펭귄 수
+  rows = []
+  cols = []
 
-  ans = 0
+  for i in range(n):
+    current = []
 
-  for a, b, c in groups:
-    if k < a:
-      continue
-    
-    if (k - a) % b == 0:
-      ans += c
+    cnt = 0
+
+    for j in range(m):
+      if grid[i][j] == '#':
+        cnt += 1
+      else:
+        if cnt > 0:
+          current.append(cnt)
+        cnt = 0
+    if cnt > 0:
+      current.append(cnt)
+    rows.append(current)
   
-  print(ans)
+  for j in range(m):
+    current = []
+    cnt = 0
 
+    for i in range(n):
+      if grid[i][j] == '#':
+        cnt += 1
+      else:
+        if cnt > 0:
+          current.append(cnt)
+        cnt = 0
+    if cnt > 0:
+      current.append(cnt)
+    cols.append(current)
+  
+  for i in range(n):
+    print(len(rows[i]), *rows[i])
+  
+  print()
+
+  for j in range(m):
+    print(len(cols[j]), *cols[j])
 
 if __name__ == "__main__":
   tc = 1

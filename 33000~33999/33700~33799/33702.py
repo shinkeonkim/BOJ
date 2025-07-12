@@ -1,14 +1,21 @@
 """
-[32365: Heavy-Light Composition](https://www.acmicpc.net/problem/32365)
+[33702: 비밀번호](https://www.acmicpc.net/problem/33702)
 
 Tier: Bronze 2 
-Category: implementation, string
+Category: math, precomputation, parity
 """
 
 
 import sys
 from math import sqrt, pi, sin, factorial, ceil, floor
 from datetime import datetime, timedelta
+from collections import deque, defaultdict, Counter
+from itertools import permutations, combinations, product
+from bisect import bisect_left, bisect_right
+from heapq import heappush, heappop, heapify
+from functools import reduce, lru_cache
+from operator import itemgetter, attrgetter, mul, add, sub, truediv
+from typing import List, Tuple, Dict, Set, Any, Union
 
 SYS_INPUT = True
 RECURSION_LIMIT = 10 ** 7
@@ -31,26 +38,15 @@ def lcm(a, b): return a * b // gcd(a, b)
 
 
 def solve():
-  n, m = mii()
+  n = ii()
+  if n in [2, 4, 6, 8]:
+    return 0
 
-  for _ in range(n):
-    s = inp()
-    d = {}
-    for i in s:
-      d[i] = d.get(i, 0) + 1
-    
-    k = [d[i] > 1 for i in s]
-
-    ret = True
-    for i in range(m - 1):
-      if k[i] == k[i + 1]:
-        ret = False
-        break
-    
-    print("T" if ret else "F")
+  return 8
 
 
 if __name__ == "__main__":
   tc = 1
   for t in range(1, tc+1):
     ret = solve()
+    print(ret)

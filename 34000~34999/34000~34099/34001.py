@@ -1,8 +1,8 @@
 """
-[29145: Можно и отдохнуть](https://www.acmicpc.net/problem/29145)
+[34001: 임스의 일일 퀘스트](https://www.acmicpc.net/problem/34001)
 
-Tier: Bronze 2 
-Category: arithmetic, math
+Tier: Bronze 3 
+Category: implementation, case_work
 """
 
 
@@ -38,23 +38,44 @@ def lcm(a, b): return a * b // gcd(a, b)
 
 
 def solve():
-  n, k = mii()
+  level = ii()
 
-  groups = [mii() for _ in range(n)]
+  table = [
+    [
+      [200, 210, 220],
+      [210, 220, 225],
+      [220, 225, 230],
+      [225, 230, 235],
+      [230, 235, 245],
+      [235, 245, 250],
+    ],
+    [
+      [260, 265, 270],
+      [265, 270, 275],
+      [270, 275, 280],
+      [275, 280, 285],
+      [280, 285, 290],
+      [285, 290, 295],
+      [290, 295, 300],
+    ]
+  ]
 
-  # a: 시작, b : 한번 이동시 거리, c: 그 그룹에 속한 펭귄 수
+  for i in range(2):
+    for j in range(len(table[i])):
+      need = 0
 
-  ans = 0
+      if level >= table[i][j][0]:
+        need = 500
 
-  for a, b, c in groups:
-    if k < a:
-      continue
+        if level >= table[i][j][1]:
+          need -= 200
+
+      if level >= table[i][j][2]:
+        need -= 200
     
-    if (k - a) % b == 0:
-      ans += c
-  
-  print(ans)
+      print(need, end=" ")
 
+    print()
 
 if __name__ == "__main__":
   tc = 1

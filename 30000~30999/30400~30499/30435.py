@@ -1,8 +1,8 @@
 """
-[29145: Можно и отдохнуть](https://www.acmicpc.net/problem/29145)
+[30435: Die Hard](https://www.acmicpc.net/problem/30435)
 
-Tier: Bronze 2 
-Category: arithmetic, math
+Tier: Bronze 1 
+Category: math, implementation, bruteforcing, probability
 """
 
 
@@ -37,26 +37,39 @@ def gcd(a, b): return gcd(b, a % b) if b > 0 else a
 def lcm(a, b): return a * b // gcd(a, b)
 
 
+def probability(a, b):
+  count = 0
+  win = 0
+  for i in a:
+    for j in b:
+      if i == j:
+        continue
+      if i > j:
+        win += 1
+      count += 1
+  return win / count if count > 0 else 0
+
+
 def solve():
-  n, k = mii()
+  dices = [mii() for _ in range(3)]
 
-  groups = [mii() for _ in range(n)]
+  for i in range(3):
+    for j in range(3):
+      if i == j:
+        continue
+      
+      ret = probability(dices[i], dices[j])
 
-  # a: 시작, b : 한번 이동시 거리, c: 그 그룹에 속한 펭귄 수
-
-  ans = 0
-
-  for a, b, c in groups:
-    if k < a:
-      continue
-    
-    if (k - a) % b == 0:
-      ans += c
+      if ret < 0.5:
+        break
+    else:
+      return i + 1
   
-  print(ans)
+  return "No dice"
 
 
 if __name__ == "__main__":
   tc = 1
   for t in range(1, tc+1):
     ret = solve()
+    p(ret)

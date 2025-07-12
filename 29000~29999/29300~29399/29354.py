@@ -1,14 +1,21 @@
 """
-[32365: Heavy-Light Composition](https://www.acmicpc.net/problem/32365)
+[29354: Завоеватель](https://www.acmicpc.net/problem/29354)
 
-Tier: Bronze 2 
-Category: implementation, string
+Tier: Bronze 1 
+Category: greedy, math
 """
 
 
 import sys
 from math import sqrt, pi, sin, factorial, ceil, floor
 from datetime import datetime, timedelta
+from collections import deque, defaultdict, Counter
+from itertools import permutations, combinations, product
+from bisect import bisect_left, bisect_right
+from heapq import heappush, heappop, heapify
+from functools import reduce, lru_cache
+from operator import itemgetter, attrgetter, mul, add, sub, truediv
+from typing import List, Tuple, Dict, Set, Any, Union
 
 SYS_INPUT = True
 RECURSION_LIMIT = 10 ** 7
@@ -31,23 +38,20 @@ def lcm(a, b): return a * b // gcd(a, b)
 
 
 def solve():
-  n, m = mii()
+  n = ii()
+  l = mii()
 
-  for _ in range(n):
-    s = inp()
-    d = {}
-    for i in s:
-      d[i] = d.get(i, 0) + 1
-    
-    k = [d[i] > 1 for i in s]
+  if n == 1:
+    print(0)
+    return 
 
-    ret = True
-    for i in range(m - 1):
-      if k[i] == k[i + 1]:
-        ret = False
-        break
-    
-    print("T" if ret else "F")
+  speed = l[0]
+  ans = l[0]
+  for i in l[1:-1]:
+    speed = min(speed, i)
+    ans += speed
+  
+  print(ans)
 
 
 if __name__ == "__main__":

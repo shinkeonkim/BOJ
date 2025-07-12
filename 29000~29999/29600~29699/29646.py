@@ -1,8 +1,8 @@
 """
-[29145: Можно и отдохнуть](https://www.acmicpc.net/problem/29145)
+[29646: Парад роботов](https://www.acmicpc.net/problem/29646)
 
 Tier: Bronze 2 
-Category: arithmetic, math
+Category: implementation, simulation
 """
 
 
@@ -39,21 +39,26 @@ def lcm(a, b): return a * b // gcd(a, b)
 
 def solve():
   n, k = mii()
+  l = [mfi() for _ in range(n)]
 
-  groups = [mii() for _ in range(n)]
+  x_sum = sum(x for x, y in l)
+  y_sum = sum(y for x, y in l)
 
-  # a: 시작, b : 한번 이동시 거리, c: 그 그룹에 속한 펭귄 수
+  for i in range(n):
+    x, y = l[i]
 
-  ans = 0
+    x_new = x_sum / n
+    y_new = y_sum / n
 
-  for a, b, c in groups:
-    if k < a:
-      continue
-    
-    if (k - a) % b == 0:
-      ans += c
+    x_diff = x_new - x
+    y_diff = y_new - y
+
+    x_sum += x_diff
+    y_sum += y_diff
+
+    l[i] = (x_new, y_new)
   
-  print(ans)
+  print(*l[k - 1])
 
 
 if __name__ == "__main__":

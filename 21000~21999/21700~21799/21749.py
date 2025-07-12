@@ -1,8 +1,8 @@
 """
-[29145: Можно и отдохнуть](https://www.acmicpc.net/problem/29145)
+[21749: Гистограмма](https://www.acmicpc.net/problem/21749)
 
-Tier: Bronze 2 
-Category: arithmetic, math
+Tier: Bronze 1 
+Category: implementation, string
 """
 
 
@@ -17,7 +17,7 @@ from functools import reduce, lru_cache
 from operator import itemgetter, attrgetter, mul, add, sub, truediv
 from typing import List, Tuple, Dict, Set, Any, Union
 
-SYS_INPUT = True
+SYS_INPUT = False
 RECURSION_LIMIT = 10 ** 7
 SET_RECURSION = False
 BLANK = " "
@@ -38,22 +38,28 @@ def lcm(a, b): return a * b // gcd(a, b)
 
 
 def solve():
-  n, k = mii()
+  s = ""
+  while 1:
+    try:
+      line = inp()
+      s += line + " "
+    except:
+      break
 
-  groups = [mii() for _ in range(n)]
+  s = s.replace(" ", "")
+  uniq_s = sorted(list(set(s)))
+  cnt = Counter(s)
+  max_cnt = max(cnt.values())
 
-  # a: 시작, b : 한번 이동시 거리, c: 그 그룹에 속한 펭귄 수
-
-  ans = 0
-
-  for a, b, c in groups:
-    if k < a:
-      continue
-    
-    if (k - a) % b == 0:
-      ans += c
+  for i in range(max_cnt, 0, -1):
+    for c in uniq_s:
+      if cnt[c] >= i:
+        p(end="#")
+      else:
+        p(end=" ")
+    p()
   
-  print(ans)
+  print("".join(uniq_s))
 
 
 if __name__ == "__main__":

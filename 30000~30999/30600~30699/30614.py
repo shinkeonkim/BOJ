@@ -1,8 +1,8 @@
 """
-[29145: Можно и отдохнуть](https://www.acmicpc.net/problem/29145)
+[30614: Port Robot](https://www.acmicpc.net/problem/30614)
 
-Tier: Bronze 2 
-Category: arithmetic, math
+Tier: Bronze 1 
+Category: implementation, data_structures, stack
 """
 
 
@@ -36,27 +36,34 @@ p = print
 def gcd(a, b): return gcd(b, a % b) if b > 0 else a
 def lcm(a, b): return a * b // gcd(a, b)
 
+stack = []
+
+def push(x):
+  stack.append(x)
+
+def pop():
+  if stack:
+    return stack.pop()
+  return -1
 
 def solve():
-  n, k = mii()
+  n = ii()
+  s = inp()
 
-  groups = [mii() for _ in range(n)]
+  for current in s:
+    if current.isupper():
+      ret = pop()
 
-  # a: 시작, b : 한번 이동시 거리, c: 그 그룹에 속한 펭귄 수
+      if ret == -1 or ret != current.lower():
+        return 0
+    else:
+      push(current)
 
-  ans = 0
-
-  for a, b, c in groups:
-    if k < a:
-      continue
-    
-    if (k - a) % b == 0:
-      ans += c
-  
-  print(ans)
-
+  return 0 if stack else 1
 
 if __name__ == "__main__":
   tc = 1
   for t in range(1, tc+1):
     ret = solve()
+
+    print(ret)

@@ -1,8 +1,8 @@
 """
-[29145: Можно и отдохнуть](https://www.acmicpc.net/problem/29145)
+[20218: Figure Skating](https://www.acmicpc.net/problem/20218)
 
-Tier: Bronze 2 
-Category: arithmetic, math
+Tier: Bronze 1 
+Category: implementation, string
 """
 
 
@@ -38,22 +38,37 @@ def lcm(a, b): return a * b // gcd(a, b)
 
 
 def solve():
-  n, k = mii()
+  n = ii()
+  expected = {}
 
-  groups = [mii() for _ in range(n)]
-
-  # a: 시작, b : 한번 이동시 거리, c: 그 그룹에 속한 펭귄 수
-
-  ans = 0
-
-  for a, b, c in groups:
-    if k < a:
-      continue
-    
-    if (k - a) % b == 0:
-      ans += c
+  for i in range(1, n + 1):
+    s = inp()
+    expected[s] = n - i + 1
   
-  print(ans)
+  actual = {}
+  for i in range(1, n + 1):
+    s = inp()
+    actual[s] = n - i + 1
+  
+  ans = ""
+  mx = 0
+  score = 0
+
+  for s in expected:
+    expected_score = expected[s]
+    actual_score = actual[s]
+
+    if expected_score < actual_score:
+      if mx < actual_score - expected_score:
+        ans = s
+        mx = actual_score - expected_score
+        score = actual_score
+      elif mx == actual_score - expected_score:
+        if score < actual_score:
+          ans = s
+          score = actual_score
+  
+  print(ans if ans else "suspicious")
 
 
 if __name__ == "__main__":

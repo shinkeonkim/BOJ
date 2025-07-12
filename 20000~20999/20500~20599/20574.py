@@ -1,8 +1,8 @@
 """
-[29145: Можно и отдохнуть](https://www.acmicpc.net/problem/29145)
+[20574: General Knight](https://www.acmicpc.net/problem/20574)
 
-Tier: Bronze 2 
-Category: arithmetic, math
+Tier: Bronze 1 
+Category: math, implementation, data_structures, string, sorting, arithmetic, hash_set
 """
 
 
@@ -36,24 +36,40 @@ p = print
 def gcd(a, b): return gcd(b, a % b) if b > 0 else a
 def lcm(a, b): return a * b // gcd(a, b)
 
+def to_axis(s):
+  y = ord(s[0]) - ord('a') + 1
+  x = int(s[1])
+
+  return (y, x)
+
+def to_str(y, x):
+  return chr(y + ord('a') - 1) + str(x)
 
 def solve():
-  n, k = mii()
+  a, b = mii()
+  s = inp()
 
-  groups = [mii() for _ in range(n)]
+  dx = [a, a, -a, -a, b, b, -b, -b]
+  dy = [b, -b, b, -b, a, -a, a, -a]
 
-  # a: 시작, b : 한번 이동시 거리, c: 그 그룹에 속한 펭귄 수
-
-  ans = 0
-
-  for a, b, c in groups:
-    if k < a:
-      continue
-    
-    if (k - a) % b == 0:
-      ans += c
+  y, x = to_axis(s)
   
-  print(ans)
+  l = []
+
+  for i in range(8):
+    ny = y + dy[i]
+    nx = x + dx[i]
+
+    if 1 <= ny <= 8 and 1 <= nx <= 8:
+      l.append(chr(ny + ord('a') - 1) + str(nx))
+  
+  l = list(set(l))
+
+  l.sort()
+
+  print(len(l))
+  for i in l:
+    print(to_str(*to_axis(i)), end= ' ')
 
 
 if __name__ == "__main__":

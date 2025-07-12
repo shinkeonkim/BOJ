@@ -1,8 +1,8 @@
 """
-[29145: Можно и отдохнуть](https://www.acmicpc.net/problem/29145)
+[21402: Фитнесс-клуб](https://www.acmicpc.net/problem/21402)
 
-Tier: Bronze 2 
-Category: arithmetic, math
+Tier: Bronze 1 
+Category: greedy
 """
 
 
@@ -40,21 +40,22 @@ def lcm(a, b): return a * b // gcd(a, b)
 def solve():
   n, k = mii()
 
-  groups = [mii() for _ in range(n)]
+  l = [mii() for _ in range(n)]
 
-  # a: 시작, b : 한번 이동시 거리, c: 그 그룹에 속한 펭귄 수
+  locked = k
+  opened = 0
 
-  ans = 0
+  for end_lock, end_open in l:
+    if end_lock > locked:
+      over_lock = end_lock - locked
+      locked += over_lock
+      opened -= over_lock
+    elif end_lock < locked:
+      left_lock = locked - end_lock
+      opened += min(left_lock, end_open)
+      locked -= min(left_lock, end_open)
 
-  for a, b, c in groups:
-    if k < a:
-      continue
-    
-    if (k - a) % b == 0:
-      ans += c
-  
-  print(ans)
-
+  print(opened)
 
 if __name__ == "__main__":
   tc = 1

@@ -1,8 +1,8 @@
 """
-[29145: Можно и отдохнуть](https://www.acmicpc.net/problem/29145)
+[26224: Karmon go](https://www.acmicpc.net/problem/26224)
 
 Tier: Bronze 2 
-Category: arithmetic, math
+Category: arbitrary_precision, arithmetic, math
 """
 
 
@@ -36,25 +36,21 @@ p = print
 def gcd(a, b): return gcd(b, a % b) if b > 0 else a
 def lcm(a, b): return a * b // gcd(a, b)
 
+import decimal
 
 def solve():
-  n, k = mii()
+  l = isplit()
 
-  groups = [mii() for _ in range(n)]
+  A = decimal.Decimal(l[1])
+  B = decimal.Decimal(l[3])
+  C = decimal.Decimal(l[4])
 
-  # a: 시작, b : 한번 이동시 거리, c: 그 그룹에 속한 펭귄 수
-
-  ans = 0
-
-  for a, b, c in groups:
-    if k < a:
-      continue
-    
-    if (k - a) % b == 0:
-      ans += c
-  
-  print(ans)
-
+  if A * B == C:
+    print("Whatever")
+  elif A * B < C:
+    print("Evolve, Power up")
+  else:
+    print("Power up, Evolve")
 
 if __name__ == "__main__":
   tc = 1

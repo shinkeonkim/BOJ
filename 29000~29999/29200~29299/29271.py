@@ -1,8 +1,8 @@
 """
-[29145: Можно и отдохнуть](https://www.acmicpc.net/problem/29145)
+[29271: Фильтр](https://www.acmicpc.net/problem/29271)
 
 Tier: Bronze 2 
-Category: arithmetic, math
+Category: implementation, math
 """
 
 
@@ -38,20 +38,18 @@ def lcm(a, b): return a * b // gcd(a, b)
 
 
 def solve():
-  n, k = mii()
+  n, max_cap, x = mii()
+  l = mii()
 
-  groups = [mii() for _ in range(n)]
-
-  # a: 시작, b : 한번 이동시 거리, c: 그 그룹에 속한 펭귄 수
-
+  current_cap = 0
   ans = 0
 
-  for a, b, c in groups:
-    if k < a:
-      continue
-    
-    if (k - a) % b == 0:
-      ans += c
+  for i in range(n):
+    current_cap += l[i]
+    current_cap = min(current_cap, max_cap)
+    filter = min(current_cap, x)
+    ans += filter
+    current_cap -= filter
   
   print(ans)
 

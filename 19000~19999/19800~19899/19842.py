@@ -1,8 +1,8 @@
 """
-[29145: Можно и отдохнуть](https://www.acmicpc.net/problem/29145)
+[19842: Restoring the Sequence](https://www.acmicpc.net/problem/19842)
 
-Tier: Bronze 2 
-Category: arithmetic, math
+Tier: Bronze 1 
+Category: implementation
 """
 
 
@@ -38,23 +38,34 @@ def lcm(a, b): return a * b // gcd(a, b)
 
 
 def solve():
-  n, k = mii()
+  n = ii()
+  m = ii()
+  a = mii()
 
-  groups = [mii() for _ in range(n)]
-
-  # a: 시작, b : 한번 이동시 거리, c: 그 그룹에 속한 펭귄 수
-
-  ans = 0
-
-  for a, b, c in groups:
-    if k < a:
+  not_expected = []
+  i = 1
+  idx = 0
+  while i <= n and idx < m:
+    if i != a[idx]:
+      not_expected.append(i)
+      i += 1
       continue
-    
-    if (k - a) % b == 0:
-      ans += c
+    i += 1
+    idx += 1
   
-  print(ans)
+  while i <= n:
+    not_expected.append(i)
+    i += 1
+  
+  while idx < m:
+    not_expected.append(a[idx])
+    idx += 1
 
+  if len(not_expected) == 1:
+    print("Yes")
+    print(not_expected[0])
+  else:
+    print("No")
 
 if __name__ == "__main__":
   tc = 1

@@ -1,8 +1,8 @@
 """
-[29145: Можно и отдохнуть](https://www.acmicpc.net/problem/29145)
+[33080: Party Medley](https://www.acmicpc.net/problem/33080)
 
 Tier: Bronze 2 
-Category: arithmetic, math
+Category: arithmetic, bruteforcing, math
 """
 
 
@@ -38,22 +38,25 @@ def lcm(a, b): return a * b // gcd(a, b)
 
 
 def solve():
-  n, k = mii()
+  n, m = mii()
+  l = mii()
+  mx = 0
+  cnt = 0
 
-  groups = [mii() for _ in range(n)]
+  for i in range(n):
+    for j in range(i + 1, n):
+      for k in range(j + 1, n):
 
-  # a: 시작, b : 한번 이동시 거리, c: 그 그룹에 속한 펭귄 수
+        a =[l[i], l[j], l[k]]
 
-  ans = 0
-
-  for a, b, c in groups:
-    if k < a:
-      continue
-    
-    if (k - a) % b == 0:
-      ans += c
+        if max(a) - min(a) <= m:
+          cnt += 1
+          mx = max(mx, sum(a))
   
-  print(ans)
+  if cnt == 0:
+    print(-1)
+  else:
+    print(cnt, mx)
 
 
 if __name__ == "__main__":

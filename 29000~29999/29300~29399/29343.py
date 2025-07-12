@@ -1,8 +1,8 @@
 """
-[29145: Можно и отдохнуть](https://www.acmicpc.net/problem/29145)
+[29343: Шифровка](https://www.acmicpc.net/problem/29343)
 
-Tier: Bronze 2 
-Category: arithmetic, math
+Tier: Bronze 1 
+Category: implementation, string
 """
 
 
@@ -38,20 +38,24 @@ def lcm(a, b): return a * b // gcd(a, b)
 
 
 def solve():
-  n, k = mii()
+  n = ii()
+  s = inp().lower()
 
-  groups = [mii() for _ in range(n)]
+  vowel = "aeiou"
 
-  # a: 시작, b : 한번 이동시 거리, c: 그 그룹에 속한 펭귄 수
-
+  prefix_vowel_count = 0
+  suffix_vowel_count = 0
   ans = 0
 
-  for a, b, c in groups:
-    if k < a:
-      continue
+  for i in range(n):
+    if s[i] in vowel:
+      prefix_vowel_count += 1
     
-    if (k - a) % b == 0:
-      ans += c
+    if s[n - i - 1] in vowel:
+      suffix_vowel_count += 1
+
+    if prefix_vowel_count == suffix_vowel_count and prefix_vowel_count > 0:
+      ans += 1
   
   print(ans)
 

@@ -1,8 +1,8 @@
 """
-[29145: Можно и отдохнуть](https://www.acmicpc.net/problem/29145)
+[19772: Звезды на погонах](https://www.acmicpc.net/problem/19772)
 
 Tier: Bronze 2 
-Category: arithmetic, math
+Category: math, arithmetic
 """
 
 
@@ -38,22 +38,17 @@ def lcm(a, b): return a * b // gcd(a, b)
 
 
 def solve():
-  n, k = mii()
+  a, b, c, d, e = mii()
 
-  groups = [mii() for _ in range(n)]
+  minY = c - e
+  maxY = c - d
 
-  # a: 시작, b : 한번 이동시 거리, c: 그 그룹에 속한 펭귄 수
+  range_1 = set([*range(a, min(b + 1, c))])
+  range_2 = set([*range(minY, maxY + 1)])
 
-  ans = 0
+  all = set([*range(a, b + 1)]) - {minY, maxY}
 
-  for a, b, c in groups:
-    if k < a:
-      continue
-    
-    if (k - a) % b == 0:
-      ans += c
-  
-  print(ans)
+  print(len(range_1 - range_2), len(all))
 
 
 if __name__ == "__main__":

@@ -1,8 +1,8 @@
 """
-[29145: Можно и отдохнуть](https://www.acmicpc.net/problem/29145)
+[32813: Oooh I See](https://www.acmicpc.net/problem/32813)
 
-Tier: Bronze 2 
-Category: arithmetic, math
+Tier: Bronze 1 
+Category: implementation
 """
 
 
@@ -38,22 +38,27 @@ def lcm(a, b): return a * b // gcd(a, b)
 
 
 def solve():
-  n, k = mii()
+  n, m = mii()
+  l = [inp() for _ in range(n)]
 
-  groups = [mii() for _ in range(n)]
+  dy = [0, 1, 0, -1, 1, 1, -1, -1]
+  dx = [1, 0, -1, 0, 1, -1, 1, -1]
+  cnt = 0
+  ans = ()
 
-  # a: 시작, b : 한번 이동시 거리, c: 그 그룹에 속한 펭귄 수
-
-  ans = 0
-
-  for a, b, c in groups:
-    if k < a:
-      continue
-    
-    if (k - a) % b == 0:
-      ans += c
+  for i in range(1, n - 1):
+    for j in range(1, m - 1):
+      if l[i][j] == "0":        
+        if all(l[i + dy[k]][j + dx[k]] == "O" for k in range(8)):
+          cnt += 1
+          ans = (i + 1, j + 1)
   
-  print(ans)
+  if cnt == 1:
+    p(*ans)
+  elif cnt > 1:
+    p(f"Oh no! {cnt} locations")
+  else:
+    p("Oh no!")
 
 
 if __name__ == "__main__":

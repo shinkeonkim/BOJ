@@ -1,8 +1,8 @@
 """
-[29145: Можно и отдохнуть](https://www.acmicpc.net/problem/29145)
+[18271: Preokret](https://www.acmicpc.net/problem/18271)
 
-Tier: Bronze 2 
-Category: arithmetic, math
+Tier: Bronze 1 
+Category: implementation, simulation
 """
 
 
@@ -38,23 +38,48 @@ def lcm(a, b): return a * b // gcd(a, b)
 
 
 def solve():
-  n, k = mii()
+  n = ii()
+  l = [ii() for _ in range(n)]
 
-  groups = [mii() for _ in range(n)]
+  final_score = [None, 0, 0]
+  equal_score_count = 1
+  max_reversion_length = 0
 
-  # a: 시작, b : 한번 이동시 거리, c: 그 그룹에 속한 펭귄 수
 
-  ans = 0
+  final_score[l[0]] += 1
 
-  for a, b, c in groups:
-    if k < a:
-      continue
+  for i in range(1, n):
+    final_score[l[i]] += 1
+
+    if final_score[1] == final_score[2]:
+      equal_score_count += 1
     
-    if (k - a) % b == 0:
-      ans += c
-  
-  print(ans)
 
+  l2 = []
+
+  current = l[0]
+  cnt = 1
+
+  for i in range(1, n):
+    if l[i] == current:
+      cnt += 1
+    else:
+      l2.append((current, cnt))
+      current = l[i]
+      cnt = 1
+  l2.append((current, cnt))
+
+  score = [0, 0, 0]
+
+  for team, count in l2:
+    if score[team] < score[3 - team] and score[team] + count > score[3 - team]:
+      max_reversion_length = max(max_reversion_length, count)
+    
+    score[team] += count
+
+  print(final_score[1], final_score[2])
+  print(equal_score_count)
+  print(max_reversion_length)
 
 if __name__ == "__main__":
   tc = 1

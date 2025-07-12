@@ -1,8 +1,8 @@
 """
-[29145: Можно и отдохнуть](https://www.acmicpc.net/problem/29145)
+[33246: Integrity Overflow](https://www.acmicpc.net/problem/33246)
 
 Tier: Bronze 2 
-Category: arithmetic, math
+Category: case_work, implementation, string
 """
 
 
@@ -36,27 +36,42 @@ p = print
 def gcd(a, b): return gcd(b, a % b) if b > 0 else a
 def lcm(a, b): return a * b // gcd(a, b)
 
+def is_similar(pwd, p):
+  if len(pwd) != len(p):
+    return False
+
+  cnt = 0
+
+  for i in range(len(pwd)):
+    if pwd[i] != p[i]:
+      cnt += 1
+      if cnt > 1:
+        return False
+
+  return True
 
 def solve():
-  n, k = mii()
+  n = ii()
+  pwd = inp()
 
-  groups = [mii() for _ in range(n)]
+  results = [isplit() for _ in range(n)]
 
-  # a: 시작, b : 한번 이동시 거리, c: 그 그룹에 속한 펭귄 수
-
-  ans = 0
-
-  for a, b, c in groups:
-    if k < a:
+  for p, r in results:
+    similar = is_similar(pwd, p)
+    if similar and r == "ALLOWED":
       continue
-    
-    if (k - a) % b == 0:
-      ans += c
-  
-  print(ans)
+
+    if not similar and r == "DENIED":
+      continue
+
+    return False
+
+  return True
 
 
 if __name__ == "__main__":
   tc = 1
   for t in range(1, tc+1):
     ret = solve()
+
+    print("SYSTEM SECURE" if ret else "INTEGRITY OVERFLOW")

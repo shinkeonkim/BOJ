@@ -1,8 +1,8 @@
 """
-[29145: Можно и отдохнуть](https://www.acmicpc.net/problem/29145)
+[20225: Contact Tracer](https://www.acmicpc.net/problem/20225)
 
-Tier: Bronze 2 
-Category: arithmetic, math
+Tier: Bronze 1 
+Category: implementation, simulation
 """
 
 
@@ -38,22 +38,21 @@ def lcm(a, b): return a * b // gcd(a, b)
 
 
 def solve():
-  n, k = mii()
+  while 1:
+    m, n, p = mii()
 
-  groups = [mii() for _ in range(n)]
+    if m == n == p == 0:
+      break
 
-  # a: 시작, b : 한번 이동시 거리, c: 그 그룹에 속한 펭귄 수
+    is_infected = [0] * (m + 1)
+    is_infected[p] = 1
 
-  ans = 0
-
-  for a, b, c in groups:
-    if k < a:
-      continue
-    
-    if (k - a) % b == 0:
-      ans += c
-  
-  print(ans)
+    for _ in range(n):
+      a, b = mii()
+      if is_infected[a] or is_infected[b]:
+        is_infected[a] = is_infected[b] = 1
+        
+    print(sum(is_infected))
 
 
 if __name__ == "__main__":

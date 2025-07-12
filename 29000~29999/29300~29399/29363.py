@@ -1,8 +1,8 @@
 """
-[29145: Можно и отдохнуть](https://www.acmicpc.net/problem/29145)
+[29363: Пишущая машинка](https://www.acmicpc.net/problem/29363)
 
 Tier: Bronze 2 
-Category: arithmetic, math
+Category: math, greedy, string
 """
 
 
@@ -38,20 +38,42 @@ def lcm(a, b): return a * b // gcd(a, b)
 
 
 def solve():
-  n, k = mii()
+  n = ii()
 
-  groups = [mii() for _ in range(n)]
+  l = [inp() for _ in range(n)]
 
-  # a: 시작, b : 한번 이동시 거리, c: 그 그룹에 속한 펭귄 수
+  ans = len(l[0])
 
-  ans = 0
+  for i in range(1, n):
+    # 방법 1
+    # 처음부터 그냥 다 쓰기
 
-  for a, b, c in groups:
-    if k < a:
-      continue
-    
-    if (k - a) % b == 0:
-      ans += c
+    ans += 1
+
+    current = len(l[i])
+    # 방법 2
+    # 이전 문장을 복사한 후, 뒤에서부터 다른 문자를 다 지우고 다시 작성
+
+    differnt_idx = -1
+
+    for j in range(0, min(len(l[i]), len(l[i-1]))):
+      if l[i][j] != l[i-1][j]:
+        differnt_idx = j
+        break
+
+    if differnt_idx == -1:
+      if len(l[i]) > len(l[i-1]):
+        delete_count = 0
+        add_count = len(l[i]) - len(l[i-1])
+      else:
+        delete_count = len(l[i-1]) - len(l[i])
+        add_count = 0
+    else:
+      delete_count = len(l[i - 1]) - differnt_idx
+      add_count = len(l[i]) - differnt_idx
+
+    current = min(current, delete_count + add_count + 1)
+    ans += current
   
   print(ans)
 

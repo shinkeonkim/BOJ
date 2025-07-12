@@ -1,8 +1,8 @@
 """
-[29145: Можно и отдохнуть](https://www.acmicpc.net/problem/29145)
+[7131: Õhne vanaraamatupood](https://www.acmicpc.net/problem/7131)
 
 Tier: Bronze 2 
-Category: arithmetic, math
+Category: implementation, simulation
 """
 
 
@@ -38,22 +38,33 @@ def lcm(a, b): return a * b // gcd(a, b)
 
 
 def solve():
-  n, k = mii()
+  N, p0, T = isplit()
+  N = int(N)
+  p0 = float(p0)
+  T = int(T)
 
-  groups = [mii() for _ in range(n)]
+  l = [isplit() for _ in range(N)]
+  prices = [0] * (N)
+  cnt = 1
+  prices[0] = p0
 
-  # a: 시작, b : 한번 이동시 거리, c: 그 그룹에 속한 펭귄 수
+  for i in range(1, T):
+    avg = sum(prices) / cnt if cnt > 0 else 0
 
-  ans = 0
+    for idx in range(N):
+      start_date, interval, margin_rate = l[idx]
+      start_date = int(start_date)
+      interval = int(interval)
+      margin_rate = float(margin_rate)
 
-  for a, b, c in groups:
-    if k < a:
-      continue
-    
-    if (k - a) % b == 0:
-      ans += c
+      if i >= start_date and (i - start_date) % interval == 0:
+        if prices[idx] == 0:
+          cnt += 1
+        
+        prices[idx] = round(avg * (1 + margin_rate), 2)
   
-  print(ans)
+  for price in prices:
+    print(f"{price:.2f}")
 
 
 if __name__ == "__main__":

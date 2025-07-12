@@ -1,8 +1,8 @@
 """
-[29145: Можно и отдохнуть](https://www.acmicpc.net/problem/29145)
+[32903: Application List](https://www.acmicpc.net/problem/32903)
 
-Tier: Bronze 2 
-Category: arithmetic, math
+Tier: Bronze 1 
+Category: arithmetic, implementation, math, string
 """
 
 
@@ -38,22 +38,16 @@ def lcm(a, b): return a * b // gcd(a, b)
 
 
 def solve():
-  n, k = mii()
-
-  groups = [mii() for _ in range(n)]
-
-  # a: 시작, b : 한번 이동시 거리, c: 그 그룹에 속한 펭귄 수
-
-  ans = 0
-
-  for a, b, c in groups:
-    if k < a:
-      continue
-    
-    if (k - a) % b == 0:
-      ans += c
+  n = ii()
+  c = Counter([inp()[0] for _ in range(n)])
   
-  print(ans)
+
+  for i in range(26):
+    cnt = c[chr(i + ord('a'))] 
+    print(end = (chr(i + ord('a')) if cnt > 0 else "."))
+
+    if i % 6 == 5:
+      print()
 
 
 if __name__ == "__main__":

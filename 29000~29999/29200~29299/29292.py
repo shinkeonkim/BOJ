@@ -1,8 +1,8 @@
 """
-[29145: Можно и отдохнуть](https://www.acmicpc.net/problem/29145)
+[29292: X частей](https://www.acmicpc.net/problem/29292)
 
 Tier: Bronze 2 
-Category: arithmetic, math
+Category: arithmetic, greedy, math
 """
 
 
@@ -38,22 +38,31 @@ def lcm(a, b): return a * b // gcd(a, b)
 
 
 def solve():
-  n, k = mii()
+  N, X = mii()
+  A = mii()
+  B = mii()
 
-  groups = [mii() for _ in range(n)]
+  ans = 0 # diff sum
+  current_sum = 0
 
-  # a: 시작, b : 한번 이동시 거리, c: 그 그룹에 속한 펭귄 수
+  g = 0
+  for i in range(N):
+    current_sum += A[i]
 
-  ans = 0
-
-  for a, b, c in groups:
-    if k < a:
-      continue
+    if current_sum >= B[g]:
+      ans += current_sum - B[g]
+      current_sum = 0
+      g += 1
     
-    if (k - a) % b == 0:
-      ans += c
+    if g >= X:
+      for j in range(i + 1, N):
+        ans += A[j]
+      break
   
-  print(ans)
+  if g < X:
+    print(-1)
+  else:
+    print(ans)
 
 
 if __name__ == "__main__":

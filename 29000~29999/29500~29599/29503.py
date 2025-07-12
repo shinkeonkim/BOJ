@@ -1,8 +1,8 @@
 """
-[29145: Можно и отдохнуть](https://www.acmicpc.net/problem/29145)
+[29503: Шахматы](https://www.acmicpc.net/problem/29503)
 
 Tier: Bronze 2 
-Category: arithmetic, math
+Category: implementation, parsing, simulation, string
 """
 
 
@@ -36,24 +36,26 @@ p = print
 def gcd(a, b): return gcd(b, a % b) if b > 0 else a
 def lcm(a, b): return a * b // gcd(a, b)
 
+def to_axis(s):
+  return ord(s[0]) - ord('a'), 8 - int(s[1])
 
 def solve():
-  n, k = mii()
+  board = [list(inp()) for _ in range(8)]
 
-  groups = [mii() for _ in range(n)]
+  n = ii()
 
-  # a: 시작, b : 한번 이동시 거리, c: 그 그룹에 속한 펭귄 수
+  for _ in range(n):
+    command = inp()
+    a, b = command[:2], command[2:]
+    a_x, a_y = to_axis(a)
+    b_x, b_y = to_axis(b)
 
-  ans = 0
+    moving = board[a_y][a_x]
 
-  for a, b, c in groups:
-    if k < a:
-      continue
-    
-    if (k - a) % b == 0:
-      ans += c
-  
-  print(ans)
+    board[a_y][a_x] = '.'
+    board[b_y][b_x] = moving
+
+    print(moving, end='')
 
 
 if __name__ == "__main__":

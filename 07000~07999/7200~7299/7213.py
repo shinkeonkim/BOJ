@@ -1,8 +1,8 @@
 """
-[29145: Можно и отдохнуть](https://www.acmicpc.net/problem/29145)
+[7213: Akmuo, popierius, žirklės](https://www.acmicpc.net/problem/7213)
 
-Tier: Bronze 2 
-Category: arithmetic, math
+Tier: Bronze 1 
+Category: greedy, implementation
 """
 
 
@@ -36,25 +36,56 @@ p = print
 def gcd(a, b): return gcd(b, a % b) if b > 0 else a
 def lcm(a, b): return a * b // gcd(a, b)
 
+def win(a, b):
+  ret = 0
+  for i in range(3):
+    k = min(a[i], b[(i + 2) % 3]) # i로 (i + 2) % 3를 이김
+    a[i] -= k
+    b[(i + 2) % 3] -= k
+    ret += k
+  return ret
+
+def tie(a, b):
+  for i in range(3):
+    k = min(a[i], b[i]) # 무승부
+    a[i] -= k
+    b[i] -= k
+
+def lose(a, b):
+  ret = 0
+  for i in range(3):
+    k = min(a[i], b[(i + 1) % 3]) # i로 (i + 1) % 3를 짐
+    a[i] -= k
+    b[(i + 1) % 3] -= k
+    ret -= k
+  return ret
+
+def greedy_win(a, b):
+  # 가위, 바위, 보
+  ret = 0
+
+  ret += win(a, b) # a가 이김
+  tie(a, b) # 무승부
+  ret += lose(a, b) # a가 짐
+
+  return ret
+
+def greedy_lose(a, b):
+  ret = 0
+  ret += lose(a, b) # a가 짐
+  tie(a, b) # 무승부
+  ret += win(a, b) # a가 이김
+  return ret
 
 def solve():
-  n, k = mii()
+  A = mii()
+  B = mii()
 
-  groups = [mii() for _ in range(n)]
+  a = greedy_win(A[::], B[::])
+  b = greedy_lose(A[::], B[::])
 
-  # a: 시작, b : 한번 이동시 거리, c: 그 그룹에 속한 펭귄 수
-
-  ans = 0
-
-  for a, b, c in groups:
-    if k < a:
-      continue
-    
-    if (k - a) % b == 0:
-      ans += c
-  
-  print(ans)
-
+  print(a)
+  print(b)
 
 if __name__ == "__main__":
   tc = 1

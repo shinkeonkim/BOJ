@@ -1,8 +1,8 @@
 """
-[29145: Можно и отдохнуть](https://www.acmicpc.net/problem/29145)
+[10701: PAPRIKA](https://www.acmicpc.net/problem/10701)
 
-Tier: Bronze 2 
-Category: arithmetic, math
+Tier: Bronze 1 
+Category: implementation, simulation
 """
 
 
@@ -38,21 +38,25 @@ def lcm(a, b): return a * b // gcd(a, b)
 
 
 def solve():
-  n, k = mii()
+  n, x = mii()
 
-  groups = [mii() for _ in range(n)]
-
-  # a: 시작, b : 한번 이동시 거리, c: 그 그룹에 속한 펭귄 수
+  l = [mii() for _ in range(n)]
+  
+  for i in range(1, n):
+    if l[i - 1][0] < l[i][0] and l[i - 1][1] == 0 and l[i][1] == 1:
+      l[i - 1][0], l[i][0] = l[i][0], l[i - 1][0]
+    elif l[i - 1][0] > l[i][0] and l[i - 1][1] == 1 and l[i][1] == 0:
+      l[i - 1][0], l[i][0] = l[i][0], l[i - 1][0]
 
   ans = 0
+  for age, hope in l:
+    if age <= x:
+      if hope == 1:
+        ans += 1
+    else:
+      if hope == 0:
+        ans += 1
 
-  for a, b, c in groups:
-    if k < a:
-      continue
-    
-    if (k - a) % b == 0:
-      ans += c
-  
   print(ans)
 
 

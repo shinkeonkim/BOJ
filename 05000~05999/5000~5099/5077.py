@@ -1,8 +1,8 @@
 """
-[29145: Можно и отдохнуть](https://www.acmicpc.net/problem/29145)
+[5077: Maps](https://www.acmicpc.net/problem/5077)
 
-Tier: Bronze 2 
-Category: arithmetic, math
+Tier: Bronze 1 
+Category: bruteforcing, implementation, string
 """
 
 
@@ -38,25 +38,30 @@ def lcm(a, b): return a * b // gcd(a, b)
 
 
 def solve():
-  n, k = mii()
+  n, m = mii()
+  target = [inp() for _ in range(n)]
 
-  groups = [mii() for _ in range(n)]
+  y, x = mii()
+  mp = [inp() for _ in range(y)]
 
-  # a: 시작, b : 한번 이동시 거리, c: 그 그룹에 속한 펭귄 수
+  count = 0
+  for i in range(y - n + 1):
+    for j in range(x - m + 1):
+      found = True
+      for k in range(n):
+        for l in range(m):
+          if target[k][l] != mp[i + k][j + l]:
+            found = False
+            break
+        if not found:
+          break
+      if found:
+        count += 1
 
-  ans = 0
-
-  for a, b, c in groups:
-    if k < a:
-      continue
-    
-    if (k - a) % b == 0:
-      ans += c
-  
-  print(ans)
+  print(count)
 
 
 if __name__ == "__main__":
-  tc = 1
+  tc = ii()
   for t in range(1, tc+1):
     ret = solve()

@@ -1,8 +1,8 @@
 """
-[29145: Можно и отдохнуть](https://www.acmicpc.net/problem/29145)
+[13638: Coral Perfeito](https://www.acmicpc.net/problem/13638)
 
-Tier: Bronze 2 
-Category: arithmetic, math
+Tier: Bronze 1 
+Category: arithmetic, greedy, implementation, math
 """
 
 
@@ -38,22 +38,37 @@ def lcm(a, b): return a * b // gcd(a, b)
 
 
 def solve():
-  n, k = mii()
+  while 1:
+    try:
+      n = ii()
+    except:
+      break
+    l = mii()
 
-  groups = [mii() for _ in range(n)]
+    l.sort()
 
-  # a: 시작, b : 한번 이동시 거리, c: 그 그룹에 속한 펭귄 수
+    sm = sum(l)
 
-  ans = 0
-
-  for a, b, c in groups:
-    if k < a:
+    if sm % n != 0:
+      p(-1)
       continue
+
+    target = sm // n
+
+    plus = 0
+    minus = 0
+
+    for i in l:
+      if i < target:
+        minus += target - i
+      elif i > target:
+        plus += i - target
     
-    if (k - a) % b == 0:
-      ans += c
-  
-  print(ans)
+    if plus != minus:
+      p(-1)
+      continue
+
+    p(1 + plus)
 
 
 if __name__ == "__main__":

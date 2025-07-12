@@ -1,8 +1,8 @@
 """
-[29145: Можно и отдохнуть](https://www.acmicpc.net/problem/29145)
+[30559: Boat Commuter](https://www.acmicpc.net/problem/30559)
 
-Tier: Bronze 2 
-Category: arithmetic, math
+Tier: Bronze 1 
+Category: implementation, simulation
 """
 
 
@@ -38,22 +38,30 @@ def lcm(a, b): return a * b // gcd(a, b)
 
 
 def solve():
-  n, k = mii()
+  n, m , k = mii()
+  l = [mii() for _ in range(k)]
 
-  groups = [mii() for _ in range(n)]
+  costs_by_card = defaultdict(lambda: 0)
+  last_places = defaultdict(lambda: 0)
 
-  # a: 시작, b : 한번 이동시 거리, c: 그 그룹에 속한 펭귄 수
+  for place, card in l:
+    last_place = last_places[card]
 
-  ans = 0
-
-  for a, b, c in groups:
-    if k < a:
-      continue
-    
-    if (k - a) % b == 0:
-      ans += c
+    if last_place == 0:
+      last_places[card] = place
+    else:
+      if last_place == place:
+        costs_by_card[card] += 100
+      else:
+        costs_by_card[card] += abs(place - last_place)
+      last_places[card] = 0
   
-  print(ans)
+  for k, v in last_places.items():
+    if v != 0:
+      costs_by_card[k] += 100
+  
+  for i in range(1, m + 1):
+    print(costs_by_card[i], end=' ')
 
 
 if __name__ == "__main__":

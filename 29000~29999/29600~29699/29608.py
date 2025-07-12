@@ -29,43 +29,45 @@ p = print
 def gcd(a, b): return gcd(b, a % b) if b > 0 else a
 def lcm(a, b): return a * b // gcd(a, b)
 
-
-def f(l):
-  mx = -1
-  for i in l:
-    mx = max(mx, max(i))
-  
-  return mx >= 0
-
-def g(n, l, sm):
-  cnt = 0
-  ret = True
-  for i in range(n):
-    if l[i][i] * 2 > sm[i]:
-      cnt += 1
-
-    if l[i][i] * 2 < sm[i]:
-      ret = False
-  return (cnt, ret)
-
       
 def solve():
   n = ii()
   l = [mii() for _ in range(n)]
-  sm = [sum(i) for i in l]
   
-  a = f(l)
-  cnt, b = g(n, l, sm)
-  
-  if a and b:
-    p("YES")
-    p(cnt)
-  else:
-    p("NO")
-  
+  for i in range(n):
+    for j in range(n):
+      if l[i][j] < 0:
+        return (False, -1)
+
+  cnt = 0
+  for i in range(n):
+    sm = 0
+
+    for j in range(n):
+      if i == j:
+        continue
+
+      sm += l[i][j]
+    
+    if sm > l[i][i]:
+      return (False, -1)
+    
+    if sm < l[i][i]:
+      cnt += 1
+
+  if cnt > 0:
+    return (True, cnt)
+
+  return (False, -1)  
 
 
 if __name__ == "__main__":
   tc = 1
   for t in range(1, tc+1):
     ret = solve()
+
+    if ret[0]:
+      p("YES")
+      print(ret[1])
+    else:
+      p("NO")

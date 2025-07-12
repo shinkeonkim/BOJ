@@ -1,8 +1,8 @@
 """
-[29145: Можно и отдохнуть](https://www.acmicpc.net/problem/29145)
+[33247: Alternative Blockchain Algorithms](https://www.acmicpc.net/problem/33247)
 
 Tier: Bronze 2 
-Category: arithmetic, math
+Category: arithmetic, implementation, math
 """
 
 
@@ -38,25 +38,37 @@ def lcm(a, b): return a * b // gcd(a, b)
 
 
 def solve():
-  n, k = mii()
+  n = ii()
+  chain = [mii() for _ in range(n)]
 
-  groups = [mii() for _ in range(n)]
-
-  # a: 시작, b : 한번 이동시 거리, c: 그 그룹에 속한 펭귄 수
-
-  ans = 0
-
-  for a, b, c in groups:
-    if k < a:
-      continue
-    
-    if (k - a) % b == 0:
-      ans += c
+  if chain[0][1] != 0:
+    return (False, "INVALID")
   
-  print(ans)
+  current = chain[0][2]
+
+  if current < 0:
+    return (False, "NO_MONEY")
+
+  for i in range(1, n):
+    parent_id = chain[i - 1][0]
+
+    if chain[i][1] != parent_id:
+      return (False, "INVALID")
+
+    current += chain[i][2]
+
+    if current < 0:
+      return (False, "NO_MONEY")
+
+  return (True, current)
 
 
 if __name__ == "__main__":
   tc = 1
   for t in range(1, tc+1):
-    ret = solve()
+    stat, ret = solve()
+
+    if stat:
+      print(ret)
+    else:
+      print(ret)

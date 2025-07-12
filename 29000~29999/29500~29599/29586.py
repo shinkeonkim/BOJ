@@ -1,8 +1,8 @@
 """
-[29145: Можно и отдохнуть](https://www.acmicpc.net/problem/29145)
+[29586: Оптическое распознавание символов](https://www.acmicpc.net/problem/29586)
 
 Tier: Bronze 2 
-Category: arithmetic, math
+Category: implementation
 """
 
 
@@ -38,20 +38,27 @@ def lcm(a, b): return a * b // gcd(a, b)
 
 
 def solve():
-  n, k = mii()
+  n, w, h = mii()
 
-  groups = [mii() for _ in range(n)]
+  l = []
 
-  # a: 시작, b : 한번 이동시 거리, c: 그 그룹에 속한 펭귄 수
+  for _ in range(n):
+    l.append([inp() for _ in range(h)])
+  
+  query = [inp() for _ in range(h)]
 
-  ans = 0
+  ans = 1
+  mx = 0
 
-  for a, b, c in groups:
-    if k < a:
-      continue
-    
-    if (k - a) % b == 0:
-      ans += c
+  for i in range(n):
+    cnt = 0
+    for y in range(h):
+      for x in range(w):
+        if l[i][y][x] == query[y][x]:
+          cnt += 1
+    if cnt > mx:
+      mx = cnt
+      ans = i + 1
   
   print(ans)
 

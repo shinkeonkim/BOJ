@@ -1,8 +1,8 @@
 """
-[29145: Можно и отдохнуть](https://www.acmicpc.net/problem/29145)
+[28656: Ксероксинатор](https://www.acmicpc.net/problem/28656)
 
-Tier: Bronze 2 
-Category: arithmetic, math
+Tier: Bronze 1 
+Category: implementation
 """
 
 
@@ -38,21 +38,29 @@ def lcm(a, b): return a * b // gcd(a, b)
 
 
 def solve():
-  n, k = mii()
+  n, b = mii()
 
-  groups = [mii() for _ in range(n)]
+  l = mii()
 
-  # a: 시작, b : 한번 이동시 거리, c: 그 그룹에 속한 펭귄 수
-
+  wait_clones = 0
   ans = 0
 
-  for a, b, c in groups:
-    if k < a:
-      continue
+  for to_do in l:
+    processable = b
+    if wait_clones > 0:
+      wait_process = min(wait_clones, processable)
+      processable -= wait_process
+      wait_clones -= wait_process
+      ans += wait_process
     
-    if (k - a) % b == 0:
-      ans += c
+    to_process = min(to_do, processable)
+
+    ans += to_process
+    wait_clones += to_do - to_process
+    ans += wait_clones
   
+  ans += wait_clones
+
   print(ans)
 
 

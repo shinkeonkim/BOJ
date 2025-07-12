@@ -1,8 +1,8 @@
 """
-[29145: Можно и отдохнуть](https://www.acmicpc.net/problem/29145)
+[33538: Crawling](https://www.acmicpc.net/problem/33538)
 
-Tier: Bronze 2 
-Category: arithmetic, math
+Tier: Bronze 3 
+Category: math, arithmetic, physics
 """
 
 
@@ -38,23 +38,20 @@ def lcm(a, b): return a * b // gcd(a, b)
 
 
 def solve():
-  n, k = mii()
+  l = ii() # 수영장의 길이
+  n = ii() # 학생의 수
+  t = fi() # 경쟁 선수의 기록
 
-  groups = [mii() for _ in range(n)]
+  records = [mfi() for _ in range(n)] # 학생들의 기록
 
-  # a: 시작, b : 한번 이동시 거리, c: 그 그룹에 속한 펭귄 수
+  mn = float('inf')
+  for i in range(n):
+    mn = min(mn, (l / records[i][0] + l / records[i][1]))
 
-  ans = 0
-
-  for a, b, c in groups:
-    if k < a:
-      continue
-    
-    if (k - a) % b == 0:
-      ans += c
-  
-  print(ans)
-
+  if mn < t:
+    print("HOPE")
+  else:
+    print("DOOMED")
 
 if __name__ == "__main__":
   tc = 1

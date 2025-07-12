@@ -1,8 +1,8 @@
 """
-[29145: Можно и отдохнуть](https://www.acmicpc.net/problem/29145)
+[33358: I Flipped The Calendar...](https://www.acmicpc.net/problem/33358)
 
 Tier: Bronze 2 
-Category: arithmetic, math
+Category: math, implementation, arithmetic
 """
 
 
@@ -37,22 +37,17 @@ def gcd(a, b): return gcd(b, a % b) if b > 0 else a
 def lcm(a, b): return a * b // gcd(a, b)
 
 
+import calendar
+
 def solve():
-  n, k = mii()
-
-  groups = [mii() for _ in range(n)]
-
-  # a: 시작, b : 한번 이동시 거리, c: 그 그룹에 속한 펭귄 수
-
+  year = ii()
   ans = 0
+  for month in range(1, 13):
+    month_range = calendar.monthrange(year, month)
 
-  for a, b, c in groups:
-    if k < a:
-      continue
-    
-    if (k - a) % b == 0:
-      ans += c
-  
+    dd = month_range[0] + month_range[1]
+    ans += dd // 7 + (1 if dd % 7 > 0 else 0)
+
   print(ans)
 
 

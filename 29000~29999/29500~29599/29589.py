@@ -1,8 +1,8 @@
 """
-[29145: Можно и отдохнуть](https://www.acmicpc.net/problem/29145)
+[29589: Трамваи](https://www.acmicpc.net/problem/29589)
 
 Tier: Bronze 2 
-Category: arithmetic, math
+Category: bruteforcing, implementation, simulation
 """
 
 
@@ -37,24 +37,39 @@ def gcd(a, b): return gcd(b, a % b) if b > 0 else a
 def lcm(a, b): return a * b // gcd(a, b)
 
 
+def to_num(s):
+  h, m = map(int, s.split(":"))
+  return h * 60 + m
+
+
 def solve():
-  n, k = mii()
-
-  groups = [mii() for _ in range(n)]
-
-  # a: 시작, b : 한번 이동시 거리, c: 그 그룹에 속한 펭귄 수
-
-  ans = 0
-
-  for a, b, c in groups:
-    if k < a:
-      continue
-    
-    if (k - a) % b == 0:
-      ans += c
+  n, m, k = mii()
   
-  print(ans)
+  tram = [to_num(inp()) for _ in range(n)]
+  people = [[i, to_num(inp())] for i in range(m)]
 
+  i = j = 0
+  cnt = 0
+
+  answer = [-1] * m
+  waiting = []
+
+  for i in range(n):
+    while j < m:
+      if people[j][1] <= tram[i]:
+        j += 1
+        waiting.append(people[j-1][0])
+      else:
+        break
+
+    for person in waiting[:k]:
+      answer[person] = i + 1
+    
+    waiting = waiting[k:]
+  
+  print(*answer, sep="\n")
+      
+  
 
 if __name__ == "__main__":
   tc = 1

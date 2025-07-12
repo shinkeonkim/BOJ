@@ -9,6 +9,13 @@ Category: ad_hoc
 import sys
 from math import sqrt, pi, sin, factorial, ceil, floor
 from datetime import datetime, timedelta
+from collections import deque, defaultdict, Counter
+from itertools import permutations, combinations, product
+from bisect import bisect_left, bisect_right
+from heapq import heappush, heappop, heapify
+from functools import reduce, lru_cache
+from operator import itemgetter, attrgetter, mul, add, sub, truediv
+from typing import List, Tuple, Dict, Set, Any, Union
 
 SYS_INPUT = True
 RECURSION_LIMIT = 10 ** 7
@@ -33,34 +40,19 @@ def lcm(a, b): return a * b // gcd(a, b)
 def solve():
   n = ii()
   l = mii()
-  
-  d = [1] * n
-  track = [-1] * n
-  
-  for i in range(n):
-    for j in range(i):
-      if l[j] >= l[i]:
-        if d[i] < d[j] + 1:
-          d[i] = d[j] + 1
-          track[i] = j
-  
-  if max(d) == 1:
-    p(0)
-    return
 
-  crt = d.index(max(d))
-  ans = []
-    
-  while track[crt] != -1:
-    ans.append(crt + 1)
-    crt = track[crt]
+  chk = False
+  for i in range(1, n):
+    if l[i - 1] >= l[i]:
+      chk = True
+      break
   
-  ans.append(crt + 1)
-  
-  ans.reverse()
-  
-  p(len(ans))
-  p(*ans)
+  if chk:
+    print(n)
+    print(*[i + 1 for i in range(n)])
+  else:
+    print(0)
+
 
 if __name__ == "__main__":
   tc = 1

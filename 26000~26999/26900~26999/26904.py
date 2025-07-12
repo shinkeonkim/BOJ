@@ -1,8 +1,8 @@
 """
-[29145: Можно и отдохнуть](https://www.acmicpc.net/problem/29145)
+[26904: Tågväxeln](https://www.acmicpc.net/problem/26904)
 
 Tier: Bronze 2 
-Category: arithmetic, math
+Category: arithmetic, implementation, math, simulation
 """
 
 
@@ -38,21 +38,27 @@ def lcm(a, b): return a * b // gcd(a, b)
 
 
 def solve():
-  n, k = mii()
+  n, m = mii()
 
-  groups = [mii() for _ in range(n)]
-
-  # a: 시작, b : 한번 이동시 거리, c: 그 그룹에 속한 펭귄 수
+  switch = 0 if n < m else 1
 
   ans = 0
 
-  for a, b, c in groups:
-    if k < a:
-      continue
-    
-    if (k - a) % b == 0:
-      ans += c
-  
+  for i in range(1, 1440):
+    if i % n == 0 and i % m == 0:
+      switch = 1 - switch
+      ans += 1
+    elif i % n == 0:
+      if switch == 1:
+        switch = 0
+        ans += 1
+        # print(i, "1 - > 0")
+    elif i % m == 0:
+      if switch == 0:
+        switch = 1
+        ans += 1
+        # print(i, "0 - > 1")
+
   print(ans)
 
 

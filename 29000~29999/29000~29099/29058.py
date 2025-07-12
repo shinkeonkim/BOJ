@@ -1,8 +1,8 @@
 """
-[29145: Можно и отдохнуть](https://www.acmicpc.net/problem/29145)
+[29058: Слежка от президента](https://www.acmicpc.net/problem/29058)
 
 Tier: Bronze 2 
-Category: arithmetic, math
+Category: implementation, string
 """
 
 
@@ -38,22 +38,35 @@ def lcm(a, b): return a * b // gcd(a, b)
 
 
 def solve():
-  n, k = mii()
+  n, m, k = mii()
 
-  groups = [mii() for _ in range(n)]
+  windows = [""] * n
+  current_window = 0
+  clipboard = ""
 
-  # a: 시작, b : 한번 이동시 거리, c: 그 그룹에 속한 펭귄 수
+  for _ in range(m):
+    command = inp()
 
-  ans = 0
-
-  for a, b, c in groups:
-    if k < a:
+    if command == "Next":
+      current_window = (current_window + 1) % n
       continue
     
-    if (k - a) % b == 0:
-      ans += c
-  
-  print(ans)
+    if command == "Paste":
+      windows[current_window] += clipboard
+      continue
+
+    if command == "Copy":
+      clipboard = windows[current_window][-k:]
+      continue
+
+    if command == "Backspace":
+      if windows[current_window]:
+        windows[current_window] = windows[current_window][:-1]
+      continue
+      
+    windows[current_window] += command
+
+  print(windows[current_window][-k:] if windows[current_window] else "Empty")
 
 
 if __name__ == "__main__":

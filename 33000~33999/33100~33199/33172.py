@@ -1,8 +1,8 @@
 """
-[29145: Можно и отдохнуть](https://www.acmicpc.net/problem/29145)
+[33172: 周期文字列 (Cycle String)](https://www.acmicpc.net/problem/33172)
 
-Tier: Bronze 2 
-Category: arithmetic, math
+Tier: Bronze 1 
+Category: bruteforcing, implementation, string
 """
 
 
@@ -38,25 +38,22 @@ def lcm(a, b): return a * b // gcd(a, b)
 
 
 def solve():
-  n, k = mii()
+  n = ii()
+  s = inp()
 
-  groups = [mii() for _ in range(n)]
-
-  # a: 시작, b : 한번 이동시 거리, c: 그 그룹에 속한 펭귄 수
-
-  ans = 0
-
-  for a, b, c in groups:
-    if k < a:
+  for i in range(1, n):
+    if n % i != 0:
       continue
-    
-    if (k - a) % b == 0:
-      ans += c
-  
-  print(ans)
+    k = s[:i]
+
+    if k * (n // i) == s:
+      return True
+  return False
 
 
 if __name__ == "__main__":
   tc = 1
   for t in range(1, tc+1):
     ret = solve()
+
+    print("Yes" if ret else "No")

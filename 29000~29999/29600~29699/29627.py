@@ -1,8 +1,8 @@
 """
-[29145: Можно и отдохнуть](https://www.acmicpc.net/problem/29145)
+[29627: Ноутбук](https://www.acmicpc.net/problem/29627)
 
 Tier: Bronze 2 
-Category: arithmetic, math
+Category: arithmetic, implementation, math
 """
 
 
@@ -38,22 +38,32 @@ def lcm(a, b): return a * b // gcd(a, b)
 
 
 def solve():
-  n, k = mii()
+  n, x, y = mii() # x: 방전에 걸리는 시간, y: 충전에 걸리는 시간
 
-  groups = [mii() for _ in range(n)]
+  prev = 0
+  stat = 0 # 0: 충전 중, 1: 충전 X
+  battery = 100
 
-  # a: 시작, b : 한번 이동시 거리, c: 그 그룹에 속한 펭귄 수
+  times = [[*map(int, inp().split(":"))] for _ in range(n)] + [(23, 59)]
 
-  ans = 0
+  for i in range(n+1):
+    tm = times[i][0] * 60 + times[i][1]
+    duration = tm - prev
 
-  for a, b, c in groups:
-    if k < a:
-      continue
-    
-    if (k - a) % b == 0:
-      ans += c
+    if stat == 0:
+      battery += duration * (100 / y)
+      if battery > 100:
+        battery = 100
+    else:
+      battery -= duration * (100 / x)
+      if battery < 0:
+        battery = 0
+
+    prev = tm
+    stat = 1 - stat
+
   
-  print(ans)
+  print(f"{battery:.3f}")
 
 
 if __name__ == "__main__":

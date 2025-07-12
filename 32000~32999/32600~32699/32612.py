@@ -1,8 +1,8 @@
 """
-[29145: Можно и отдохнуть](https://www.acmicpc.net/problem/29145)
+[32612: Expected Eyes](https://www.acmicpc.net/problem/32612)
 
-Tier: Bronze 2 
-Category: arithmetic, math
+Tier: Bronze 1 
+Category: math, probability
 """
 
 
@@ -38,22 +38,20 @@ def lcm(a, b): return a * b // gcd(a, b)
 
 
 def solve():
-  n, k = mii()
+  n = ii() # dice 개수
+  x = mii()
 
-  groups = [mii() for _ in range(n)]
+  l = [0]
 
-  # a: 시작, b : 한번 이동시 거리, c: 그 그룹에 속한 펭귄 수
-
-  ans = 0
-
-  for a, b, c in groups:
-    if k < a:
-      continue
-    
-    if (k - a) % b == 0:
-      ans += c
+  for i in range(n):
+    l2 = []
+    for j in range(1, x[i] + 1):
+      for k in l:
+        l2.append(k + j)
+    l = l2
   
-  print(ans)
+  ans = sum(l) / len(l)
+  print(f"{ans:.10f}")
 
 
 if __name__ == "__main__":

@@ -1,8 +1,8 @@
 """
-[29145: Можно и отдохнуть](https://www.acmicpc.net/problem/29145)
+[5088: Archaeological Digs](https://www.acmicpc.net/problem/5088)
 
-Tier: Bronze 2 
-Category: arithmetic, math
+Tier: Bronze 1 
+Category: implementation
 """
 
 
@@ -38,22 +38,27 @@ def lcm(a, b): return a * b // gcd(a, b)
 
 
 def solve():
-  n, k = mii()
+  while 1:
+    X, Y = mii()
 
-  groups = [mii() for _ in range(n)]
+    if X == 0 and Y == 0:
+      break
 
-  # a: 시작, b : 한번 이동시 거리, c: 그 그룹에 속한 펭귄 수
+    c = Counter()
+    ans = 0
 
-  ans = 0
+    n = ii()
+    l = [mii() for _ in range(n)]
+    m = ii()
+    q = [mii() for _ in range(m)]
 
-  for a, b, c in groups:
-    if k < a:
-      continue
+    for x, y in l:
+      c[(x, y)] += 1
     
-    if (k - a) % b == 0:
-      ans += c
-  
-  print(ans)
+    for x, y in q:
+      ans += c[(x, y)]
+    
+    p(ans)
 
 
 if __name__ == "__main__":

@@ -1,8 +1,8 @@
 """
-[29145: Можно и отдохнуть](https://www.acmicpc.net/problem/29145)
+[21530: Города](https://www.acmicpc.net/problem/21530)
 
-Tier: Bronze 2 
-Category: arithmetic, math
+Tier: Bronze 1 
+Category: ad_hoc, implementation
 """
 
 
@@ -38,22 +38,34 @@ def lcm(a, b): return a * b // gcd(a, b)
 
 
 def solve():
-  n, k = mii()
+  n = ii()
+  l = [inp() for _ in range(n)]
 
-  groups = [mii() for _ in range(n)]
+  city_count = 0
 
-  # a: 시작, b : 한번 이동시 거리, c: 그 그룹에 속한 펭귄 수
+  for i in l:
+    for j in i:
+      if j == 'C':
+        city_count += 1
 
-  ans = 0
+  ans = [[2] * n for _ in range(n)]
 
-  for a, b, c in groups:
-    if k < a:
-      continue
-    
-    if (k - a) % b == 0:
-      ans += c
+  cnt = 0
+  break_flag = False
+  for i in range(n):
+    for j in range(n):
+      ans[i][j] = 1
+      if l[i][j] == 'C':
+        cnt += 1
+      
+      if cnt * 2 == city_count:
+        break_flag = True
+        break
+    if break_flag:
+      break
   
-  print(ans)
+  for i in ans:
+    print(*i,sep="")
 
 
 if __name__ == "__main__":

@@ -1,8 +1,8 @@
 """
-[29145: Можно и отдохнуть](https://www.acmicpc.net/problem/29145)
+[19858: Золотые слитки](https://www.acmicpc.net/problem/19858)
 
 Tier: Bronze 2 
-Category: arithmetic, math
+Category: ad_hoc, case_work, constructive, math
 """
 
 
@@ -38,22 +38,26 @@ def lcm(a, b): return a * b // gcd(a, b)
 
 
 def solve():
-  n, k = mii()
+  l = mii()
 
-  groups = [mii() for _ in range(n)]
+  if sum(l) == 2 * max(l):
+    print(0)
+    return
 
-  # a: 시작, b : 한번 이동시 거리, c: 그 그룹에 속한 펭귄 수
+  a, b, c = sorted(l)
 
-  ans = 0
+  if (a + b + c) % 2 != 0:
+    print(-1)
+    return
 
-  for a, b, c in groups:
-    if k < a:
-      continue
-    
-    if (k - a) % b == 0:
-      ans += c
-  
-  print(ans)
+  target = (a + b + c) // 2
+
+  if 2 * target - a - b != c:
+    print(-1)
+    return
+
+  print(l.index(c) + 1)
+  print(target - a, target - b)
 
 
 if __name__ == "__main__":

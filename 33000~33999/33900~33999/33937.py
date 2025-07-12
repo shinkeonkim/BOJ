@@ -1,8 +1,8 @@
 """
-[29145: Можно и отдохнуть](https://www.acmicpc.net/problem/29145)
+[33937: 태권도와 복싱을 합한 운동](https://www.acmicpc.net/problem/33937)
 
-Tier: Bronze 2 
-Category: arithmetic, math
+Tier: Bronze 1 
+Category: string
 """
 
 
@@ -36,24 +36,29 @@ p = print
 def gcd(a, b): return gcd(b, a % b) if b > 0 else a
 def lcm(a, b): return a * b // gcd(a, b)
 
+def f(s):
+  ret = ""
+  chk = False 
+
+  for i in s:
+    if i in "aeiou":
+      chk = True 
+    else:
+      if chk:
+        return ret
+    ret += i
+  
+  return ""
 
 def solve():
-  n, k = mii()
+  a = f(inp())
+  b = f(inp())
 
-  groups = [mii() for _ in range(n)]
-
-  # a: 시작, b : 한번 이동시 거리, c: 그 그룹에 속한 펭귄 수
-
-  ans = 0
-
-  for a, b, c in groups:
-    if k < a:
-      continue
-    
-    if (k - a) % b == 0:
-      ans += c
+  if a == "" or b == "":
+    print("no such exercise")
+    return
   
-  print(ans)
+  print(a + b)
 
 
 if __name__ == "__main__":

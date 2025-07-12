@@ -1,8 +1,8 @@
 """
-[29145: Можно и отдохнуть](https://www.acmicpc.net/problem/29145)
+[13687: Copa do Mundo](https://www.acmicpc.net/problem/13687)
 
-Tier: Bronze 2 
-Category: arithmetic, math
+Tier: Bronze 1 
+Category: ad_hoc, arithmetic, math
 """
 
 
@@ -17,7 +17,7 @@ from functools import reduce, lru_cache
 from operator import itemgetter, attrgetter, mul, add, sub, truediv
 from typing import List, Tuple, Dict, Set, Any, Union
 
-SYS_INPUT = True
+SYS_INPUT = False
 RECURSION_LIMIT = 10 ** 7
 SET_RECURSION = False
 BLANK = " "
@@ -38,22 +38,14 @@ def lcm(a, b): return a * b // gcd(a, b)
 
 
 def solve():
-  n, k = mii()
+  while 1:
+    T, N = mii() # N: 게임 수
 
-  groups = [mii() for _ in range(n)]
+    if T == N == 0:
+      break
 
-  # a: 시작, b : 한번 이동시 거리, c: 그 그룹에 속한 펭귄 수
-
-  ans = 0
-
-  for a, b, c in groups:
-    if k < a:
-      continue
-    
-    if (k - a) % b == 0:
-      ans += c
-  
-  print(ans)
+    s = sum([int(isplit()[1]) for _ in range(T)])
+    print(N - (s - 2 * N))
 
 
 if __name__ == "__main__":

@@ -1,14 +1,21 @@
 """
-[32365: Heavy-Light Composition](https://www.acmicpc.net/problem/32365)
+[29342: Война клонов](https://www.acmicpc.net/problem/29342)
 
 Tier: Bronze 2 
-Category: implementation, string
+Category: math, arithmetic, combinatorics, parity
 """
 
 
 import sys
 from math import sqrt, pi, sin, factorial, ceil, floor
 from datetime import datetime, timedelta
+from collections import deque, defaultdict, Counter
+from itertools import permutations, combinations, product
+from bisect import bisect_left, bisect_right
+from heapq import heappush, heappop, heapify
+from functools import reduce, lru_cache
+from operator import itemgetter, attrgetter, mul, add, sub, truediv
+from typing import List, Tuple, Dict, Set, Any, Union
 
 SYS_INPUT = True
 RECURSION_LIMIT = 10 ** 7
@@ -31,23 +38,18 @@ def lcm(a, b): return a * b // gcd(a, b)
 
 
 def solve():
-  n, m = mii()
+  n = ii()
+  l = mii()
+  odd = 0
+  even = 0
 
-  for _ in range(n):
-    s = inp()
-    d = {}
-    for i in s:
-      d[i] = d.get(i, 0) + 1
-    
-    k = [d[i] > 1 for i in s]
-
-    ret = True
-    for i in range(m - 1):
-      if k[i] == k[i + 1]:
-        ret = False
-        break
-    
-    print("T" if ret else "F")
+  for i in l:
+    if i % 2 == 0:
+      even += 1
+    else:
+      odd += 1
+  
+  print(odd * even)
 
 
 if __name__ == "__main__":

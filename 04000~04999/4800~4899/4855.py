@@ -1,8 +1,8 @@
 """
-[29145: Можно и отдохнуть](https://www.acmicpc.net/problem/29145)
+[4855: Tire Dimensions](https://www.acmicpc.net/problem/4855)
 
 Tier: Bronze 2 
-Category: arithmetic, math
+Category: arithmetic, implementation, math, parsing, string
 """
 
 
@@ -17,7 +17,7 @@ from functools import reduce, lru_cache
 from operator import itemgetter, attrgetter, mul, add, sub, truediv
 from typing import List, Tuple, Dict, Set, Any, Union
 
-SYS_INPUT = True
+SYS_INPUT = False
 RECURSION_LIMIT = 10 ** 7
 SET_RECURSION = False
 BLANK = " "
@@ -38,23 +38,25 @@ def lcm(a, b): return a * b // gcd(a, b)
 
 
 def solve():
-  n, k = mii()
-
-  groups = [mii() for _ in range(n)]
-
-  # a: 시작, b : 한번 이동시 거리, c: 그 그룹에 속한 펭귄 수
-
-  ans = 0
-
-  for a, b, c in groups:
-    if k < a:
-      continue
-    
-    if (k - a) % b == 0:
-      ans += c
+  while 1:
+    try:
+      s = input()
+    except EOFError:
+      break
   
-  print(ans)
+    l = s.split()
 
+    section_width = int(l[1])
+    ratio = int(l[3])
+    nominal_rim_diameter = int(l[-1]) * 25.4
+
+    section_height = section_width * ratio / 100
+    overall_diameter = nominal_rim_diameter + 2 * section_height
+
+    radius = overall_diameter / 2
+
+    ans = round(2 * pi * radius / 10)
+    print(f"{s}: {ans}")
 
 if __name__ == "__main__":
   tc = 1

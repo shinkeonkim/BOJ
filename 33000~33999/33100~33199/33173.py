@@ -1,8 +1,8 @@
 """
-[29145: Можно и отдохнуть](https://www.acmicpc.net/problem/29145)
+[33173: マスキングテープ (Masking Tape)](https://www.acmicpc.net/problem/33173)
 
 Tier: Bronze 2 
-Category: arithmetic, math
+Category: implementation
 """
 
 
@@ -38,23 +38,31 @@ def lcm(a, b): return a * b // gcd(a, b)
 
 
 def solve():
-  n, k = mii()
+  H, W, Q = mii()
 
-  groups = [mii() for _ in range(n)]
+  cells = [[0] * W for _ in range(H)]
+  masking = [[False] * W for _ in range(H)]
 
-  # a: 시작, b : 한번 이동시 거리, c: 그 그룹에 속한 펭귄 수
+  for _ in range(Q):
+    query = mii()
 
-  ans = 0
+    if query[0] == 1:
+      # 색깔을 칠하는 쿼리
 
-  for a, b, c in groups:
-    if k < a:
-      continue
-    
-    if (k - a) % b == 0:
-      ans += c
+      for i in range(query[1] - 1, query[1] + 1):
+        for j in range(query[2] - 1, query[2] + 1):
+          if not masking[i][j]:
+            cells[i][j] = query[3]
+    else:
+      # 마스킹하는 쿼리
+      for i in range(query[1] - 1, query[1] + 1):
+        for j in range(query[2] - 1, query[2] + 1):
+          masking[i][j] = True
   
-  print(ans)
+  # 모든 색상 출력
 
+  for i in range(H):
+    print(*cells[i])
 
 if __name__ == "__main__":
   tc = 1

@@ -1,8 +1,8 @@
 """
-[29145: Можно и отдохнуть](https://www.acmicpc.net/problem/29145)
+[22177: Универсальная розетка](https://www.acmicpc.net/problem/22177)
 
-Tier: Bronze 2 
-Category: arithmetic, math
+Tier: Bronze 1 
+Category: geometry, implementation, math, pythagoras
 """
 
 
@@ -38,25 +38,25 @@ def lcm(a, b): return a * b // gcd(a, b)
 
 
 def solve():
-  n, k = mii()
+  n, d = mii()
 
-  groups = [mii() for _ in range(n)]
+  holes = [mii() for _ in range(n)]
 
-  # a: 시작, b : 한번 이동시 거리, c: 그 그룹에 속한 펭귄 수
+  for i in range(n):
+    for j in range(i + 1, n):
+      if holes[i][2] == holes[j][2]:
+        continue
+      
+      if d * d != (holes[i][0] - holes[j][0]) ** 2 + (holes[i][1] - holes[j][1]) ** 2:
+        continue
 
-  ans = 0
+      return "Yes"
 
-  for a, b, c in groups:
-    if k < a:
-      continue
-    
-    if (k - a) % b == 0:
-      ans += c
-  
-  print(ans)
+  return "No"
 
 
 if __name__ == "__main__":
   tc = 1
   for t in range(1, tc+1):
     ret = solve()
+    print(ret)

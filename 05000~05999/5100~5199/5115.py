@@ -1,8 +1,8 @@
 """
-[29145: Можно и отдохнуть](https://www.acmicpc.net/problem/29145)
+[5115: Coded Communication](https://www.acmicpc.net/problem/5115)
 
-Tier: Bronze 2 
-Category: arithmetic, math
+Tier: Bronze 1 
+Category: string
 """
 
 
@@ -36,27 +36,18 @@ p = print
 def gcd(a, b): return gcd(b, a % b) if b > 0 else a
 def lcm(a, b): return a * b // gcd(a, b)
 
+def diff(a, b, ln):
+  return sum(1 for i in range(ln) if a[i] != b[i])
 
 def solve():
-  n, k = mii()
+  n, b = mii()  
+  l = [inp() for _ in range(n)]
+  r = inp()  
 
-  groups = [mii() for _ in range(n)]
-
-  # a: 시작, b : 한번 이동시 거리, c: 그 그룹에 속한 펭귄 수
-
-  ans = 0
-
-  for a, b, c in groups:
-    if k < a:
-      continue
-    
-    if (k - a) % b == 0:
-      ans += c
-  
-  print(ans)
-
+  return min([diff(i, r, b) for i in l])
 
 if __name__ == "__main__":
-  tc = 1
+  tc = ii()
   for t in range(1, tc+1):
     ret = solve()
+    print(f"Data Set {t}:\n{ret}\n")

@@ -1,8 +1,8 @@
 """
-[29145: Можно и отдохнуть](https://www.acmicpc.net/problem/29145)
+[26984: Cow Phrasebook](https://www.acmicpc.net/problem/26984)
 
-Tier: Bronze 2 
-Category: arithmetic, math
+Tier: Bronze 1 
+Category: string, bruteforcing
 """
 
 
@@ -38,20 +38,16 @@ def lcm(a, b): return a * b // gcd(a, b)
 
 
 def solve():
-  n, k = mii()
-
-  groups = [mii() for _ in range(n)]
-
-  # a: 시작, b : 한번 이동시 거리, c: 그 그룹에 속한 펭귄 수
+  m, n = mii()
+  phrases = [inp() for _ in range(m)]
+  messages = [inp() for _ in range(n)]
 
   ans = 0
-
-  for a, b, c in groups:
-    if k < a:
-      continue
-    
-    if (k - a) % b == 0:
-      ans += c
+  for message in messages:
+    for phrase in phrases:
+      if phrase[:len(message)] == message and len(message) <= len(phrase):
+        ans += 1
+        break
   
   print(ans)
 

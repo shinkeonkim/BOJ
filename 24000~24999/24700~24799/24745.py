@@ -1,8 +1,8 @@
 """
-[29145: Можно и отдохнуть](https://www.acmicpc.net/problem/29145)
+[24745: Morse Code Palindromes](https://www.acmicpc.net/problem/24745)
 
-Tier: Bronze 2 
-Category: arithmetic, math
+Tier: Bronze 1 
+Category: implementation, precomputation, string
 """
 
 
@@ -36,27 +36,31 @@ p = print
 def gcd(a, b): return gcd(b, a % b) if b > 0 else a
 def lcm(a, b): return a * b // gcd(a, b)
 
+morse_code = {"A":".-", "B":"-...", "C":"-.-.", "D":"-..", "E":".",
+"F":"..-.", "G":"--.", "H":"....", "I":"..", "J":".---",
+"K":"-.-", "L":".-..", "M":"--", "N":"-.", "O":"---",
+"P":".--.", "Q":"--.-", "R":".-.", "S":"...", "T":"-",
+"U":"..-", "V":"...-", "W":".--", "X":"-..-", "Y":"-.--",
+"Z":"--..", "0":"-----", "1":".----", "2":"..---", "3":"...--",
+"4":"....-", "5":".....", "6":"-....", "7":"--...", "8":"---..",
+"9":"----."}
+
 
 def solve():
-  n, k = mii()
+  morse = [morse_code[i] if i in morse_code else "" for i in input().upper()]
 
-  groups = [mii() for _ in range(n)]
+  morse = "".join(morse)
 
-  # a: 시작, b : 한번 이동시 거리, c: 그 그룹에 속한 펭귄 수
+  if not morse:
+    return "NO"
 
-  ans = 0
-
-  for a, b, c in groups:
-    if k < a:
-      continue
-    
-    if (k - a) % b == 0:
-      ans += c
-  
-  print(ans)
-
+  if morse == morse[::-1]:
+    return "YES"
+  else:
+    return "NO"
 
 if __name__ == "__main__":
   tc = 1
   for t in range(1, tc+1):
     ret = solve()
+    print(ret)

@@ -1,8 +1,8 @@
 """
-[29145: Можно и отдохнуть](https://www.acmicpc.net/problem/29145)
+[32921: False Alarm](https://www.acmicpc.net/problem/32921)
 
-Tier: Bronze 2 
-Category: arithmetic, math
+Tier: Bronze 1 
+Category: arithmetic, implementation, math
 """
 
 
@@ -38,22 +38,34 @@ def lcm(a, b): return a * b // gcd(a, b)
 
 
 def solve():
-  n, k = mii()
+  n  = ii()
 
-  groups = [mii() for _ in range(n)]
+  if n == 1:
+    print(2)
+    return
 
-  # a: 시작, b : 한번 이동시 거리, c: 그 그룹에 속한 펭귄 수
+  l = []
+  for i in range(n):
+    h, m = map(int, input().split(":"))
+    l.append(h * 60 + m)
 
-  ans = 0
+  l.sort()
 
-  for a, b, c in groups:
-    if k < a:
-      continue
-    
-    if (k - a) % b == 0:
-      ans += c
+  max_cnt = 0
+
+  crt = [l[0]]
+  for i in range(1, n):
+    if crt[0] + 10 >= l[i]:
+      crt.append(l[i])
+    else:
+      while crt:
+        crt.pop(0)
+        if not crt or crt[0] + 10 >= l[i]:
+          break
+      crt.append(l[i])
+    max_cnt = max(max_cnt, len(crt))
   
-  print(ans)
+  print(max(3 - max_cnt, 0))
 
 
 if __name__ == "__main__":

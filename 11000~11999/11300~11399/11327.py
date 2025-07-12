@@ -1,8 +1,8 @@
 """
-[29145: Можно и отдохнуть](https://www.acmicpc.net/problem/29145)
+[11327: Polynomial Boundaries](https://www.acmicpc.net/problem/11327)
 
-Tier: Bronze 2 
-Category: arithmetic, math
+Tier: Bronze 1 
+Category: math, implementation
 """
 
 
@@ -38,22 +38,29 @@ def lcm(a, b): return a * b // gcd(a, b)
 
 
 def solve():
-  n, k = mii()
+  while 1:
+    s = inp()
 
-  groups = [mii() for _ in range(n)]
-
-  # a: 시작, b : 한번 이동시 거리, c: 그 그룹에 속한 펭귄 수
-
-  ans = 0
-
-  for a, b, c in groups:
-    if k < a:
-      continue
+    if s == "0":
+      break
     
-    if (k - a) % b == 0:
-      ans += c
-  
-  print(ans)
+    n, *l = map(int, s.split())
+    x, y = mii()
+
+    current = 1
+
+    y_prime = 0
+
+    for i in range(n):
+      y_prime += l[i] * current
+      current *= x
+    
+    if y_prime == y:
+      print("On")
+    elif y_prime < y:
+      print("Outside")
+    else:
+      print("Inside")
 
 
 if __name__ == "__main__":

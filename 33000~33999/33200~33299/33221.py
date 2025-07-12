@@ -1,8 +1,9 @@
+# TODO
 """
-[29145: Можно и отдохнуть](https://www.acmicpc.net/problem/29145)
+[33221: Cake Promise](https://www.acmicpc.net/problem/33221)
 
 Tier: Bronze 2 
-Category: arithmetic, math
+Category: arithmetic, implementation, math
 """
 
 
@@ -37,24 +38,31 @@ def gcd(a, b): return gcd(b, a % b) if b > 0 else a
 def lcm(a, b): return a * b // gcd(a, b)
 
 
+def f(l):
+  cnt = 0
+  tm = 0
+
+  for i in l:
+    if i.isdigit():
+      tm += int(i)
+      cnt += 1
+  
+  return (cnt, tm)
+  
+
 def solve():
-  n, k = mii()
+  t, p = mii()
+  l = [f(isplit()) for _ in range(t)]
 
-  groups = [mii() for _ in range(n)]
-
-  # a: 시작, b : 한번 이동시 거리, c: 그 그룹에 속한 펭귄 수
+  crt = l[0]
 
   ans = 0
 
-  for a, b, c in groups:
-    if k < a:
-      continue
-    
-    if (k - a) % b == 0:
-      ans += c
-  
-  print(ans)
+  for cnt, tm in l[1:]:
+    if cnt > crt[0] or (cnt == crt[0] and tm <= crt[1]):
+      ans += 1
 
+  print(ans)
 
 if __name__ == "__main__":
   tc = 1

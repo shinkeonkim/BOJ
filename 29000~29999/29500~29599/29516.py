@@ -1,8 +1,8 @@
 """
-[29145: Можно и отдохнуть](https://www.acmicpc.net/problem/29145)
+[29516: Королевский сад](https://www.acmicpc.net/problem/29516)
 
 Tier: Bronze 2 
-Category: arithmetic, math
+Category: bruteforcing, implementation
 """
 
 
@@ -38,25 +38,42 @@ def lcm(a, b): return a * b // gcd(a, b)
 
 
 def solve():
-  n, k = mii()
+  a, b = mii()
+  l = [inp() for _ in range(a)]
 
-  groups = [mii() for _ in range(n)]
+  c = dict()
 
-  # a: 시작, b : 한번 이동시 거리, c: 그 그룹에 속한 펭귄 수
-
-  ans = 0
-
-  for a, b, c in groups:
-    if k < a:
-      continue
-    
-    if (k - a) % b == 0:
-      ans += c
+  for i in l:
+    for j in i:
+      c[j] = c.get(j, 0) + 1
   
-  print(ans)
+  for i in range(a):
+    c2 = c.copy()
+
+    for j in range(b):
+      c2[l[i][j]] -= 1
+
+    categories = set(k for k, v in c2.items() if v > 0)
+
+    if len(categories) <= 1:
+      return True
+  
+  for j in range(b):
+    c2 = c.copy()
+    
+    for i in range(a):
+      c2[l[i][j]] -= 1
+
+    categories = set(k for k, v in c2.items() if v > 0)
+    if len(categories) <= 1:
+      return True
+
+  return False      
 
 
 if __name__ == "__main__":
   tc = 1
   for t in range(1, tc+1):
     ret = solve()
+
+    print("Yes" if ret else "No")
