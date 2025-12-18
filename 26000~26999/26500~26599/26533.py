@@ -1,8 +1,8 @@
 """
-[{problem_number}: {title}](https://www.acmicpc.net/problem/{problem_number})
+[26533: Tractor Path](https://www.acmicpc.net/problem/26533)
 
-Tier: {tier} 
-Category: {tags}
+Tier: Silver 2 
+Category: bfs, dfs, graphs, graph_traversal
 """
 
 
@@ -16,7 +16,6 @@ from heapq import heappush, heappop, heapify
 from functools import reduce, lru_cache
 from operator import itemgetter, attrgetter, mul, add, sub, truediv
 from typing import List, Tuple, Dict, Set, Any, Union
-from fractions import Fraction
 
 SYS_INPUT = True
 RECURSION_LIMIT = 10 ** 7
@@ -36,13 +35,21 @@ p = print
 
 def gcd(a, b): return gcd(b, a % b) if b > 0 else a
 def lcm(a, b): return a * b // gcd(a, b)
-def near_integer(x): return int(x + 0.5) if x >= 0 else int(x - 0.5)
-def round_up_half(n): return floor(n + 0.5)
-def rotate90(l): return [''.join(x) for x in zip(*l[::-1])]
-def transpose(matrix): return list(map(list, zip(*matrix)))
+
 
 def solve():
-  p("test")
+  n = ii()
+  mp = [inp() for _ in range(n)]
+  chk = [0] * n
+  chk[0] = 1
+
+  for i in range(n):
+    chk[0] = chk[0] and (mp[i][0] == '.')
+
+    for j in range(1, n):
+      chk[j] = (chk[j] or chk[j - 1]) and (mp [i][j] == '.')
+  
+  print("Yes" if any(chk) else "No")
 
 
 if __name__ == "__main__":

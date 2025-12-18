@@ -1,8 +1,8 @@
 """
-[{problem_number}: {title}](https://www.acmicpc.net/problem/{problem_number})
+[9920: Image](https://www.acmicpc.net/problem/9920)
 
-Tier: {tier} 
-Category: {tags}
+Tier: Silver 2 
+Category: divide_and_conquer, recursion
 """
 
 
@@ -16,7 +16,6 @@ from heapq import heappush, heappop, heapify
 from functools import reduce, lru_cache
 from operator import itemgetter, attrgetter, mul, add, sub, truediv
 from typing import List, Tuple, Dict, Set, Any, Union
-from fractions import Fraction
 
 SYS_INPUT = True
 RECURSION_LIMIT = 10 ** 7
@@ -36,13 +35,35 @@ p = print
 
 def gcd(a, b): return gcd(b, a % b) if b > 0 else a
 def lcm(a, b): return a * b // gcd(a, b)
-def near_integer(x): return int(x + 0.5) if x >= 0 else int(x - 0.5)
-def round_up_half(n): return floor(n + 0.5)
-def rotate90(l): return [''.join(x) for x in zip(*l[::-1])]
-def transpose(matrix): return list(map(list, zip(*matrix)))
+
+def f(n, l):
+  ret = 0
+
+  st = set()
+  for i in l:
+    st.update(i)
+
+  if len(st) == 1:
+    ret += 2
+    return ret
+  
+  ret += 1
+
+  mid = n // 2
+  ret += f(mid, [l[i][:mid] for i in range(0, mid)])
+  ret += f(mid, [l[i][mid:] for i in range(0, mid)])
+  ret += f(mid, [l[i][:mid] for i in range(mid, n)])
+  ret += f(mid, [l[i][mid:] for i in range(mid, n)])
+
+  return ret
+
 
 def solve():
-  p("test")
+  n = ii()
+
+  l = [[*map(int, input().split())] for _ in range(n)]
+
+  print(f(n, l))
 
 
 if __name__ == "__main__":

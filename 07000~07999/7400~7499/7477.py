@@ -1,8 +1,8 @@
 """
-[{problem_number}: {title}](https://www.acmicpc.net/problem/{problem_number})
+[7477: Highways](https://www.acmicpc.net/problem/7477)
 
-Tier: {tier} 
-Category: {tags}
+Tier: Bronze 1 
+Category: greedy
 """
 
 
@@ -16,7 +16,6 @@ from heapq import heappush, heappop, heapify
 from functools import reduce, lru_cache
 from operator import itemgetter, attrgetter, mul, add, sub, truediv
 from typing import List, Tuple, Dict, Set, Any, Union
-from fractions import Fraction
 
 SYS_INPUT = True
 RECURSION_LIMIT = 10 ** 7
@@ -36,13 +35,38 @@ p = print
 
 def gcd(a, b): return gcd(b, a % b) if b > 0 else a
 def lcm(a, b): return a * b // gcd(a, b)
-def near_integer(x): return int(x + 0.5) if x >= 0 else int(x - 0.5)
-def round_up_half(n): return floor(n + 0.5)
-def rotate90(l): return [''.join(x) for x in zip(*l[::-1])]
-def transpose(matrix): return list(map(list, zip(*matrix)))
+
 
 def solve():
-  p("test")
+  n = ii()
+  k = mii()
+
+  q = []
+  
+  if n <= 3:
+    print(0)
+    return
+
+  sm = 0
+  prev = 0
+  for i in range(n - 1):
+    heappush(q, (k[i] - prev, i))
+    sm += (k[i] - prev)
+    prev = k[i]
+  
+  selected = -1
+  while 1:
+    front = heappop(q)
+    
+    if front[1] == 0 or front[1] == n - 2:
+      continue
+    
+    sm += front[0]
+    selected = front[1]
+    break
+  
+  print(sm)
+  print(selected + 2, 1, n, selected + 1)
 
 
 if __name__ == "__main__":

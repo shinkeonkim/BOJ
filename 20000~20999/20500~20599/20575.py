@@ -1,8 +1,8 @@
 """
-[{problem_number}: {title}](https://www.acmicpc.net/problem/{problem_number})
+[20575: Buffon's Needle](https://www.acmicpc.net/problem/20575)
 
-Tier: {tier} 
-Category: {tags}
+Tier: Bronze 1 
+Category: arithmetic, math, string
 """
 
 
@@ -16,7 +16,6 @@ from heapq import heappush, heappop, heapify
 from functools import reduce, lru_cache
 from operator import itemgetter, attrgetter, mul, add, sub, truediv
 from typing import List, Tuple, Dict, Set, Any, Union
-from fractions import Fraction
 
 SYS_INPUT = True
 RECURSION_LIMIT = 10 ** 7
@@ -36,13 +35,27 @@ p = print
 
 def gcd(a, b): return gcd(b, a % b) if b > 0 else a
 def lcm(a, b): return a * b // gcd(a, b)
-def near_integer(x): return int(x + 0.5) if x >= 0 else int(x - 0.5)
-def round_up_half(n): return floor(n + 0.5)
-def rotate90(l): return [''.join(x) for x in zip(*l[::-1])]
-def transpose(matrix): return list(map(list, zip(*matrix)))
+
+
+def f(a):
+  if a >= 0:
+    return int(a)
+  else:
+    return int(a) - 1
 
 def solve():
-  p("test")
+  n = ii()
+  l = [[*map(float, input().split())] for _ in range(n)]
+
+  cnt = 0
+
+  for i in range(n):
+    x1, y1, x2, y2 = l[i]
+    
+    if f(x1) != f(x2):
+      cnt += 1
+  
+  print(2 * n / cnt)
 
 
 if __name__ == "__main__":

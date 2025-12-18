@@ -1,8 +1,8 @@
 """
-[{problem_number}: {title}](https://www.acmicpc.net/problem/{problem_number})
+[31660: Mirror Strings](https://www.acmicpc.net/problem/31660)
 
-Tier: {tier} 
-Category: {tags}
+Tier: Silver 3 
+Category: combinatorics, math
 """
 
 
@@ -16,7 +16,6 @@ from heapq import heappush, heappop, heapify
 from functools import reduce, lru_cache
 from operator import itemgetter, attrgetter, mul, add, sub, truediv
 from typing import List, Tuple, Dict, Set, Any, Union
-from fractions import Fraction
 
 SYS_INPUT = True
 RECURSION_LIMIT = 10 ** 7
@@ -36,13 +35,37 @@ p = print
 
 def gcd(a, b): return gcd(b, a % b) if b > 0 else a
 def lcm(a, b): return a * b // gcd(a, b)
-def near_integer(x): return int(x + 0.5) if x >= 0 else int(x - 0.5)
-def round_up_half(n): return floor(n + 0.5)
-def rotate90(l): return [''.join(x) for x in zip(*l[::-1])]
-def transpose(matrix): return list(map(list, zip(*matrix)))
+
+MOD = 10**9 + 7
 
 def solve():
-  p("test")
+  L, R = mii()
+
+  last = [[2, 5], [2, 5]]
+  ans = 0
+
+  if L <= 1:
+    ans += 7
+  
+  if L <= 2 <= R:
+    ans += 7
+
+  for i in range(3, R + 1):
+    crt = [0, 0]
+    if i % 2 == 1:
+      crt[0] = (last[-1][0] * 2) % MOD
+      crt[1] = (last[-1][1] * 5) % MOD
+    else:
+      crt[0] = (last[-2][0] * 2) % MOD
+      crt[1] = (last[-2][1] * 5) % MOD
+    
+    if i >= L:
+      ans += (crt[0] + crt[1]) % MOD
+      ans %= MOD
+    
+    last = [last[1], crt]
+
+  print(ans)
 
 
 if __name__ == "__main__":

@@ -1,8 +1,8 @@
 """
-[{problem_number}: {title}](https://www.acmicpc.net/problem/{problem_number})
+[7830: Romantic Date](https://www.acmicpc.net/problem/7830)
 
-Tier: {tier} 
-Category: {tags}
+Tier: Silver 3 
+Category: implementation, greedy
 """
 
 
@@ -16,7 +16,6 @@ from heapq import heappush, heappop, heapify
 from functools import reduce, lru_cache
 from operator import itemgetter, attrgetter, mul, add, sub, truediv
 from typing import List, Tuple, Dict, Set, Any, Union
-from fractions import Fraction
 
 SYS_INPUT = True
 RECURSION_LIMIT = 10 ** 7
@@ -36,16 +35,48 @@ p = print
 
 def gcd(a, b): return gcd(b, a % b) if b > 0 else a
 def lcm(a, b): return a * b // gcd(a, b)
-def near_integer(x): return int(x + 0.5) if x >= 0 else int(x - 0.5)
-def round_up_half(n): return floor(n + 0.5)
-def rotate90(l): return [''.join(x) for x in zip(*l[::-1])]
-def transpose(matrix): return list(map(list, zip(*matrix)))
+
+
+d = {
+  'T': 9,
+  'A': 13,
+  'K': 12,
+  'Q': 11,
+  'J': 10,
+}
+
+def card_to_num(s):
+  if s[0] not in d:
+    num = int(s[0]) - 1
+  else:
+    num = d[s[0]]
+  shape = 'DCHS'.index(s[1])
+
+  return (num - 1) * 4 + shape
+
 
 def solve():
-  p("test")
+  l = [*map(card_to_num, input().split())]
+
+  left = list(set([i for i in range(52)]) - set(l))
+  left.sort()
+  l.sort()
+
+  i = j = 0
+  ans = 0
+
+  while i < 26 and j < 26:
+    if l[i] > left[j]:
+      ans += 1
+      i += 1
+      j += 1
+    else:
+      i += 1
+
+  print(ans)
 
 
 if __name__ == "__main__":
-  tc = 1
+  tc = ii()
   for t in range(1, tc+1):
     ret = solve()

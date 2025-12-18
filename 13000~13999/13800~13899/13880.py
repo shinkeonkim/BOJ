@@ -1,8 +1,8 @@
 """
-[{problem_number}: {title}](https://www.acmicpc.net/problem/{problem_number})
+[13880: A Rational Sequence (Take 3)](https://www.acmicpc.net/problem/13880)
 
-Tier: {tier} 
-Category: {tags}
+Tier: Silver 3 
+Category: data_structures, implementation, recursion, stack
 """
 
 
@@ -16,7 +16,6 @@ from heapq import heappush, heappop, heapify
 from functools import reduce, lru_cache
 from operator import itemgetter, attrgetter, mul, add, sub, truediv
 from typing import List, Tuple, Dict, Set, Any, Union
-from fractions import Fraction
 
 SYS_INPUT = True
 RECURSION_LIMIT = 10 ** 7
@@ -36,16 +35,21 @@ p = print
 
 def gcd(a, b): return gcd(b, a % b) if b > 0 else a
 def lcm(a, b): return a * b // gcd(a, b)
-def near_integer(x): return int(x + 0.5) if x >= 0 else int(x - 0.5)
-def round_up_half(n): return floor(n + 0.5)
-def rotate90(l): return [''.join(x) for x in zip(*l[::-1])]
-def transpose(matrix): return list(map(list, zip(*matrix)))
 
-def solve():
-  p("test")
+
+def solve(n):
+  if n == 1:
+    return (1, 1)
+  
+  half = n // 2
+  a, b = solve(half)
+  
+  return (a, a + b) if n % 2 == 0 else (a + b, b)
 
 
 if __name__ == "__main__":
-  tc = 1
+  tc = ii()
   for t in range(1, tc+1):
-    ret = solve()
+    k, n = map(int, input().split())
+    ret = solve(n)
+    print(k, f"{ret[0]}/{ret[1]}")

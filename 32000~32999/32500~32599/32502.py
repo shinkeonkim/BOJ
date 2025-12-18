@@ -1,13 +1,13 @@
 """
-[{problem_number}: {title}](https://www.acmicpc.net/problem/{problem_number})
+[32502: Gears and Axles](https://www.acmicpc.net/problem/32502)
 
-Tier: {tier} 
-Category: {tags}
+Tier: Silver 2 
+Category: math, sorting
 """
 
 
 import sys
-from math import sqrt, pi, sin, factorial, ceil, floor
+from math import sqrt, pi, sin, factorial, ceil, floor, log
 from datetime import datetime, timedelta
 from collections import deque, defaultdict, Counter
 from itertools import permutations, combinations, product
@@ -16,7 +16,6 @@ from heapq import heappush, heappop, heapify
 from functools import reduce, lru_cache
 from operator import itemgetter, attrgetter, mul, add, sub, truediv
 from typing import List, Tuple, Dict, Set, Any, Union
-from fractions import Fraction
 
 SYS_INPUT = True
 RECURSION_LIMIT = 10 ** 7
@@ -36,14 +35,30 @@ p = print
 
 def gcd(a, b): return gcd(b, a % b) if b > 0 else a
 def lcm(a, b): return a * b // gcd(a, b)
-def near_integer(x): return int(x + 0.5) if x >= 0 else int(x - 0.5)
-def round_up_half(n): return floor(n + 0.5)
-def rotate90(l): return [''.join(x) for x in zip(*l[::-1])]
-def transpose(matrix): return list(map(list, zip(*matrix)))
+
 
 def solve():
-  p("test")
+  n = ii()
+  d = defaultdict(list)
 
+  for i in range(n):
+    size, number = mii()
+
+    d[size].append(number)
+  
+  z = 0
+
+  for k, v in d.items():
+    if len(v) == 1:
+      continue
+    v.sort()
+
+    v = [log(i) for i in v]
+    
+    for i in range(len(v) // 2):
+      z += v[-(i + 1)] - v[i]
+    
+  print(z)
 
 if __name__ == "__main__":
   tc = 1

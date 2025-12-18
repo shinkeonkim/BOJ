@@ -1,8 +1,8 @@
 """
-[{problem_number}: {title}](https://www.acmicpc.net/problem/{problem_number})
+[27007: Yogurt factory](https://www.acmicpc.net/problem/27007)
 
-Tier: {tier} 
-Category: {tags}
+Tier: Silver 1 
+Category: greedy
 """
 
 
@@ -16,7 +16,6 @@ from heapq import heappush, heappop, heapify
 from functools import reduce, lru_cache
 from operator import itemgetter, attrgetter, mul, add, sub, truediv
 from typing import List, Tuple, Dict, Set, Any, Union
-from fractions import Fraction
 
 SYS_INPUT = True
 RECURSION_LIMIT = 10 ** 7
@@ -36,13 +35,24 @@ p = print
 
 def gcd(a, b): return gcd(b, a % b) if b > 0 else a
 def lcm(a, b): return a * b // gcd(a, b)
-def near_integer(x): return int(x + 0.5) if x >= 0 else int(x - 0.5)
-def round_up_half(n): return floor(n + 0.5)
-def rotate90(l): return [''.join(x) for x in zip(*l[::-1])]
-def transpose(matrix): return list(map(list, zip(*matrix)))
+
 
 def solve():
-  p("test")
+  n, s = mii()
+  l = [mii() for _ in range(n)]
+
+  mn = float('inf')
+  ans = 0
+
+  for cost, need_count in l:
+    mn += s
+
+    if cost < mn:
+      mn = cost
+
+    ans += mn * need_count
+  
+  p(ans)
 
 
 if __name__ == "__main__":

@@ -1,8 +1,8 @@
 """
-[{problem_number}: {title}](https://www.acmicpc.net/problem/{problem_number})
+[25818: How Much Coffee is Left?](https://www.acmicpc.net/problem/25818)
 
-Tier: {tier} 
-Category: {tags}
+Tier: Silver 4 
+Category: math, geometry, geometry_3d
 """
 
 
@@ -16,7 +16,6 @@ from heapq import heappush, heappop, heapify
 from functools import reduce, lru_cache
 from operator import itemgetter, attrgetter, mul, add, sub, truediv
 from typing import List, Tuple, Dict, Set, Any, Union
-from fractions import Fraction
 
 SYS_INPUT = True
 RECURSION_LIMIT = 10 ** 7
@@ -36,13 +35,27 @@ p = print
 
 def gcd(a, b): return gcd(b, a % b) if b > 0 else a
 def lcm(a, b): return a * b // gcd(a, b)
-def near_integer(x): return int(x + 0.5) if x >= 0 else int(x - 0.5)
-def round_up_half(n): return floor(n + 0.5)
-def rotate90(l): return [''.join(x) for x in zip(*l[::-1])]
-def transpose(matrix): return list(map(list, zip(*matrix)))
+
+def truncated_cone_volume(r, R, H): # 뿔대 부피 (r < R)
+  return 1 / 3 * pi * H * (r ** 2 + r * R + R ** 2)
+
 
 def solve():
-  p("test")
+  r, s, h, m, d = mii()
+  # r: bottom radius
+  # s: top radius
+  # h: cup height
+  # m: 커피를 마신 시간 (분)
+  # d: 현재 남아있는 커피의 높이
+
+  # s ~ r
+  # h:d = s:coffee_radius
+
+  coffee_radius = d * (s - r) / h + r
+  drunk_volume = truncated_cone_volume(coffee_radius, s, h - d)
+  left_volume = truncated_cone_volume(r, coffee_radius, d)
+
+  print(left_volume * m / drunk_volume)
 
 
 if __name__ == "__main__":

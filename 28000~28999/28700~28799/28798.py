@@ -1,8 +1,8 @@
 """
-[{problem_number}: {title}](https://www.acmicpc.net/problem/{problem_number})
+[28798: Старик и шахматная доска](https://www.acmicpc.net/problem/28798)
 
-Tier: {tier} 
-Category: {tags}
+Tier: Bronze 1 
+Category: math
 """
 
 
@@ -16,7 +16,6 @@ from heapq import heappush, heappop, heapify
 from functools import reduce, lru_cache
 from operator import itemgetter, attrgetter, mul, add, sub, truediv
 from typing import List, Tuple, Dict, Set, Any, Union
-from fractions import Fraction
 
 SYS_INPUT = True
 RECURSION_LIMIT = 10 ** 7
@@ -36,13 +35,41 @@ p = print
 
 def gcd(a, b): return gcd(b, a % b) if b > 0 else a
 def lcm(a, b): return a * b // gcd(a, b)
-def near_integer(x): return int(x + 0.5) if x >= 0 else int(x - 0.5)
-def round_up_half(n): return floor(n + 0.5)
-def rotate90(l): return [''.join(x) for x in zip(*l[::-1])]
-def transpose(matrix): return list(map(list, zip(*matrix)))
+
 
 def solve():
-  p("test")
+  n, m = mii()
+  # n개의 흰색 칸, m개의 검은색 칸
+
+  start = 0
+  end = 10 ** 10
+
+  ans = 0
+
+  while start <= end:
+    mid = (start + end) // 2
+  
+    # 체스판의 너비가 mid 일때
+
+    if mid % 2 == 0:
+      need = mid ** 2 // 2
+
+      if need <= n and need <= m:
+        ans = mid
+        start = mid + 1
+      else:
+        end = mid - 1
+    else:
+      more = mid ** 2 // 2 + 1
+      less = mid ** 2 // 2
+
+      if (more <= n and less <= m) or (more <= m and less <= n):
+        ans = mid
+        start = mid + 1
+      else:
+        end = mid - 1
+  
+  print(ans)
 
 
 if __name__ == "__main__":

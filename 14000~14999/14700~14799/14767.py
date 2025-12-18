@@ -1,8 +1,8 @@
 """
-[{problem_number}: {title}](https://www.acmicpc.net/problem/{problem_number})
+[14767: Flow Shop](https://www.acmicpc.net/problem/14767)
 
-Tier: {tier} 
-Category: {tags}
+Tier: Silver 4 
+Category: dp, implementation
 """
 
 
@@ -16,7 +16,6 @@ from heapq import heappush, heappop, heapify
 from functools import reduce, lru_cache
 from operator import itemgetter, attrgetter, mul, add, sub, truediv
 from typing import List, Tuple, Dict, Set, Any, Union
-from fractions import Fraction
 
 SYS_INPUT = True
 RECURSION_LIMIT = 10 ** 7
@@ -36,13 +35,26 @@ p = print
 
 def gcd(a, b): return gcd(b, a % b) if b > 0 else a
 def lcm(a, b): return a * b // gcd(a, b)
-def near_integer(x): return int(x + 0.5) if x >= 0 else int(x - 0.5)
-def round_up_half(n): return floor(n + 0.5)
-def rotate90(l): return [''.join(x) for x in zip(*l[::-1])]
-def transpose(matrix): return list(map(list, zip(*matrix)))
+
 
 def solve():
-  p("test")
+  n, m = mii()
+  l = [mii() for _ in range(n)]
+  D = [[0] * m for _ in range(n)]
+
+  for i in range(n):
+    for j in range(m):
+      if i == 0 and j == 0:
+        D[i][j] = l[i][j]
+      elif i == 0:
+        D[i][j] = l[i][j] + D[i][j-1]
+      elif j == 0:
+        D[i][j] = l[i][j] + D[i-1][j]
+      else:
+        D[i][j] = l[i][j] + max(D[i-1][j], D[i][j-1])
+  
+  for i in range(n):
+    print(D[i][m - 1], end=" ")
 
 
 if __name__ == "__main__":

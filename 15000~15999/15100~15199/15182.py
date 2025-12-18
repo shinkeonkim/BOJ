@@ -1,8 +1,8 @@
 """
-[{problem_number}: {title}](https://www.acmicpc.net/problem/{problem_number})
+[15182: Byte Me!](https://www.acmicpc.net/problem/15182)
 
-Tier: {tier} 
-Category: {tags}
+Tier: Bronze 1 
+Category: implementation
 """
 
 
@@ -16,7 +16,6 @@ from heapq import heappush, heappop, heapify
 from functools import reduce, lru_cache
 from operator import itemgetter, attrgetter, mul, add, sub, truediv
 from typing import List, Tuple, Dict, Set, Any, Union
-from fractions import Fraction
 
 SYS_INPUT = True
 RECURSION_LIMIT = 10 ** 7
@@ -36,13 +35,48 @@ p = print
 
 def gcd(a, b): return gcd(b, a % b) if b > 0 else a
 def lcm(a, b): return a * b // gcd(a, b)
-def near_integer(x): return int(x + 0.5) if x >= 0 else int(x - 0.5)
-def round_up_half(n): return floor(n + 0.5)
-def rotate90(l): return [''.join(x) for x in zip(*l[::-1])]
-def transpose(matrix): return list(map(list, zip(*matrix)))
+
 
 def solve():
-  p("test")
+  n = ii()
+  data = [mii() for _ in range(n)]
+  parity = mii()
+
+  sm = [sum(i) % 2 for i in data]
+
+  if sm.count(0) == 1:
+    # 홀수 패리티 사용 중, 짝수인게 오류임
+    error_idx = sm.index(0) + 1
+
+    print("Odd")
+
+    print(f"Byte {error_idx} is broken")
+
+    for i in range(len(data[0])):
+      s = 0
+      for j in range(n):
+        s += data[j][i]
+      
+      if (s + parity[i]) % 2 != 1:
+        print(f"Bit {i + 1} is broken")
+        break
+  
+  else:
+    # 짝수 패리티 사용 중, 홀수인게 오류임
+    error_idx = sm.index(1) + 1
+
+    print("Even")
+
+    print(f"Byte {error_idx} is broken")
+
+    for i in range(len(data[0])):
+      s = 0
+      for j in range(n):
+        s += data[j][i]
+      
+      if (s + parity[i]) % 2 != 0:
+        print(f"Bit {i + 1} is broken")
+        break
 
 
 if __name__ == "__main__":

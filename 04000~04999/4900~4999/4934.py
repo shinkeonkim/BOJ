@@ -1,8 +1,8 @@
 """
-[{problem_number}: {title}](https://www.acmicpc.net/problem/{problem_number})
+[4934: The Euclidian Clock](https://www.acmicpc.net/problem/4934)
 
-Tier: {tier} 
-Category: {tags}
+Tier: Bronze 1 
+Category: geometry, math
 """
 
 
@@ -16,9 +16,8 @@ from heapq import heappush, heappop, heapify
 from functools import reduce, lru_cache
 from operator import itemgetter, attrgetter, mul, add, sub, truediv
 from typing import List, Tuple, Dict, Set, Any, Union
-from fractions import Fraction
 
-SYS_INPUT = True
+SYS_INPUT = False
 RECURSION_LIMIT = 10 ** 7
 SET_RECURSION = False
 BLANK = " "
@@ -36,16 +35,33 @@ p = print
 
 def gcd(a, b): return gcd(b, a % b) if b > 0 else a
 def lcm(a, b): return a * b // gcd(a, b)
-def near_integer(x): return int(x + 0.5) if x >= 0 else int(x - 0.5)
-def round_up_half(n): return floor(n + 0.5)
-def rotate90(l): return [''.join(x) for x in zip(*l[::-1])]
-def transpose(matrix): return list(map(list, zip(*matrix)))
+
+
+def to_tm(h, m, s, ms):
+  return (h * 3600 + m * 60 + s) * 100 + ms
+
+def tm_to_angle(mili):
+  total = 12 * 3600 * 100
+
+  return (mili / total) * 360
+
+def diff(a, b):
+  if a > b:
+    return 360 - (a - b)
+  return b - a
 
 def solve():
-  p("test")
+  start = tm_to_angle(to_tm(*mii()))
+  end = tm_to_angle(to_tm(*mii()))
+  radius = fi()
+  angle = diff(start, end)
+
+  return radius ** 2 * (angle / 360) * pi
 
 
 if __name__ == "__main__":
-  tc = 1
+  tc = ii()
   for t in range(1, tc+1):
     ret = solve()
+
+    print(f"{t}. {ret:.3f}")

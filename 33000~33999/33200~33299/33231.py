@@ -1,8 +1,8 @@
 """
-[{problem_number}: {title}](https://www.acmicpc.net/problem/{problem_number})
+[33231: Coatis and Owls](https://www.acmicpc.net/problem/33231)
 
-Tier: {tier} 
-Category: {tags}
+Tier: Bronze 1 
+Category: implementation, math, simulation
 """
 
 
@@ -16,7 +16,6 @@ from heapq import heappush, heappop, heapify
 from functools import reduce, lru_cache
 from operator import itemgetter, attrgetter, mul, add, sub, truediv
 from typing import List, Tuple, Dict, Set, Any, Union
-from fractions import Fraction
 
 SYS_INPUT = True
 RECURSION_LIMIT = 10 ** 7
@@ -39,10 +38,45 @@ def lcm(a, b): return a * b // gcd(a, b)
 def near_integer(x): return int(x + 0.5) if x >= 0 else int(x - 0.5)
 def round_up_half(n): return floor(n + 0.5)
 def rotate90(l): return [''.join(x) for x in zip(*l[::-1])]
-def transpose(matrix): return list(map(list, zip(*matrix)))
+
 
 def solve():
-  p("test")
+  n, m = mii()
+  
+  l = mii()
+  A = l[:n][::-1]
+  B = l[n:]
+  
+  i = j = 0
+  
+  while i < n and j < m:
+    if A[i] == B[j]:
+      A[i] = 0
+      B[j] = 0
+      i += 1
+      j += 1
+    elif A[i] < B[j]:
+      B[j] -= ceil((A[i] ** 2) / B[j])
+      A[i] = 0
+      i += 1
+      if B[j] == 0:
+        j += 1
+    else:
+      A[i] -= ceil((B[j] ** 2) / A[i])
+      B[j] = 0
+      j += 1
+      if A[i] == 0:
+        i += 1
+
+
+  if i == n and j == m:
+    print("stalemate")
+  elif j == m:
+    print("coatis")
+    print(sum(A))
+  else:
+    print("owls")
+    print(sum(B))
 
 
 if __name__ == "__main__":

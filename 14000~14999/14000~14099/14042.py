@@ -1,8 +1,8 @@
 """
-[{problem_number}: {title}](https://www.acmicpc.net/problem/{problem_number})
+[14042: Tandem Bicycle](https://www.acmicpc.net/problem/14042)
 
-Tier: {tier} 
-Category: {tags}
+Tier: Silver 4 
+Category: greedy, sorting
 """
 
 
@@ -16,7 +16,6 @@ from heapq import heappush, heappop, heapify
 from functools import reduce, lru_cache
 from operator import itemgetter, attrgetter, mul, add, sub, truediv
 from typing import List, Tuple, Dict, Set, Any, Union
-from fractions import Fraction
 
 SYS_INPUT = True
 RECURSION_LIMIT = 10 ** 7
@@ -36,13 +35,23 @@ p = print
 
 def gcd(a, b): return gcd(b, a % b) if b > 0 else a
 def lcm(a, b): return a * b // gcd(a, b)
-def near_integer(x): return int(x + 0.5) if x >= 0 else int(x - 0.5)
-def round_up_half(n): return floor(n + 0.5)
-def rotate90(l): return [''.join(x) for x in zip(*l[::-1])]
-def transpose(matrix): return list(map(list, zip(*matrix)))
+
 
 def solve():
-  p("test")
+  question_type = int(input())
+  n = int(input())
+  A = [*map(int, input().split())]
+  B = [*map(int, input().split())]
+
+  if question_type == 1:
+    A = sorted(A)
+    B = sorted(B)
+
+    print(sum(max(A[i], B[i]) for i in range(n)))
+
+  else:
+    l = A + B
+    print(sum(sorted(l, reverse=True)[:n]))
 
 
 if __name__ == "__main__":

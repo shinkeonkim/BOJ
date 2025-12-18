@@ -1,8 +1,8 @@
 """
-[{problem_number}: {title}](https://www.acmicpc.net/problem/{problem_number})
+[6893: TopYodeller](https://www.acmicpc.net/problem/6893)
 
-Tier: {tier} 
-Category: {tags}
+Tier: Bronze 1 
+Category: implementation
 """
 
 
@@ -16,7 +16,6 @@ from heapq import heappush, heappop, heapify
 from functools import reduce, lru_cache
 from operator import itemgetter, attrgetter, mul, add, sub, truediv
 from typing import List, Tuple, Dict, Set, Any, Union
-from fractions import Fraction
 
 SYS_INPUT = True
 RECURSION_LIMIT = 10 ** 7
@@ -36,14 +35,32 @@ p = print
 
 def gcd(a, b): return gcd(b, a % b) if b > 0 else a
 def lcm(a, b): return a * b // gcd(a, b)
-def near_integer(x): return int(x + 0.5) if x >= 0 else int(x - 0.5)
-def round_up_half(n): return floor(n + 0.5)
-def rotate90(l): return [''.join(x) for x in zip(*l[::-1])]
-def transpose(matrix): return list(map(list, zip(*matrix)))
+
 
 def solve():
-  p("test")
+  n, k = mii() # n명, k라운드
 
+  total_score = defaultdict(lambda : 0)
+  worsk_rank = defaultdict(lambda : 0)
+
+  for _ in range(k):
+    scores = mii()
+  
+    for i, score in enumerate(scores):
+      total_score[i + 1] += score
+
+
+    d = sorted(list(set(total_score.values())), reverse=True)
+    d = {v: i + 1 for i, v in enumerate(d)}
+
+    for k, v in total_score.items():
+      worsk_rank[k] = max(worsk_rank[k], d[v])
+    
+  max_total_score = max(total_score.values())
+
+  for i in range(1, n + 1):
+    if total_score[i] == max_total_score:
+      print(f"Yodeller {i} is the TopYodeller: score {total_score[i]}, worst rank {worsk_rank[i]}")
 
 if __name__ == "__main__":
   tc = 1

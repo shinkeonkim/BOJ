@@ -1,8 +1,8 @@
 """
-[{problem_number}: {title}](https://www.acmicpc.net/problem/{problem_number})
+[10204: Neighborhoods in Graphs](https://www.acmicpc.net/problem/10204)
 
-Tier: {tier} 
-Category: {tags}
+Tier: Silver 2 
+Category: bfs, dfs, floyd_warshall, graphs, graph_traversal, parsing, shortest_path, string
 """
 
 
@@ -16,7 +16,6 @@ from heapq import heappush, heappop, heapify
 from functools import reduce, lru_cache
 from operator import itemgetter, attrgetter, mul, add, sub, truediv
 from typing import List, Tuple, Dict, Set, Any, Union
-from fractions import Fraction
 
 SYS_INPUT = True
 RECURSION_LIMIT = 10 ** 7
@@ -36,16 +35,51 @@ p = print
 
 def gcd(a, b): return gcd(b, a % b) if b > 0 else a
 def lcm(a, b): return a * b // gcd(a, b)
-def near_integer(x): return int(x + 0.5) if x >= 0 else int(x - 0.5)
-def round_up_half(n): return floor(n + 0.5)
-def rotate90(l): return [''.join(x) for x in zip(*l[::-1])]
-def transpose(matrix): return list(map(list, zip(*matrix)))
+
+INF = float("inf")
 
 def solve():
-  p("test")
+  n, e, *l, s = isplit()
+  n = int(n)
+  e = int(e)
+  s = int(s[1:])
+
+  adj = defaultdict(list)
+
+  for i in range(0, len(l), 2):
+    a = int(l[i][1:])
+    b = int(l[i+1][1:])
+    adj[a].append(b)
+    adj[b].append(a)
+  
+  dist = [INF] * (n + 1)
+
+  q = deque([(s, 0)])
+
+  while q:
+    node, dis = q.popleft()
+
+    if dist[node] <= dis:
+      continue
+
+    dist[node] = dis
+
+    for nei in adj[node]:
+      if dist[nei] > dis + 1:
+        q.append((nei, dis + 1))
+    
+  ans = 0
+
+  for i in range(1, n + 1):
+    if i == s:
+      continue
+    if dist[i] <= 2:
+      ans += 1
+  
+  print(f"The number of supervillains in 2-hop neighborhood of v{s} is {ans}")
 
 
 if __name__ == "__main__":
-  tc = 1
+  tc = ii()
   for t in range(1, tc+1):
     ret = solve()
