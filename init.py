@@ -5,7 +5,8 @@ from os import path, getcwd
 
 LANGUAGE_MAPPING = {
   0: 'cpp',
-  1: 'py'
+  1: 'py',
+  2: 'rb',
 }
 
 def get_template(file_path, problem_number, title, tier, tags) -> str:
@@ -39,6 +40,13 @@ def get_templates_by_language(language, problem_number, title, tier, tags) -> di
       tier=tier,
       tags=tags
     ),
+    'rb': get_template(
+      file_path='./templates/ruby_template.txt',
+      problem_number=problem_number,
+      title=title,
+      tier=tier,
+      tags=tags
+    )
   }[language]
 
 
@@ -110,7 +118,7 @@ def create_file(file_path, content):
 
 if __name__ == '__main__':
   problem_number = int(input('BOJ 문제 번호를 입력해주세요.: '))
-  language = int(input('언어를 선택해주세요. (cpp: 0, python: 1): '))
+  language = int(input('언어를 선택해주세요. (cpp: 0, python: 1, ruby: 2): '))
 
   file_path = get_file_path(
     problem_number=problem_number,

@@ -1,0 +1,40 @@
+# [{problem_number}: {title}](https://www.acmicpc.net/problem/{problem_number})
+# Tier: {tier} 
+# Category: {tags}
+
+# frozen_string_literal: true
+
+require 'set'
+require 'prime'
+require 'matrix'
+require 'rational'
+require 'stringio'
+require 'bigdecimal'
+require 'cmath'
+
+INF = Float::INFINITY
+
+def input; gets.chomp; end
+def mii; gets.split.map(&:to_i); end
+def mfi; gets.split.map(&:to_f); end
+def ii; gets.to_i; end
+def fi; gets.to_f; end
+def isplit; gets.split; end
+def gcd(a, b); b.zero? ? a : gcd(b, a % b); end
+def lcm(a, b); (a * b) / gcd(a, b); end
+def round_up_half(n); (n + 0.5).floor; end
+def rotate90(l); l.map(&:chars).reverse.transpose.map(&:join); end
+
+def solve
+  a = INF
+  puts a
+end
+
+if __FILE__ == $0
+  tc = 1
+
+  (1..tc).each do |t|
+    # print "Case ##{{t}}: "
+    solve
+  end
+end

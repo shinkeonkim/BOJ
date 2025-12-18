@@ -1,17 +1,9 @@
 [project]
 name = "boj"
 version = "0.1.0"
-description = ""
-authors = [
-    {name = "shinkeonkim",email = "dev.shinkeonkim@gmail.com"}
-]
+description = "Add your description here"
 readme = "README.md"
-requires-python = ">=3.13"
+requires-python = ">=3.14"
 dependencies = [
-    "requests (>=2.32.3,<3.0.0)"
+    "requests>=2.32.5",
 ]
-
-
-[build-system]
-requires = ["poetry-core>=2.0.0,<3.0.0"]
-build-backend = "poetry.core.masonry.api"
