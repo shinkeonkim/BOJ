@@ -1,8 +1,8 @@
 """
-[21402: Фитнесс-клуб](https://www.acmicpc.net/problem/21402)
+[5984: The Bovine Fire Drill](https://www.acmicpc.net/problem/5984)
 
 Tier: Bronze 1 
-Category: greedy
+Category: implementation, simulation
 """
 
 
@@ -38,52 +38,37 @@ def lcm(a, b): return a * b // gcd(a, b)
 
 
 def solve():
-  n, k = mii()
+  ans = 0
 
-  l = [mii() for _ in range(n)]
+  n = ii()
+  l = [i + 1 for i in range(n)] 
+  chk = [False] * (n + 1)
+  num_idx = {i + 1: i for i in range(n)}
 
-  stats = [0] * k
+  turn = 1
 
-  for to_lock, to_unlock in l:
-    chk = [True] * k
+  while 1:
+    current_idx = num_idx[turn]
+    l[current_idx] = 0
 
-    if to_unlock > 0:
-      # 최대한 열려있는 것을 계속 열려있게 함.
-      for i in range(k):
-        if not chk[i]:
-          continue
-        
-        if to_unlock > 0 and stats[i]:
-          stats[i] = 1
-          to_unlock -= 1
-          chk[i] = False
-      
-    if to_unlock > 0:
-      # 잠겨있는 것을 열어야 한다.
-      for i in range(k):
-        if not chk[i]:
-          continue
-        
-        if to_unlock > 0 and stats[i] == 0:
-          stats[i] = 1
-          to_unlock -= 1
-          chk[i] = False
-    
-    if to_lock > 0:
-      # 최대한 열려있던 것을 잠가야 한다.
-      for i in range(k):
-        if not chk[i]:
-          continue
-        
-        if to_lock > 0 and stats[i] == 1:
-          stats[i] = 0
-          to_lock -= 1
-          chk[i] = False
-  
-  print(k - sum(stats))
+    if chk[turn]:
+      return turn
+
+    chk[turn] = True
+    next_idx = (current_idx + turn) % n
+
+    if l[next_idx] == 0:
+      return turn  
+
+    next_turn = l[next_idx]
+    l[next_idx] = turn
+    num_idx[turn] = next_idx
+
+    turn = next_turn
 
 
 if __name__ == "__main__":
   tc = 1
   for t in range(1, tc+1):
     ret = solve()
+    p(ret)

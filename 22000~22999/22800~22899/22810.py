@@ -1,8 +1,8 @@
 """
-[33646: Pencil Crayons](https://www.acmicpc.net/problem/33646)
+[22810: When Can We Meet?](https://www.acmicpc.net/problem/22810)
 
 Tier: Bronze 1 
-Category: greedy, implementation
+Category: implementation
 """
 
 
@@ -16,6 +16,7 @@ from heapq import heappush, heappop, heapify
 from functools import reduce, lru_cache
 from operator import itemgetter, attrgetter, mul, add, sub, truediv
 from typing import List, Tuple, Dict, Set, Any, Union
+from fractions import Fraction
 
 SYS_INPUT = True
 RECURSION_LIMIT = 10 ** 7
@@ -39,24 +40,33 @@ def round_up_half(n): return floor(n + 0.5)
 def rotate90(l): return [''.join(x) for x in zip(*l[::-1])]
 
 
-def solve():
-  n, k = mii()
-
-  l = [isplit() for _ in range(n)]
-
-  ans = 0
-  for i in l:
-    c = Counter()
-    for j in i:
-      c[j] += 1
+def solve(N, Q):
+  l = []
+  
+  counter = Counter()
+  
+  for _ in range(N):
+    z, *days = mii()
     
-    for v in c.values():
-      ans += v - 1
-    
-  print(ans)
+    for day in days:
+      counter[day] += 1
+
+  mx = max(counter.values() or [0])
+
+  if mx < Q:
+    print(0)
+    return
+  
+  for k, v in sorted(counter.items()):
+    if v == mx:
+      print(k)
+      return
 
 
 if __name__ == "__main__":
-  tc = 1
-  for t in range(1, tc+1):
-    ret = solve()
+  while 1:
+    N, Q = map(int, input().split())
+    if N == Q == 0:
+      break
+    
+    solve(N, Q)

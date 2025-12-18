@@ -1,5 +1,5 @@
 """
-[21402: Фитнесс-клуб](https://www.acmicpc.net/problem/21402)
+[26713: Ornitolog 2](https://www.acmicpc.net/problem/26713)
 
 Tier: Bronze 1 
 Category: greedy
@@ -35,52 +35,50 @@ p = print
 
 def gcd(a, b): return gcd(b, a % b) if b > 0 else a
 def lcm(a, b): return a * b // gcd(a, b)
+def round_up_half(n): return floor(n + 0.5)
+def rotate90(l): return [''.join(x) for x in zip(*l[::-1])]
 
 
 def solve():
-  n, k = mii()
+  n = ii()
+  l2 = mii()
 
-  l = [mii() for _ in range(n)]
+  l = l2[:]
 
-  stats = [0] * k
+  ans = float('inf')
+  cnt = 0
 
-  for to_lock, to_unlock in l:
-    chk = [True] * k
+  for i in range(1, n):
+    if i % 2 == 0:
+      if l[i - 1] < l[i]:
+        continue
+      cnt += 1
+      l[i] = float('inf')
+    else:
+      if l[i - 1] > l[i]:
+        continue
+      cnt += 1
+      l[i] = -float('inf')
 
-    if to_unlock > 0:
-      # 최대한 열려있는 것을 계속 열려있게 함.
-      for i in range(k):
-        if not chk[i]:
-          continue
-        
-        if to_unlock > 0 and stats[i]:
-          stats[i] = 1
-          to_unlock -= 1
-          chk[i] = False
-      
-    if to_unlock > 0:
-      # 잠겨있는 것을 열어야 한다.
-      for i in range(k):
-        if not chk[i]:
-          continue
-        
-        if to_unlock > 0 and stats[i] == 0:
-          stats[i] = 1
-          to_unlock -= 1
-          chk[i] = False
-    
-    if to_lock > 0:
-      # 최대한 열려있던 것을 잠가야 한다.
-      for i in range(k):
-        if not chk[i]:
-          continue
-        
-        if to_lock > 0 and stats[i] == 1:
-          stats[i] = 0
-          to_lock -= 1
-          chk[i] = False
-  
-  print(k - sum(stats))
+  ans = min(ans, cnt)
+
+  l = l2[:]
+  cnt = 0
+
+  for i in range(1, n):
+    if i % 2 == 1:
+      if l[i - 1] < l[i]:
+        continue
+      cnt += 1
+      l[i] = float('inf')
+    else:
+      if l[i - 1] > l[i]:
+        continue
+      cnt += 1
+      l[i] = -float('inf')
+  ans = min(ans, cnt)
+
+  print(ans)
 
 
 if __name__ == "__main__":

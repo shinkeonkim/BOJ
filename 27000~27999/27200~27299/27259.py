@@ -1,8 +1,8 @@
 """
-[21402: Фитнесс-клуб](https://www.acmicpc.net/problem/21402)
+[27259: Разноцветные диагонали](https://www.acmicpc.net/problem/27259)
 
 Tier: Bronze 1 
-Category: greedy
+Category: bruteforcing, implementation, math
 """
 
 
@@ -38,49 +38,42 @@ def lcm(a, b): return a * b // gcd(a, b)
 
 
 def solve():
-  n, k = mii()
+  n = ii()
+  l = [[float('inf')] * n for _ in range(n)]
 
-  l = [mii() for _ in range(n)]
+  q = []
 
-  stats = [0] * k
+  for i in range(n):
+    q.append([i, i, 0])
+    q.append([i, n - i - 1, 0])
 
-  for to_lock, to_unlock in l:
-    chk = [True] * k
+  dy = [0, 0, 1, -1]
+  dx = [1, -1, 0, 0]
+  while q:
+    y, x, d = q.pop(0)
 
-    if to_unlock > 0:
-      # 최대한 열려있는 것을 계속 열려있게 함.
-      for i in range(k):
-        if not chk[i]:
-          continue
-        
-        if to_unlock > 0 and stats[i]:
-          stats[i] = 1
-          to_unlock -= 1
-          chk[i] = False
+    if l[y][x] <= d:
+      continue
+
+    l[y][x] = d
+
+    for i in range(4):
+      ny, nx = y + dy[i], x + dx[i]
+
+      if ny < 0 or nx < 0 or ny >= n or nx >= n:
+        continue
+
+      if l[ny][nx] <= d + 1:
+        continue
       
-    if to_unlock > 0:
-      # 잠겨있는 것을 열어야 한다.
-      for i in range(k):
-        if not chk[i]:
-          continue
-        
-        if to_unlock > 0 and stats[i] == 0:
-          stats[i] = 1
-          to_unlock -= 1
-          chk[i] = False
-    
-    if to_lock > 0:
-      # 최대한 열려있던 것을 잠가야 한다.
-      for i in range(k):
-        if not chk[i]:
-          continue
-        
-        if to_lock > 0 and stats[i] == 1:
-          stats[i] = 0
-          to_lock -= 1
-          chk[i] = False
-  
-  print(k - sum(stats))
+      q.append([ny, nx, d + 1])
+
+  for i in range(n):
+    for j in range(n):
+      print(chr(l[i][j] % 26 + ord('a')), end="")
+    print()
+
+
 
 
 if __name__ == "__main__":

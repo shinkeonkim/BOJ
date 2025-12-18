@@ -1,8 +1,8 @@
 """
-[21402: Фитнесс-клуб](https://www.acmicpc.net/problem/21402)
+[5133: Recipes](https://www.acmicpc.net/problem/5133)
 
 Tier: Bronze 1 
-Category: greedy
+Category: implementation, math
 """
 
 
@@ -16,6 +16,7 @@ from heapq import heappush, heappop, heapify
 from functools import reduce, lru_cache
 from operator import itemgetter, attrgetter, mul, add, sub, truediv
 from typing import List, Tuple, Dict, Set, Any, Union
+from fractions import Fraction
 
 SYS_INPUT = True
 RECURSION_LIMIT = 10 ** 7
@@ -35,55 +36,27 @@ p = print
 
 def gcd(a, b): return gcd(b, a % b) if b > 0 else a
 def lcm(a, b): return a * b // gcd(a, b)
+def round_up_half(n): return floor(n + 0.5)
+def rotate90(l): return [''.join(x) for x in zip(*l[::-1])]
 
 
 def solve():
   n, k = mii()
+  for _ in range(n):
+    a, b = isplit()
+    b, c = b.split("/")
+    a, b, c = int(a), int(b), int(c)
 
-  l = [mii() for _ in range(n)]
+    crt = Fraction(b, c) + Fraction(a, 1)
+    crt *= k
 
-  stats = [0] * k
-
-  for to_lock, to_unlock in l:
-    chk = [True] * k
-
-    if to_unlock > 0:
-      # 최대한 열려있는 것을 계속 열려있게 함.
-      for i in range(k):
-        if not chk[i]:
-          continue
-        
-        if to_unlock > 0 and stats[i]:
-          stats[i] = 1
-          to_unlock -= 1
-          chk[i] = False
-      
-    if to_unlock > 0:
-      # 잠겨있는 것을 열어야 한다.
-      for i in range(k):
-        if not chk[i]:
-          continue
-        
-        if to_unlock > 0 and stats[i] == 0:
-          stats[i] = 1
-          to_unlock -= 1
-          chk[i] = False
-    
-    if to_lock > 0:
-      # 최대한 열려있던 것을 잠가야 한다.
-      for i in range(k):
-        if not chk[i]:
-          continue
-        
-        if to_lock > 0 and stats[i] == 1:
-          stats[i] = 0
-          to_lock -= 1
-          chk[i] = False
-  
-  print(k - sum(stats))
-
-
+    if crt.is_integer():
+      print(int(crt))
+    else:
+      print(crt.numerator // crt.denominator, f"{crt.numerator % crt.denominator}/{crt.denominator}")
 if __name__ == "__main__":
-  tc = 1
+  tc = ii()
   for t in range(1, tc+1):
+    print(f"Data Set {t}:")
     ret = solve()
+    print()

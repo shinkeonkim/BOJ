@@ -1,8 +1,8 @@
 """
-[33646: Pencil Crayons](https://www.acmicpc.net/problem/33646)
+[34308: Abby's Absolutes](https://www.acmicpc.net/problem/34308)
 
-Tier: Bronze 1 
-Category: greedy, implementation
+Tier: Bronze 4 
+Category: math, arithmetic
 """
 
 
@@ -16,6 +16,7 @@ from heapq import heappush, heappop, heapify
 from functools import reduce, lru_cache
 from operator import itemgetter, attrgetter, mul, add, sub, truediv
 from typing import List, Tuple, Dict, Set, Any, Union
+from fractions import Fraction
 
 SYS_INPUT = True
 RECURSION_LIMIT = 10 ** 7
@@ -40,21 +41,14 @@ def rotate90(l): return [''.join(x) for x in zip(*l[::-1])]
 
 
 def solve():
-  n, k = mii()
+  k, n = mii()
+  l = mii()
 
-  l = [isplit() for _ in range(n)]
-
-  ans = 0
   for i in l:
-    c = Counter()
-    for j in i:
-      c[j] += 1
-    
-    for v in c.values():
-      ans += v - 1
-    
-  print(ans)
-
+    if abs(i - 1) <= abs(k - i):
+      p(1, end=" ")
+    else:
+      p(k, end=" ")
 
 if __name__ == "__main__":
   tc = 1

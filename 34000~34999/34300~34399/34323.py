@@ -1,8 +1,8 @@
 """
-[33646: Pencil Crayons](https://www.acmicpc.net/problem/33646)
+[34323: 할인이 필요해](https://www.acmicpc.net/problem/34323)
 
-Tier: Bronze 1 
-Category: greedy, implementation
+Tier: Bronze 4 
+Category: math, arithmetic
 """
 
 
@@ -16,6 +16,7 @@ from heapq import heappush, heappop, heapify
 from functools import reduce, lru_cache
 from operator import itemgetter, attrgetter, mul, add, sub, truediv
 from typing import List, Tuple, Dict, Set, Any, Union
+from fractions import Fraction
 
 SYS_INPUT = True
 RECURSION_LIMIT = 10 ** 7
@@ -40,20 +41,8 @@ def rotate90(l): return [''.join(x) for x in zip(*l[::-1])]
 
 
 def solve():
-  n, k = mii()
-
-  l = [isplit() for _ in range(n)]
-
-  ans = 0
-  for i in l:
-    c = Counter()
-    for j in i:
-      c[j] += 1
-    
-    for v in c.values():
-      ans += v - 1
-    
-  print(ans)
+  N, M, S = mii()
+  print(min((M + 1) * S * (100 - N) // 100, M * S))
 
 
 if __name__ == "__main__":

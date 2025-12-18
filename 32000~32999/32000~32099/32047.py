@@ -1,8 +1,8 @@
 """
-[33646: Pencil Crayons](https://www.acmicpc.net/problem/33646)
+[32047: Overtaking](https://www.acmicpc.net/problem/32047)
 
 Tier: Bronze 1 
-Category: greedy, implementation
+Category: implementation, simulation
 """
 
 
@@ -35,28 +35,38 @@ p = print
 
 def gcd(a, b): return gcd(b, a % b) if b > 0 else a
 def lcm(a, b): return a * b // gcd(a, b)
-def round_up_half(n): return floor(n + 0.5)
-def rotate90(l): return [''.join(x) for x in zip(*l[::-1])]
 
 
-def solve():
-  n, k = mii()
+def solve(n):
+  winner = 0
 
-  l = [isplit() for _ in range(n)]
+  A = mii()
+  B = mii()
 
-  ans = 0
-  for i in l:
-    c = Counter()
-    for j in i:
-      c[j] += 1
-    
-    for v in c.values():
-      ans += v - 1
-    
-  print(ans)
+  a = b = 0
+  overtaking = 0
+
+  for i in range(n):
+    a += A[i]
+    b += B[i]
+
+    if a > b:
+      if winner == 2:
+        overtaking += 1
+      winner = 1
+    elif b > a:
+      if winner == 1:
+        overtaking += 1
+      winner = 2
+  
+  print(overtaking)
 
 
 if __name__ == "__main__":
-  tc = 1
-  for t in range(1, tc+1):
-    ret = solve()
+  while 1:
+    n = ii()
+
+    if n == 0:
+      break
+
+    solve(n)

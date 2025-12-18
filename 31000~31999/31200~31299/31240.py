@@ -1,8 +1,8 @@
 """
-[21402: Фитнесс-клуб](https://www.acmicpc.net/problem/21402)
+[31240: НОМЕР НА СТРАНИЦА](https://www.acmicpc.net/problem/31240)
 
 Tier: Bronze 1 
-Category: greedy
+Category: implementation
 """
 
 
@@ -38,50 +38,27 @@ def lcm(a, b): return a * b // gcd(a, b)
 
 
 def solve():
-  n, k = mii()
+  s = inp()
+  ans = 0
 
-  l = [mii() for _ in range(n)]
+  for i in range(1, len(s)):
+    a = s[:i]
+    b = s[i:]
 
-  stats = [0] * k
+    if a[0] == '0' or b[0] == '0':
+      continue
 
-  for to_lock, to_unlock in l:
-    chk = [True] * k
-
-    if to_unlock > 0:
-      # 최대한 열려있는 것을 계속 열려있게 함.
-      for i in range(k):
-        if not chk[i]:
-          continue
-        
-        if to_unlock > 0 and stats[i]:
-          stats[i] = 1
-          to_unlock -= 1
-          chk[i] = False
-      
-    if to_unlock > 0:
-      # 잠겨있는 것을 열어야 한다.
-      for i in range(k):
-        if not chk[i]:
-          continue
-        
-        if to_unlock > 0 and stats[i] == 0:
-          stats[i] = 1
-          to_unlock -= 1
-          chk[i] = False
+    if len(a) > len(b):
+      continue
     
-    if to_lock > 0:
-      # 최대한 열려있던 것을 잠가야 한다.
-      for i in range(k):
-        if not chk[i]:
-          continue
-        
-        if to_lock > 0 and stats[i] == 1:
-          stats[i] = 0
-          to_lock -= 1
-          chk[i] = False
+    if len(a) < len(b):
+      ans += 1
+      continue
+    
+    if int(a) <= int(b):
+      ans += 1
   
-  print(k - sum(stats))
-
+  print(ans)
 
 if __name__ == "__main__":
   tc = 1

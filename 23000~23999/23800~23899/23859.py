@@ -1,8 +1,8 @@
 """
-[21402: Фитнесс-клуб](https://www.acmicpc.net/problem/21402)
+[23859: Snowman](https://www.acmicpc.net/problem/23859)
 
 Tier: Bronze 1 
-Category: greedy
+Category: greedy, string
 """
 
 
@@ -38,49 +38,21 @@ def lcm(a, b): return a * b // gcd(a, b)
 
 
 def solve():
-  n, k = mii()
+  s = input()
+  n = int(input())
 
-  l = [mii() for _ in range(n)]
+  l = []
+  k = len(s)
 
-  stats = [0] * k
+  for i in range(k - 1):
+    l.append(s[i] + s[i + 1])
+    l.append(s[i + 1] + s[i])
 
-  for to_lock, to_unlock in l:
-    chk = [True] * k
+  l.sort()
 
-    if to_unlock > 0:
-      # 최대한 열려있는 것을 계속 열려있게 함.
-      for i in range(k):
-        if not chk[i]:
-          continue
-        
-        if to_unlock > 0 and stats[i]:
-          stats[i] = 1
-          to_unlock -= 1
-          chk[i] = False
-      
-    if to_unlock > 0:
-      # 잠겨있는 것을 열어야 한다.
-      for i in range(k):
-        if not chk[i]:
-          continue
-        
-        if to_unlock > 0 and stats[i] == 0:
-          stats[i] = 1
-          to_unlock -= 1
-          chk[i] = False
-    
-    if to_lock > 0:
-      # 최대한 열려있던 것을 잠가야 한다.
-      for i in range(k):
-        if not chk[i]:
-          continue
-        
-        if to_lock > 0 and stats[i] == 1:
-          stats[i] = 0
-          to_lock -= 1
-          chk[i] = False
-  
-  print(k - sum(stats))
+  target = ''.join(l[0])
+
+  print(target * (n // 2) + target[:n % 2])
 
 
 if __name__ == "__main__":

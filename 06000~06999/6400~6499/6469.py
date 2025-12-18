@@ -1,8 +1,8 @@
 """
-[33646: Pencil Crayons](https://www.acmicpc.net/problem/33646)
+[6469: Uniform Generator](https://www.acmicpc.net/problem/6469)
 
 Tier: Bronze 1 
-Category: greedy, implementation
+Category: math, implementation
 """
 
 
@@ -16,6 +16,7 @@ from heapq import heappush, heappop, heapify
 from functools import reduce, lru_cache
 from operator import itemgetter, attrgetter, mul, add, sub, truediv
 from typing import List, Tuple, Dict, Set, Any, Union
+from fractions import Fraction
 
 SYS_INPUT = True
 RECURSION_LIMIT = 10 ** 7
@@ -39,24 +40,17 @@ def round_up_half(n): return floor(n + 0.5)
 def rotate90(l): return [''.join(x) for x in zip(*l[::-1])]
 
 
-def solve():
-  n, k = mii()
-
-  l = [isplit() for _ in range(n)]
-
-  ans = 0
-  for i in l:
-    c = Counter()
-    for j in i:
-      c[j] += 1
-    
-    for v in c.values():
-      ans += v - 1
-    
-  print(ans)
+def solve(a, b):
+  ret = "Good" if gcd(a, b) == 1 else "Bad"
+  
+  print(f"{a:>10}{b:>10} {ret} Choice\n")
 
 
 if __name__ == "__main__":
-  tc = 1
-  for t in range(1, tc+1):
-    ret = solve()
+  while 1:
+    try:
+      a, b = map(int, input().split())
+    except EOFError:
+      break
+    
+    solve(a, b)

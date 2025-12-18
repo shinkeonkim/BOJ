@@ -1,8 +1,8 @@
 """
-[21402: Фитнесс-клуб](https://www.acmicpc.net/problem/21402)
+[32906: Triangle on the Axis](https://www.acmicpc.net/problem/32906)
 
 Tier: Bronze 1 
-Category: greedy
+Category: geometry, implementation
 """
 
 
@@ -38,52 +38,30 @@ def lcm(a, b): return a * b // gcd(a, b)
 
 
 def solve():
-  n, k = mii()
+  n = ii()
+  points = [mii() for _ in range(n)]
 
-  l = [mii() for _ in range(n)]
+  point_x = []
+  point_y = []
 
-  stats = [0] * k
+  for x, y in points:
+    if y == 0:
+      point_x.append(x)
+    else:
+      point_y.append(abs(y))
 
-  for to_lock, to_unlock in l:
-    chk = [True] * k
+  point_x.sort()
+  point_y.sort()
 
-    if to_unlock > 0:
-      # 최대한 열려있는 것을 계속 열려있게 함.
-      for i in range(k):
-        if not chk[i]:
-          continue
-        
-        if to_unlock > 0 and stats[i]:
-          stats[i] = 1
-          to_unlock -= 1
-          chk[i] = False
-      
-    if to_unlock > 0:
-      # 잠겨있는 것을 열어야 한다.
-      for i in range(k):
-        if not chk[i]:
-          continue
-        
-        if to_unlock > 0 and stats[i] == 0:
-          stats[i] = 1
-          to_unlock -= 1
-          chk[i] = False
-    
-    if to_lock > 0:
-      # 최대한 열려있던 것을 잠가야 한다.
-      for i in range(k):
-        if not chk[i]:
-          continue
-        
-        if to_lock > 0 and stats[i] == 1:
-          stats[i] = 0
-          to_lock -= 1
-          chk[i] = False
+  if len(point_x) <= 1 or len(point_y) == 0:
+    return 0
   
-  print(k - sum(stats))
+  return point_y[-1] * (point_x[-1] - point_x[0]) / 2
 
 
 if __name__ == "__main__":
   tc = 1
   for t in range(1, tc+1):
     ret = solve()
+
+    print(ret)

@@ -1,8 +1,8 @@
 """
-[12198: Password Attacker (Small)](https://www.acmicpc.net/problem/12198)
+[34509: 2, 4, 6, 8](https://www.acmicpc.net/problem/34509)
 
-Tier: Bronze 1 
-Category: math, bruteforcing, combinatorics
+Tier: Bronze 4 
+Category: bruteforcing, constructive
 """
 
 
@@ -16,6 +16,7 @@ from heapq import heappush, heappop, heapify
 from functools import reduce, lru_cache
 from operator import itemgetter, attrgetter, mul, add, sub, truediv
 from typing import List, Tuple, Dict, Set, Any, Union
+from fractions import Fraction
 
 SYS_INPUT = True
 RECURSION_LIMIT = 10 ** 7
@@ -35,15 +36,21 @@ p = print
 
 def gcd(a, b): return gcd(b, a % b) if b > 0 else a
 def lcm(a, b): return a * b // gcd(a, b)
+def round_up_half(n): return floor(n + 0.5)
+def rotate90(l): return [''.join(x) for x in zip(*l[::-1])]
 
 
 def solve():
-  m, n = mii() # m개의 숫자 종류, n자리 비밀번호 구성
-
+  for a in range(1, 10):
+    for b in range(0, 10):
+      if a == 8 or b == 8:
+        continue
+      if (b * 10 + a) % 4 == 0 and (a + b) % 6 == 0:
+        print(a * 10 + b)
   
 
 
 if __name__ == "__main__":
-  tc = ii()
+  tc = 1
   for t in range(1, tc+1):
     ret = solve()

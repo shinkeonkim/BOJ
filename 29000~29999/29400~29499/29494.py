@@ -1,8 +1,8 @@
 """
-[21402: Фитнесс-клуб](https://www.acmicpc.net/problem/21402)
+[29494: Простая задача](https://www.acmicpc.net/problem/29494)
 
 Tier: Bronze 1 
-Category: greedy
+Category: ad_hoc, bruteforcing
 """
 
 
@@ -38,52 +38,25 @@ def lcm(a, b): return a * b // gcd(a, b)
 
 
 def solve():
-  n, k = mii()
+  l = [mii() for _ in range(3)]
 
-  l = [mii() for _ in range(n)]
-
-  stats = [0] * k
-
-  for to_lock, to_unlock in l:
-    chk = [True] * k
-
-    if to_unlock > 0:
-      # 최대한 열려있는 것을 계속 열려있게 함.
-      for i in range(k):
-        if not chk[i]:
+  for center in range(3):
+    for k1 in range(4):
+      for k2 in range(4):
+        if k1 == k2:
           continue
-        
-        if to_unlock > 0 and stats[i]:
-          stats[i] = 1
-          to_unlock -= 1
-          chk[i] = False
-      
-    if to_unlock > 0:
-      # 잠겨있는 것을 열어야 한다.
-      for i in range(k):
-        if not chk[i]:
-          continue
-        
-        if to_unlock > 0 and stats[i] == 0:
-          stats[i] = 1
-          to_unlock -= 1
-          chk[i] = False
-    
-    if to_lock > 0:
-      # 최대한 열려있던 것을 잠가야 한다.
-      for i in range(k):
-        if not chk[i]:
-          continue
-        
-        if to_lock > 0 and stats[i] == 1:
-          stats[i] = 0
-          to_lock -= 1
-          chk[i] = False
+
+        a = (center + 1) % 3
+        b = (center + 2) % 3
+
+        if l[center][k1] in l[a] and l[center][k2] in l[b]:
+          return True
   
-  print(k - sum(stats))
+  return False
 
 
 if __name__ == "__main__":
   tc = 1
   for t in range(1, tc+1):
     ret = solve()
+    print("Yes" if ret else "No")

@@ -1,8 +1,8 @@
 """
-[33646: Pencil Crayons](https://www.acmicpc.net/problem/33646)
+[34635: Art Installation](https://www.acmicpc.net/problem/34635)
 
-Tier: Bronze 1 
-Category: greedy, implementation
+Tier: Bronze 2 
+Category: math, greedy, arithmetic
 """
 
 
@@ -16,6 +16,7 @@ from heapq import heappush, heappop, heapify
 from functools import reduce, lru_cache
 from operator import itemgetter, attrgetter, mul, add, sub, truediv
 from typing import List, Tuple, Dict, Set, Any, Union
+from fractions import Fraction
 
 SYS_INPUT = True
 RECURSION_LIMIT = 10 ** 7
@@ -40,22 +41,35 @@ def rotate90(l): return [''.join(x) for x in zip(*l[::-1])]
 
 
 def solve():
-  n, k = mii()
-
-  l = [isplit() for _ in range(n)]
-
+  nr, ng, nb = mii()
+  r, g, b = mii()
+  rg, gb = mii()
+  
+  nr = max(0, nr - r)
+  ng = max(0, ng - g)
+  nb = max(0, nb - b)
+  
   ans = 0
-  for i in l:
-    c = Counter()
-    for j in i:
-      c[j] += 1
-    
-    for v in c.values():
-      ans += v - 1
-    
-  print(ans)
+  buy_r = min(nr, rg)
+  ans += buy_r
+  rg -= buy_r
+  nr -= buy_r
+  
+  buy_b = min(nb, gb)
+  ans += buy_b
+  gb -= buy_b
+  nb -= buy_b
+  
+  buy_g = min(ng, rg + gb)
+  ans += buy_g
+  ng -= buy_g
 
-
+  if nr + ng + nb == 0:
+    print(ans)
+  else:
+    print(-1)
+  
+  
 if __name__ == "__main__":
   tc = 1
   for t in range(1, tc+1):

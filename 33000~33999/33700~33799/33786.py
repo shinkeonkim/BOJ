@@ -1,8 +1,8 @@
 """
-[33646: Pencil Crayons](https://www.acmicpc.net/problem/33646)
+[33786: Inaccurate Expectations](https://www.acmicpc.net/problem/33786)
 
 Tier: Bronze 1 
-Category: greedy, implementation
+Category: math, arbitrary_precision, recursion
 """
 
 
@@ -19,7 +19,7 @@ from typing import List, Tuple, Dict, Set, Any, Union
 
 SYS_INPUT = True
 RECURSION_LIMIT = 10 ** 7
-SET_RECURSION = False
+SET_RECURSION = True
 BLANK = " "
 
 if SET_RECURSION:
@@ -35,25 +35,21 @@ p = print
 
 def gcd(a, b): return gcd(b, a % b) if b > 0 else a
 def lcm(a, b): return a * b // gcd(a, b)
-def round_up_half(n): return floor(n + 0.5)
-def rotate90(l): return [''.join(x) for x in zip(*l[::-1])]
 
+
+def f(n):
+  if n == 0:
+    return 0
+  
+  if n == 1:
+    return 1
+
+  return n + n * f(n - 1)
 
 def solve():
-  n, k = mii()
+  n = ii()
 
-  l = [isplit() for _ in range(n)]
-
-  ans = 0
-  for i in l:
-    c = Counter()
-    for j in i:
-      c[j] += 1
-    
-    for v in c.values():
-      ans += v - 1
-    
-  print(ans)
+  print(f(n))
 
 
 if __name__ == "__main__":

@@ -1,8 +1,8 @@
 """
-[33646: Pencil Crayons](https://www.acmicpc.net/problem/33646)
+[4749: Take Your Vitamins](https://www.acmicpc.net/problem/4749)
 
 Tier: Bronze 1 
-Category: greedy, implementation
+Category: arithmetic, implementation, math, parsing, string
 """
 
 
@@ -16,6 +16,7 @@ from heapq import heappush, heappop, heapify
 from functools import reduce, lru_cache
 from operator import itemgetter, attrgetter, mul, add, sub, truediv
 from typing import List, Tuple, Dict, Set, Any, Union
+from fractions import Fraction
 
 SYS_INPUT = True
 RECURSION_LIMIT = 10 ** 7
@@ -40,23 +41,28 @@ def rotate90(l): return [''.join(x) for x in zip(*l[::-1])]
 
 
 def solve():
-  n, k = mii()
-
-  l = [isplit() for _ in range(n)]
-
-  ans = 0
-  for i in l:
-    c = Counter()
-    for j in i:
-      c[j] += 1
+  no_significant_amount = []
+  
+  while 1:
+    A, U, R, *V = isplit()
+    A = float(A)
+    R = float(R)
+    V = " ".join(V)
     
-    for v in c.values():
-      ans += v - 1
+    if A < 0:
+      break
     
-  print(ans)
+    rate = round_up_half(A / R * 100)
+
+    if A * 100 < R:
+      no_significant_amount.append(V)
+    else:
+      print(V, f"{A:.1f}", U, f"{rate}%")
+
+  if no_significant_amount:
+    print("Provides no significant amount of:")
+  print(*no_significant_amount, sep="\n")
 
 
 if __name__ == "__main__":
-  tc = 1
-  for t in range(1, tc+1):
-    ret = solve()
+  solve()

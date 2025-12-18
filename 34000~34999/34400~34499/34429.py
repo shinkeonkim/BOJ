@@ -1,8 +1,8 @@
 """
-[21402: Фитнесс-клуб](https://www.acmicpc.net/problem/21402)
+[34429: Late Larry](https://www.acmicpc.net/problem/34429)
 
-Tier: Bronze 1 
-Category: greedy
+Tier: Bronze 3 
+Category: math, implementation, arithmetic
 """
 
 
@@ -16,6 +16,7 @@ from heapq import heappush, heappop, heapify
 from functools import reduce, lru_cache
 from operator import itemgetter, attrgetter, mul, add, sub, truediv
 from typing import List, Tuple, Dict, Set, Any, Union
+from fractions import Fraction
 
 SYS_INPUT = True
 RECURSION_LIMIT = 10 ** 7
@@ -35,53 +36,34 @@ p = print
 
 def gcd(a, b): return gcd(b, a % b) if b > 0 else a
 def lcm(a, b): return a * b // gcd(a, b)
+def round_up_half(n): return floor(n + 0.5)
+def rotate90(l): return [''.join(x) for x in zip(*l[::-1])]
 
 
 def solve():
-  n, k = mii()
-
-  l = [mii() for _ in range(n)]
-
-  stats = [0] * k
-
-  for to_lock, to_unlock in l:
-    chk = [True] * k
-
-    if to_unlock > 0:
-      # 최대한 열려있는 것을 계속 열려있게 함.
-      for i in range(k):
-        if not chk[i]:
-          continue
-        
-        if to_unlock > 0 and stats[i]:
-          stats[i] = 1
-          to_unlock -= 1
-          chk[i] = False
-      
-    if to_unlock > 0:
-      # 잠겨있는 것을 열어야 한다.
-      for i in range(k):
-        if not chk[i]:
-          continue
-        
-        if to_unlock > 0 and stats[i] == 0:
-          stats[i] = 1
-          to_unlock -= 1
-          chk[i] = False
-    
-    if to_lock > 0:
-      # 최대한 열려있던 것을 잠가야 한다.
-      for i in range(k):
-        if not chk[i]:
-          continue
-        
-        if to_lock > 0 and stats[i] == 1:
-          stats[i] = 0
-          to_lock -= 1
-          chk[i] = False
+  s = input()
+  tm, d = s.split()
+  h, m = map(int, tm.split(':'))
+  minus = ii()
   
-  print(k - sum(stats))
+  h %= 12
+  
+  ret = 0
+  if d == 'PM':
+    ret += 12 * 60
+  
+  ret += h * 60 + m
+  ret -= minus
+  
+  ret += 24 * 60
+  ret %= (24 * 60)
 
+  am_pm = 'AM' if ret < 12 * 60 else 'PM'
+  
+  h = (ret // 60) % 12
+  m = ret % 60
+  
+  print(f"{h if h != 0 else 12}:{m:02} {am_pm}")
 
 if __name__ == "__main__":
   tc = 1

@@ -1,8 +1,8 @@
 """
-[21402: Фитнесс-клуб](https://www.acmicpc.net/problem/21402)
+[5161: Toxic Assets](https://www.acmicpc.net/problem/5161)
 
 Tier: Bronze 1 
-Category: greedy
+Category: arithmetic, implementation, math
 """
 
 
@@ -38,52 +38,20 @@ def lcm(a, b): return a * b // gcd(a, b)
 
 
 def solve():
-  n, k = mii()
+  B, D = mii()
+  prices = mfi()
 
-  l = [mii() for _ in range(n)]
+  derivatives = [mfi() for _ in range(D)]
+  investment_rates = mfi()
 
-  stats = [0] * k
+  for derivative in derivatives:
+    prices.append(sum([derivative[i] * prices[i] for i in range(len(derivative))]))
 
-  for to_lock, to_unlock in l:
-    chk = [True] * k
-
-    if to_unlock > 0:
-      # 최대한 열려있는 것을 계속 열려있게 함.
-      for i in range(k):
-        if not chk[i]:
-          continue
-        
-        if to_unlock > 0 and stats[i]:
-          stats[i] = 1
-          to_unlock -= 1
-          chk[i] = False
-      
-    if to_unlock > 0:
-      # 잠겨있는 것을 열어야 한다.
-      for i in range(k):
-        if not chk[i]:
-          continue
-        
-        if to_unlock > 0 and stats[i] == 0:
-          stats[i] = 1
-          to_unlock -= 1
-          chk[i] = False
-    
-    if to_lock > 0:
-      # 최대한 열려있던 것을 잠가야 한다.
-      for i in range(k):
-        if not chk[i]:
-          continue
-        
-        if to_lock > 0 and stats[i] == 1:
-          stats[i] = 0
-          to_lock -= 1
-          chk[i] = False
-  
-  print(k - sum(stats))
+  return sum([investment_rates[i] * prices[i] for i in range(B + D)])
 
 
 if __name__ == "__main__":
-  tc = 1
+  tc = ii()
   for t in range(1, tc+1):
     ret = solve()
+    print(f"Data Set {t}:\n{ret:.2f}\n")

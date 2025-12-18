@@ -1,8 +1,8 @@
 """
-[21402: Фитнесс-клуб](https://www.acmicpc.net/problem/21402)
+[15920: 선로에 마네킹이야!!](https://www.acmicpc.net/problem/15920)
 
 Tier: Bronze 1 
-Category: greedy
+Category: implementation, simulation
 """
 
 
@@ -38,49 +38,27 @@ def lcm(a, b): return a * b // gcd(a, b)
 
 
 def solve():
-  n, k = mii()
+  n = ii()
+  s = inp()
 
-  l = [mii() for _ in range(n)]
+  area = 0
+  chk = 0
 
-  stats = [0] * k
-
-  for to_lock, to_unlock in l:
-    chk = [True] * k
-
-    if to_unlock > 0:
-      # 최대한 열려있는 것을 계속 열려있게 함.
-      for i in range(k):
-        if not chk[i]:
-          continue
-        
-        if to_unlock > 0 and stats[i]:
-          stats[i] = 1
-          to_unlock -= 1
-          chk[i] = False
-      
-    if to_unlock > 0:
-      # 잠겨있는 것을 열어야 한다.
-      for i in range(k):
-        if not chk[i]:
-          continue
-        
-        if to_unlock > 0 and stats[i] == 0:
-          stats[i] = 1
-          to_unlock -= 1
-          chk[i] = False
-    
-    if to_lock > 0:
-      # 최대한 열려있던 것을 잠가야 한다.
-      for i in range(k):
-        if not chk[i]:
-          continue
-        
-        if to_lock > 0 and stats[i] == 1:
-          stats[i] = 0
-          to_lock -= 1
-          chk[i] = False
+  for i in range(n):
+    if s[i] == 'W':
+      area += 1
+      if area == 2:
+        break
+    elif s[i] == 'P':
+      if area == 1:
+        chk = 2
+      else:
+        chk = 1 - chk
   
-  print(k - sum(stats))
+  if area < 2:
+    print(0)
+  else:
+    print([5, 1, 6][chk])
 
 
 if __name__ == "__main__":

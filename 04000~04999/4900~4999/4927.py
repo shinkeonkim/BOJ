@@ -1,8 +1,8 @@
 """
-[33646: Pencil Crayons](https://www.acmicpc.net/problem/33646)
+[4927: Casting Out Nines](https://www.acmicpc.net/problem/4927)
 
 Tier: Bronze 1 
-Category: greedy, implementation
+Category: math, implementation, string, arithmetic, parsing
 """
 
 
@@ -16,6 +16,7 @@ from heapq import heappush, heappop, heapify
 from functools import reduce, lru_cache
 from operator import itemgetter, attrgetter, mul, add, sub, truediv
 from typing import List, Tuple, Dict, Set, Any, Union
+from fractions import Fraction
 
 SYS_INPUT = True
 RECURSION_LIMIT = 10 ** 7
@@ -38,25 +39,39 @@ def lcm(a, b): return a * b // gcd(a, b)
 def round_up_half(n): return floor(n + 0.5)
 def rotate90(l): return [''.join(x) for x in zip(*l[::-1])]
 
+def digit_sum(n):
+  return sum(int(d) for d in str(n))
 
-def solve():
-  n, k = mii()
+def solve(s):
+  a,r = s.split("=")
+  r = int(r)
+  
+  if '+' in a:
+    x, y = a.split('+')
+    x, y = int(x), int(y)
 
-  l = [isplit() for _ in range(n)]
+    if digit_sum(r) % 9 == (digit_sum(x) + digit_sum(y)) % 9:
+      return True
 
-  ans = 0
-  for i in l:
-    c = Counter()
-    for j in i:
-      c[j] += 1
-    
-    for v in c.values():
-      ans += v - 1
-    
-  print(ans)
+    return False
+  else:
+    x, y = a.split('*')
+    x, y = int(x), int(y)
+
+    if digit_sum(r) % 9 == (digit_sum(x) * digit_sum(y)) % 9:
+      return True
+    return False
 
 
 if __name__ == "__main__":
-  tc = 1
-  for t in range(1, tc+1):
-    ret = solve()
+  t = 0
+  while 1:
+    t += 1
+    s = input()
+
+    if s == '.':
+      break
+
+    ret = solve(s[:-1])
+
+    print(f"{t}. {'PASS' if ret else 'NOT!'}")

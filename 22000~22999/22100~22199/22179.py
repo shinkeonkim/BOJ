@@ -1,8 +1,8 @@
 """
-[21402: Фитнесс-клуб](https://www.acmicpc.net/problem/21402)
+[22179: Загранпаспорт](https://www.acmicpc.net/problem/22179)
 
 Tier: Bronze 1 
-Category: greedy
+Category: arithmetic, implementation, math, simulation
 """
 
 
@@ -36,54 +36,37 @@ p = print
 def gcd(a, b): return gcd(b, a % b) if b > 0 else a
 def lcm(a, b): return a * b // gcd(a, b)
 
+def tm_to_num(tm: str) -> int:
+  h, m = map(int, tm.split(":"))
+  return h * 60 + m
 
 def solve():
-  n, k = mii()
+  current = tm_to_num(inp())
 
-  l = [mii() for _ in range(n)]
+  n  = ii()
 
-  stats = [0] * k
+  for _ in range(n):
+    a, b, duration = isplit()
+    a = tm_to_num(a)
+    b = tm_to_num(b)
+    duration = int(duration)
 
-  for to_lock, to_unlock in l:
-    chk = [True] * k
-
-    if to_unlock > 0:
-      # 최대한 열려있는 것을 계속 열려있게 함.
-      for i in range(k):
-        if not chk[i]:
-          continue
-        
-        if to_unlock > 0 and stats[i]:
-          stats[i] = 1
-          to_unlock -= 1
-          chk[i] = False
-      
-    if to_unlock > 0:
-      # 잠겨있는 것을 열어야 한다.
-      for i in range(k):
-        if not chk[i]:
-          continue
-        
-        if to_unlock > 0 and stats[i] == 0:
-          stats[i] = 1
-          to_unlock -= 1
-          chk[i] = False
-    
-    if to_lock > 0:
-      # 최대한 열려있던 것을 잠가야 한다.
-      for i in range(k):
-        if not chk[i]:
-          continue
-        
-        if to_lock > 0 and stats[i] == 1:
-          stats[i] = 0
-          to_lock -= 1
-          chk[i] = False
+    if current < b and b - max(current, a) >= duration:
+      current = max(current, a) + duration
+    else:
+      return (False, -1)
   
-  print(k - sum(stats))
+  return (True, current)
 
 
 if __name__ == "__main__":
   tc = 1
   for t in range(1, tc+1):
     ret = solve()
+
+    if ret[0]:
+      p("Yes")
+      p(f"{ret[1] // 60:02}:{ret[1] % 60:02}")
+    else:
+      p("No")
+    

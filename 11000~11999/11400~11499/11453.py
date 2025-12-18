@@ -1,8 +1,8 @@
 """
-[21402: Фитнесс-клуб](https://www.acmicpc.net/problem/21402)
+[11453: Rummikub](https://www.acmicpc.net/problem/11453)
 
 Tier: Bronze 1 
-Category: greedy
+Category: ad_hoc, implementation, string
 """
 
 
@@ -38,52 +38,41 @@ def lcm(a, b): return a * b // gcd(a, b)
 
 
 def solve():
-  n, k = mii()
+  n = ii()
+  cards = isplit()
 
-  l = [mii() for _ in range(n)]
+  num_d = defaultdict(set)
 
-  stats = [0] * k
+  for card in cards:
+    num_d[int(card[:-1])].add(card[-1])
 
-  for to_lock, to_unlock in l:
-    chk = [True] * k
+  for k, v in num_d.items():
+    if len(v) >= 3:
+      return True
 
-    if to_unlock > 0:
-      # 최대한 열려있는 것을 계속 열려있게 함.
-      for i in range(k):
-        if not chk[i]:
-          continue
-        
-        if to_unlock > 0 and stats[i]:
-          stats[i] = 1
-          to_unlock -= 1
-          chk[i] = False
-      
-    if to_unlock > 0:
-      # 잠겨있는 것을 열어야 한다.
-      for i in range(k):
-        if not chk[i]:
-          continue
-        
-        if to_unlock > 0 and stats[i] == 0:
-          stats[i] = 1
-          to_unlock -= 1
-          chk[i] = False
-    
-    if to_lock > 0:
-      # 최대한 열려있던 것을 잠가야 한다.
-      for i in range(k):
-        if not chk[i]:
-          continue
-        
-        if to_lock > 0 and stats[i] == 1:
-          stats[i] = 0
-          to_lock -= 1
-          chk[i] = False
-  
-  print(k - sum(stats))
+  color_d = defaultdict(set)
+  for card in cards:
+    color_d[card[-1]].add(card[:-1])
+
+  for k, v in color_d.items():
+    v = sorted(map(int, v))
+
+    straight = False
+
+    for i in range(len(v) - 2):
+      if v[i] + 1 == v[i + 1] and v[i + 1] + 1 == v[i + 2]:
+        straight = True
+        break
+
+    if straight:
+      return True
+
+  return False
 
 
 if __name__ == "__main__":
-  tc = 1
+  tc = ii()
   for t in range(1, tc+1):
     ret = solve()
+
+    print("YES" if ret else "NO")

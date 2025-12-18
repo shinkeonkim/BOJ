@@ -1,8 +1,8 @@
 """
-[21402: Фитнесс-клуб](https://www.acmicpc.net/problem/21402)
+[26507: Rhonda](https://www.acmicpc.net/problem/26507)
 
 Tier: Bronze 1 
-Category: greedy
+Category: implementation, string
 """
 
 
@@ -38,49 +38,29 @@ def lcm(a, b): return a * b // gcd(a, b)
 
 
 def solve():
-  n, k = mii()
-
-  l = [mii() for _ in range(n)]
-
-  stats = [0] * k
-
-  for to_lock, to_unlock in l:
-    chk = [True] * k
-
-    if to_unlock > 0:
-      # 최대한 열려있는 것을 계속 열려있게 함.
-      for i in range(k):
-        if not chk[i]:
-          continue
-        
-        if to_unlock > 0 and stats[i]:
-          stats[i] = 1
-          to_unlock -= 1
-          chk[i] = False
-      
-    if to_unlock > 0:
-      # 잠겨있는 것을 열어야 한다.
-      for i in range(k):
-        if not chk[i]:
-          continue
-        
-        if to_unlock > 0 and stats[i] == 0:
-          stats[i] = 1
-          to_unlock -= 1
-          chk[i] = False
-    
-    if to_lock > 0:
-      # 최대한 열려있던 것을 잠가야 한다.
-      for i in range(k):
-        if not chk[i]:
-          continue
-        
-        if to_lock > 0 and stats[i] == 1:
-          stats[i] = 0
-          to_lock -= 1
-          chk[i] = False
+  n = ii()
+  chips = []
+  for _ in range(n):
+    chip = [[*map(int, list(inp()))] for _ in range(10)]
+    inp() # 빈줄 처리
+    chips.append(chip)
   
-  print(k - sum(stats))
+  Q = ii()
+  for _ in range(Q):
+    query = mii()
+
+    ans = [[0] * 10 for _ in range(10)]
+
+    for idx in query:
+      for i in range(10):
+        for j in range(10):
+          ans[i][j] += chips[idx][i][j]
+    
+    for i in range(10):
+      for j in range(10):
+        print(f"{ans[i][j]:02d}", end=" ")
+      print()
+    print()
 
 
 if __name__ == "__main__":

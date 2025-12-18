@@ -1,8 +1,8 @@
 """
-[21402: Фитнесс-клуб](https://www.acmicpc.net/problem/21402)
+[21044: Inverse Common Superstring](https://www.acmicpc.net/problem/21044)
 
 Tier: Bronze 1 
-Category: greedy
+Category: ad_hoc, string
 """
 
 
@@ -38,49 +38,18 @@ def lcm(a, b): return a * b // gcd(a, b)
 
 
 def solve():
-  n, k = mii()
+  s = inp()
 
-  l = [mii() for _ in range(n)]
+  a_cnt = 0
+  ans = 0
 
-  stats = [0] * k
-
-  for to_lock, to_unlock in l:
-    chk = [True] * k
-
-    if to_unlock > 0:
-      # 최대한 열려있는 것을 계속 열려있게 함.
-      for i in range(k):
-        if not chk[i]:
-          continue
-        
-        if to_unlock > 0 and stats[i]:
-          stats[i] = 1
-          to_unlock -= 1
-          chk[i] = False
-      
-    if to_unlock > 0:
-      # 잠겨있는 것을 열어야 한다.
-      for i in range(k):
-        if not chk[i]:
-          continue
-        
-        if to_unlock > 0 and stats[i] == 0:
-          stats[i] = 1
-          to_unlock -= 1
-          chk[i] = False
-    
-    if to_lock > 0:
-      # 최대한 열려있던 것을 잠가야 한다.
-      for i in range(k):
-        if not chk[i]:
-          continue
-        
-        if to_lock > 0 and stats[i] == 1:
-          stats[i] = 0
-          to_lock -= 1
-          chk[i] = False
-  
-  print(k - sum(stats))
+  for i in range(len(s)):
+    if s[i] == 'a':
+      a_cnt += 1
+      ans = max(ans, a_cnt)
+    else:
+      a_cnt = 0
+  print('a' * (ans + 1))
 
 
 if __name__ == "__main__":

@@ -1,8 +1,8 @@
 """
-[21402: Фитнесс-клуб](https://www.acmicpc.net/problem/21402)
+[21207: Train Boarding](https://www.acmicpc.net/problem/21207)
 
 Tier: Bronze 1 
-Category: greedy
+Category: bruteforcing, case_work, implementation, math
 """
 
 
@@ -38,49 +38,35 @@ def lcm(a, b): return a * b // gcd(a, b)
 
 
 def solve():
-  n, k = mii()
+  N, L, P = mii()
 
-  l = [mii() for _ in range(n)]
+  cnt = [0] * N
+  max_distance = 0
+  people = [ii() for _ in range(P)]
 
-  stats = [0] * k
+  entrances = []
 
-  for to_lock, to_unlock in l:
-    chk = [True] * k
-
-    if to_unlock > 0:
-      # 최대한 열려있는 것을 계속 열려있게 함.
-      for i in range(k):
-        if not chk[i]:
-          continue
-        
-        if to_unlock > 0 and stats[i]:
-          stats[i] = 1
-          to_unlock -= 1
-          chk[i] = False
-      
-    if to_unlock > 0:
-      # 잠겨있는 것을 열어야 한다.
-      for i in range(k):
-        if not chk[i]:
-          continue
-        
-        if to_unlock > 0 and stats[i] == 0:
-          stats[i] = 1
-          to_unlock -= 1
-          chk[i] = False
-    
-    if to_lock > 0:
-      # 최대한 열려있던 것을 잠가야 한다.
-      for i in range(k):
-        if not chk[i]:
-          continue
-        
-        if to_lock > 0 and stats[i] == 1:
-          stats[i] = 0
-          to_lock -= 1
-          chk[i] = False
+  for i in range(N):
+    entrances.append(L * i + L // 2)
   
-  print(k - sum(stats))
+  for idx in range(P):
+    person = people[idx]
+
+    min_distance = float('inf')
+    min_idx = -1
+
+    for i in range(N):
+      distance = abs(entrances[i] - person)
+
+      if distance <= min_distance:
+        min_distance = distance
+        min_idx = i
+
+    cnt[min_idx] += 1
+    max_distance = max(max_distance, min_distance)
+  
+  print(max_distance)
+  print(max(cnt))
 
 
 if __name__ == "__main__":

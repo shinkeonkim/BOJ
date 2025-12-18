@@ -1,8 +1,8 @@
 """
-[21402: Фитнесс-клуб](https://www.acmicpc.net/problem/21402)
+[34002: 임스의 잠수맵](https://www.acmicpc.net/problem/34002)
 
 Tier: Bronze 1 
-Category: greedy
+Category: implementation, greedy, simulation
 """
 
 
@@ -38,49 +38,32 @@ def lcm(a, b): return a * b // gcd(a, b)
 
 
 def solve():
-  n, k = mii()
+  A, B, C = mii()
+  S, V = mii()
+  L = ii()
 
-  l = [mii() for _ in range(n)]
+  S *= 30
+  V *= 30
 
-  stats = [0] * k
+  need_level = 250 - L
 
-  for to_lock, to_unlock in l:
-    chk = [True] * k
-
-    if to_unlock > 0:
-      # 최대한 열려있는 것을 계속 열려있게 함.
-      for i in range(k):
-        if not chk[i]:
-          continue
-        
-        if to_unlock > 0 and stats[i]:
-          stats[i] = 1
-          to_unlock -= 1
-          chk[i] = False
-      
-    if to_unlock > 0:
-      # 잠겨있는 것을 열어야 한다.
-      for i in range(k):
-        if not chk[i]:
-          continue
-        
-        if to_unlock > 0 and stats[i] == 0:
-          stats[i] = 1
-          to_unlock -= 1
-          chk[i] = False
+  tm = 0
+  count = 0
+  while need_level > 0:
+    tm += 1
+    if V > 0:
+      count += C
+      V -= 1
+    elif S > 0:
+      count += B
+      S -= 1
+    else:
+      count += A
     
-    if to_lock > 0:
-      # 최대한 열려있던 것을 잠가야 한다.
-      for i in range(k):
-        if not chk[i]:
-          continue
-        
-        if to_lock > 0 and stats[i] == 1:
-          stats[i] = 0
-          to_lock -= 1
-          chk[i] = False
-  
-  print(k - sum(stats))
+    if count >= 100:
+      need_level -= count // 100
+      count %= 100
+  print(tm)
 
 
 if __name__ == "__main__":

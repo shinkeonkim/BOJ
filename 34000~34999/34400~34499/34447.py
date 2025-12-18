@@ -1,8 +1,8 @@
 """
-[33646: Pencil Crayons](https://www.acmicpc.net/problem/33646)
+[34447: Bad Directions](https://www.acmicpc.net/problem/34447)
 
-Tier: Bronze 1 
-Category: greedy, implementation
+Tier: Bronze 3 
+Category: math, implementation, string, arithmetic
 """
 
 
@@ -16,6 +16,7 @@ from heapq import heappush, heappop, heapify
 from functools import reduce, lru_cache
 from operator import itemgetter, attrgetter, mul, add, sub, truediv
 from typing import List, Tuple, Dict, Set, Any, Union
+from fractions import Fraction
 
 SYS_INPUT = True
 RECURSION_LIMIT = 10 ** 7
@@ -40,23 +41,16 @@ def rotate90(l): return [''.join(x) for x in zip(*l[::-1])]
 
 
 def solve():
-  n, k = mii()
-
-  l = [isplit() for _ in range(n)]
-
-  ans = 0
+  k, l = isplit()
+  k = int(k)
+  l = [*map(int, list(l))]
+  
   for i in l:
-    c = Counter()
-    for j in i:
-      c[j] += 1
-    
-    for v in c.values():
-      ans += v - 1
-    
-  print(ans)
+    print((i + k) % 10, end = "")
+  print()
 
 
 if __name__ == "__main__":
-  tc = 1
+  tc = ii()
   for t in range(1, tc+1):
     ret = solve()

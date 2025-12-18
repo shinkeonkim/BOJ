@@ -1,8 +1,8 @@
 """
-[21402: Фитнесс-клуб](https://www.acmicpc.net/problem/21402)
+[28825: Фоторобот Грин-де-Вальда](https://www.acmicpc.net/problem/28825)
 
 Tier: Bronze 1 
-Category: greedy
+Category: bitmask, implementation
 """
 
 
@@ -36,51 +36,35 @@ p = print
 def gcd(a, b): return gcd(b, a % b) if b > 0 else a
 def lcm(a, b): return a * b // gcd(a, b)
 
+def is_available(color: str, permission: str) -> bool:
+  permission = int(permission)
+
+  if permission == 0:
+    return color == "."
+
+  avaiable_set = ["." ]
+
+  if permission & 1:
+    avaiable_set.append("R")
+  if permission & 2:
+    avaiable_set.append("G")
+  if permission & 4:
+    avaiable_set.append("B")
+
+  return color in avaiable_set
 
 def solve():
-  n, k = mii()
+  n, m = mii()
+  colors = [inp() for _ in range(n)]
+  permissions = [inp() for _ in range(n)]
 
-  l = [mii() for _ in range(n)]
-
-  stats = [0] * k
-
-  for to_lock, to_unlock in l:
-    chk = [True] * k
-
-    if to_unlock > 0:
-      # 최대한 열려있는 것을 계속 열려있게 함.
-      for i in range(k):
-        if not chk[i]:
-          continue
-        
-        if to_unlock > 0 and stats[i]:
-          stats[i] = 1
-          to_unlock -= 1
-          chk[i] = False
-      
-    if to_unlock > 0:
-      # 잠겨있는 것을 열어야 한다.
-      for i in range(k):
-        if not chk[i]:
-          continue
-        
-        if to_unlock > 0 and stats[i] == 0:
-          stats[i] = 1
-          to_unlock -= 1
-          chk[i] = False
-    
-    if to_lock > 0:
-      # 최대한 열려있던 것을 잠가야 한다.
-      for i in range(k):
-        if not chk[i]:
-          continue
-        
-        if to_lock > 0 and stats[i] == 1:
-          stats[i] = 0
-          to_lock -= 1
-          chk[i] = False
-  
-  print(k - sum(stats))
+  for i in range(n):
+    for j in range(m):
+      if is_available(colors[i][j], permissions[i][j]):
+        continue
+      print("incorrect")
+      return
+  print("correct")
 
 
 if __name__ == "__main__":

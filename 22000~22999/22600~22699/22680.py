@@ -1,8 +1,8 @@
 """
-[21402: Фитнесс-клуб](https://www.acmicpc.net/problem/21402)
+[22680: Space Coconut Crab](https://www.acmicpc.net/problem/22680)
 
 Tier: Bronze 1 
-Category: greedy
+Category: arithmetic, bruteforcing, math
 """
 
 
@@ -38,49 +38,35 @@ def lcm(a, b): return a * b // gcd(a, b)
 
 
 def solve():
-  n, k = mii()
+  while 1:
+    e = ii()
 
-  l = [mii() for _ in range(n)]
+    if e == 0:
+      break
 
-  stats = [0] * k
+    mx_z = 0
+    while mx_z * mx_z * mx_z <= e:
+      mx_z += 1
+    mx_z -= 1
 
-  for to_lock, to_unlock in l:
-    chk = [True] * k
+    mx_y = 0
+    while mx_y * mx_y <= e:
+      mx_y += 1
+    mx_y -= 1
 
-    if to_unlock > 0:
-      # 최대한 열려있는 것을 계속 열려있게 함.
-      for i in range(k):
-        if not chk[i]:
+    ans = float('inf')
+
+    for z in range(mx_z + 1):
+      for y in range(mx_y + 1):
+        x = e - (y * y + z * z * z)
+
+        if x < 0:
           continue
-        
-        if to_unlock > 0 and stats[i]:
-          stats[i] = 1
-          to_unlock -= 1
-          chk[i] = False
-      
-    if to_unlock > 0:
-      # 잠겨있는 것을 열어야 한다.
-      for i in range(k):
-        if not chk[i]:
-          continue
-        
-        if to_unlock > 0 and stats[i] == 0:
-          stats[i] = 1
-          to_unlock -= 1
-          chk[i] = False
-    
-    if to_lock > 0:
-      # 최대한 열려있던 것을 잠가야 한다.
-      for i in range(k):
-        if not chk[i]:
-          continue
-        
-        if to_lock > 0 and stats[i] == 1:
-          stats[i] = 0
-          to_lock -= 1
-          chk[i] = False
-  
-  print(k - sum(stats))
+
+        if x + y * y + z * z * z == e:
+          ans = min(ans, x + y + z)
+
+    p(ans)
 
 
 if __name__ == "__main__":

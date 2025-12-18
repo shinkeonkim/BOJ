@@ -1,8 +1,8 @@
 """
-[33646: Pencil Crayons](https://www.acmicpc.net/problem/33646)
+[7584: Noughts & Crosses](https://www.acmicpc.net/problem/7584)
 
 Tier: Bronze 1 
-Category: greedy, implementation
+Category: implementation, simulation
 """
 
 
@@ -16,6 +16,7 @@ from heapq import heappush, heappop, heapify
 from functools import reduce, lru_cache
 from operator import itemgetter, attrgetter, mul, add, sub, truediv
 from typing import List, Tuple, Dict, Set, Any, Union
+from fractions import Fraction
 
 SYS_INPUT = True
 RECURSION_LIMIT = 10 ** 7
@@ -39,24 +40,50 @@ def round_up_half(n): return floor(n + 0.5)
 def rotate90(l): return [''.join(x) for x in zip(*l[::-1])]
 
 
-def solve():
-  n, k = mii()
-
-  l = [isplit() for _ in range(n)]
-
-  ans = 0
-  for i in l:
-    c = Counter()
-    for j in i:
-      c[j] += 1
+def solve(s):
+  start, *l = s.split()
+  l = [*map(int, l)]
+  
+  turn = 0 if start == 'X' else 1
+  
+  board = [[-1] * 3 for _ in range(3)]
+  
+  for i in range(len(l)):
+    crt = l[i] - 1
+    row, col = crt // 3, crt % 3
     
-    for v in c.values():
-      ans += v - 1
+    board[row][col] = turn
+    turn = 1 - turn
     
-  print(ans)
+    # check winner
+    
+    winner = -1
+    for y in range(3):
+      if board[y][0] == board[y][1] == board[y][2] != -1:
+        winner = board[y][0]
+    
+    for x in range(3):
+      if board[0][x] == board[1][x] == board[2][x] != -1:
+        winner = board[0][x]
+    
+    if board[0][0] == board[1][1] == board[2][2] != -1:
+      winner = board[0][0]
+    
+    if board[0][2] == board[1][1] == board[2][0] != -1:
+      winner = board[0][2]
+      
+    if winner != -1:
+      print('X' if winner == 0 else 'O')
+      return
+  
+  print('Draw')
 
 
 if __name__ == "__main__":
-  tc = 1
-  for t in range(1, tc+1):
-    ret = solve()
+  while 1:
+    s = input()
+    
+    if s == '#':
+      break
+    
+    solve(s)

@@ -1,8 +1,8 @@
 """
-[21402: Фитнесс-клуб](https://www.acmicpc.net/problem/21402)
+[7124: Sarnased kolmnurgad](https://www.acmicpc.net/problem/7124)
 
 Tier: Bronze 1 
-Category: greedy
+Category: geometry, pythagoras
 """
 
 
@@ -37,50 +37,31 @@ def gcd(a, b): return gcd(b, a % b) if b > 0 else a
 def lcm(a, b): return a * b // gcd(a, b)
 
 
-def solve():
-  n, k = mii()
+def f(l: list):
+  ret = []
+  for i in range(3):
+    x, y = l[2 * i], l[2 * i + 1]
+    nx, ny = l[(2 * (i + 1)) % 6], l[(2 * (i + 1)) % 6 + 1]
 
-  l = [mii() for _ in range(n)]
-
-  stats = [0] * k
-
-  for to_lock, to_unlock in l:
-    chk = [True] * k
-
-    if to_unlock > 0:
-      # 최대한 열려있는 것을 계속 열려있게 함.
-      for i in range(k):
-        if not chk[i]:
-          continue
-        
-        if to_unlock > 0 and stats[i]:
-          stats[i] = 1
-          to_unlock -= 1
-          chk[i] = False
-      
-    if to_unlock > 0:
-      # 잠겨있는 것을 열어야 한다.
-      for i in range(k):
-        if not chk[i]:
-          continue
-        
-        if to_unlock > 0 and stats[i] == 0:
-          stats[i] = 1
-          to_unlock -= 1
-          chk[i] = False
-    
-    if to_lock > 0:
-      # 최대한 열려있던 것을 잠가야 한다.
-      for i in range(k):
-        if not chk[i]:
-          continue
-        
-        if to_lock > 0 and stats[i] == 1:
-          stats[i] = 0
-          to_lock -= 1
-          chk[i] = False
+    ret.append((x - nx) ** 2 + (y - ny) ** 2)
   
-  print(k - sum(stats))
+  return sorted(ret)
+
+def similar_rate(A: list, B: list):
+  # print(A, B)
+  if A[0] * B[1] == A[1] * B[0] and A[1] * B[2] == A[2] * B[1]:
+    return sqrt(A[0] / B[0])
+
+  return -1
+
+def solve():
+  A = mii()
+  B = mii()
+
+  A = f(A)
+  B = f(B)
+
+  print(similar_rate(A, B))
 
 
 if __name__ == "__main__":

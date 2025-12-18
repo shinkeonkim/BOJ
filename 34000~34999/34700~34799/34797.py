@@ -1,8 +1,8 @@
 """
-[33646: Pencil Crayons](https://www.acmicpc.net/problem/33646)
+[34797: GPA Computation](https://www.acmicpc.net/problem/34797)
 
-Tier: Bronze 1 
-Category: greedy, implementation
+Tier: Bronze 3 
+Category: math, implementation, string, arithmetic
 """
 
 
@@ -16,6 +16,7 @@ from heapq import heappush, heappop, heapify
 from functools import reduce, lru_cache
 from operator import itemgetter, attrgetter, mul, add, sub, truediv
 from typing import List, Tuple, Dict, Set, Any, Union
+from fractions import Fraction
 
 SYS_INPUT = True
 RECURSION_LIMIT = 10 ** 7
@@ -38,23 +39,24 @@ def lcm(a, b): return a * b // gcd(a, b)
 def round_up_half(n): return floor(n + 0.5)
 def rotate90(l): return [''.join(x) for x in zip(*l[::-1])]
 
+def f(s):
+  d = {'A': 4, 'B': 3, 'C': 2, 'D': 1, 'E': 0}
+  
+  score = d[s[0]]
+  add = {'1': 0.05, '2': 0.025, '3': 0}[s[1]] if score >= 2 else 0
+  
+  return score, add
 
 def solve():
-  n, k = mii()
-
-  l = [isplit() for _ in range(n)]
-
-  ans = 0
-  for i in l:
-    c = Counter()
-    for j in i:
-      c[j] += 1
-    
-    for v in c.values():
-      ans += v - 1
-    
-  print(ans)
-
+  n = ii()
+  
+  sm1, sm2 = 0, 0
+  for _ in range(n):
+    score, add = f(inp())
+    sm1 += score
+    sm2 += add
+  
+  print(f"{sm1 / n + sm2:.6f}")
 
 if __name__ == "__main__":
   tc = 1

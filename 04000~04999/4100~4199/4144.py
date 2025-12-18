@@ -1,8 +1,8 @@
 """
-[33646: Pencil Crayons](https://www.acmicpc.net/problem/33646)
+[4144: Alien Communicating Machines](https://www.acmicpc.net/problem/4144)
 
 Tier: Bronze 1 
-Category: greedy, implementation
+Category: implementation, math
 """
 
 
@@ -35,28 +35,48 @@ p = print
 
 def gcd(a, b): return gcd(b, a % b) if b > 0 else a
 def lcm(a, b): return a * b // gcd(a, b)
-def round_up_half(n): return floor(n + 0.5)
-def rotate90(l): return [''.join(x) for x in zip(*l[::-1])]
+
+def num(c):
+  if c.isdigit():
+    return int(c)
+  return ord(c) - ord('A') + 10
+
+def num_to_char(n):
+  if n < 10:
+    return str(n)
+  return chr(n - 10 + ord('A'))
+
+
+def x_to_y_base(x, y, n):
+  result = 0
+
+  n1 = reversed(n)
+
+  crt = 1
+  for i in n1:
+    result += num(i) * crt
+    crt *= x
+  
+  result_str = ""
+  while result > 0:
+    result_str = num_to_char(result % y) + result_str
+    result //= y
+  
+  if result_str == "":
+    result_str = "0"
+  
+  return result_str
 
 
 def solve():
-  n, k = mii()
+  a, b, k = isplit()
+  a = int(a)
+  b = int(b)
 
-  l = [isplit() for _ in range(n)]
-
-  ans = 0
-  for i in l:
-    c = Counter()
-    for j in i:
-      c[j] += 1
-    
-    for v in c.values():
-      ans += v - 1
-    
-  print(ans)
+  print(x_to_y_base(a, b, k))
 
 
 if __name__ == "__main__":
-  tc = 1
+  tc = ii()
   for t in range(1, tc+1):
     ret = solve()

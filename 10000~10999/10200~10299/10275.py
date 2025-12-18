@@ -1,8 +1,8 @@
 """
-[33646: Pencil Crayons](https://www.acmicpc.net/problem/33646)
+[10275: 골드 러시](https://www.acmicpc.net/problem/10275)
 
 Tier: Bronze 1 
-Category: greedy, implementation
+Category: math, implementation
 """
 
 
@@ -35,28 +35,37 @@ p = print
 
 def gcd(a, b): return gcd(b, a % b) if b > 0 else a
 def lcm(a, b): return a * b // gcd(a, b)
-def round_up_half(n): return floor(n + 0.5)
-def rotate90(l): return [''.join(x) for x in zip(*l[::-1])]
 
+
+def f(n: int, a: int, b: int) -> None:
+  k = n // 2
+
+  if n == a or n == b:
+    return 0
+  
+  if n == 1:
+    return 1
+
+  if a < b:
+    a, b = b, a
+  
+  assert(a >= k)
+
+  # print(f"f({n}, {a}, {b})")
+
+  return 1 + f(n - k, a - k, b)
 
 def solve():
-  n, k = mii()
+  n, a, b = mii()
 
-  l = [isplit() for _ in range(n)]
+  n = 2 ** n
 
-  ans = 0
-  for i in l:
-    c = Counter()
-    for j in i:
-      c[j] += 1
-    
-    for v in c.values():
-      ans += v - 1
-    
-  print(ans)
+  ret = f(n, a, b)
+
+  print(ret)
 
 
 if __name__ == "__main__":
-  tc = 1
+  tc = ii()
   for t in range(1, tc+1):
     ret = solve()

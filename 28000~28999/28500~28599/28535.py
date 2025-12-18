@@ -1,8 +1,8 @@
 """
-[33646: Pencil Crayons](https://www.acmicpc.net/problem/33646)
+[28535: Расколбас с Франкенштейном](https://www.acmicpc.net/problem/28535)
 
 Tier: Bronze 1 
-Category: greedy, implementation
+Category: math
 """
 
 
@@ -16,8 +16,9 @@ from heapq import heappush, heappop, heapify
 from functools import reduce, lru_cache
 from operator import itemgetter, attrgetter, mul, add, sub, truediv
 from typing import List, Tuple, Dict, Set, Any, Union
+from fractions import Fraction
 
-SYS_INPUT = True
+SYS_INPUT = False
 RECURSION_LIMIT = 10 ** 7
 SET_RECURSION = False
 BLANK = " "
@@ -40,20 +41,27 @@ def rotate90(l): return [''.join(x) for x in zip(*l[::-1])]
 
 
 def solve():
-  n, k = mii()
+  d = "NZQR"
+  s = input().split(" ")
+  a = s[0]
+  b = s[-1]
 
-  l = [isplit() for _ in range(n)]
+  a = d.index(a)
+  b = d.index(b)
+  oper = s[1]
 
-  ans = 0
-  for i in l:
-    c = Counter()
-    for j in i:
-      c[j] += 1
-    
-    for v in c.values():
-      ans += v - 1
-    
-  print(ans)
+  if a == b == 0 and oper == '-':
+    print("Z")
+    return
+
+  if a == b == 3 and oper == '*':
+    print("R")
+    return
+
+  assert (0 <= a <= 3)
+  assert (0 <= b <= 3)
+
+  print(d[max(a, b)])
 
 
 if __name__ == "__main__":

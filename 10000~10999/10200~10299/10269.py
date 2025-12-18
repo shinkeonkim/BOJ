@@ -1,8 +1,8 @@
 """
-[21402: Фитнесс-клуб](https://www.acmicpc.net/problem/21402)
+[10269: Train Passengers](https://www.acmicpc.net/problem/10269)
 
 Tier: Bronze 1 
-Category: greedy
+Category: implementation, simulation
 """
 
 
@@ -38,52 +38,38 @@ def lcm(a, b): return a * b // gcd(a, b)
 
 
 def solve():
-  n, k = mii()
+  current = 0
 
-  l = [mii() for _ in range(n)]
+  C, n = mii()
 
-  stats = [0] * k
+  for i in range(n):
+    out_cnt, in_cnt, wait_cnt = mii()
 
-  for to_lock, to_unlock in l:
-    chk = [True] * k
-
-    if to_unlock > 0:
-      # 최대한 열려있는 것을 계속 열려있게 함.
-      for i in range(k):
-        if not chk[i]:
-          continue
-        
-        if to_unlock > 0 and stats[i]:
-          stats[i] = 1
-          to_unlock -= 1
-          chk[i] = False
-      
-    if to_unlock > 0:
-      # 잠겨있는 것을 열어야 한다.
-      for i in range(k):
-        if not chk[i]:
-          continue
-        
-        if to_unlock > 0 and stats[i] == 0:
-          stats[i] = 1
-          to_unlock -= 1
-          chk[i] = False
+    if current < out_cnt:
+      return False
     
-    if to_lock > 0:
-      # 최대한 열려있던 것을 잠가야 한다.
-      for i in range(k):
-        if not chk[i]:
-          continue
-        
-        if to_lock > 0 and stats[i] == 1:
-          stats[i] = 0
-          to_lock -= 1
-          chk[i] = False
+    current -= out_cnt
+
+    if current + in_cnt > C:
+      return False
+    
+    current += in_cnt
+
+    if current < C and wait_cnt > 0:
+      return False
+    
+    if i == n - 1 and wait_cnt > 0:
+      return False  
   
-  print(k - sum(stats))
+  if current > 0:
+    return False
+
+  return True
 
 
 if __name__ == "__main__":
   tc = 1
   for t in range(1, tc+1):
     ret = solve()
+
+    print("possible" if ret else "impossible")

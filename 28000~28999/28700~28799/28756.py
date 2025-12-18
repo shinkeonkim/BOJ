@@ -1,8 +1,8 @@
 """
-[21402: Фитнесс-клуб](https://www.acmicpc.net/problem/21402)
+[28756: Перерыв на обед](https://www.acmicpc.net/problem/28756)
 
 Tier: Bronze 1 
-Category: greedy
+Category: arithmetic, bruteforcing, geometry, implementation, math
 """
 
 
@@ -36,51 +36,21 @@ p = print
 def gcd(a, b): return gcd(b, a % b) if b > 0 else a
 def lcm(a, b): return a * b // gcd(a, b)
 
+def dis(x1: int, y1: int, x2: int, y2: int) -> float:
+  return sqrt((x1 - x2) ** 2 + (y1 - y2) ** 2)
 
 def solve():
-  n, k = mii()
+  l = mii()
+  n = ii()
+  ans = float('inf')
 
-  l = [mii() for _ in range(n)]
+  for _ in range(n):
+    x, y, d = mii()
 
-  stats = [0] * k
-
-  for to_lock, to_unlock in l:
-    chk = [True] * k
-
-    if to_unlock > 0:
-      # 최대한 열려있는 것을 계속 열려있게 함.
-      for i in range(k):
-        if not chk[i]:
-          continue
-        
-        if to_unlock > 0 and stats[i]:
-          stats[i] = 1
-          to_unlock -= 1
-          chk[i] = False
-      
-    if to_unlock > 0:
-      # 잠겨있는 것을 열어야 한다.
-      for i in range(k):
-        if not chk[i]:
-          continue
-        
-        if to_unlock > 0 and stats[i] == 0:
-          stats[i] = 1
-          to_unlock -= 1
-          chk[i] = False
-    
-    if to_lock > 0:
-      # 최대한 열려있던 것을 잠가야 한다.
-      for i in range(k):
-        if not chk[i]:
-          continue
-        
-        if to_lock > 0 and stats[i] == 1:
-          stats[i] = 0
-          to_lock -= 1
-          chk[i] = False
+    ans = min(ans, dis(l[0], l[1], x, y) + d + dis(l[2], l[3], x, y))
   
-  print(k - sum(stats))
+  print(f"{ans:.10f}")
+
 
 
 if __name__ == "__main__":

@@ -1,8 +1,8 @@
 """
-[21402: Фитнесс-клуб](https://www.acmicpc.net/problem/21402)
+[4366: Average Speed](https://www.acmicpc.net/problem/4366)
 
 Tier: Bronze 1 
-Category: greedy
+Category: math, implementation, string, arithmetic, parsing
 """
 
 
@@ -17,7 +17,7 @@ from functools import reduce, lru_cache
 from operator import itemgetter, attrgetter, mul, add, sub, truediv
 from typing import List, Tuple, Dict, Set, Any, Union
 
-SYS_INPUT = True
+SYS_INPUT = False
 RECURSION_LIMIT = 10 ** 7
 SET_RECURSION = False
 BLANK = " "
@@ -36,52 +36,40 @@ p = print
 def gcd(a, b): return gcd(b, a % b) if b > 0 else a
 def lcm(a, b): return a * b // gcd(a, b)
 
+def to_num(time_str):
+  h, m, s = map(int, time_str.split(":"))
+  return h * 3600 + m * 60 + s
+
 
 def solve():
-  n, k = mii()
+  distance = 0
+  last_time = 0
+  current_speed = 0
 
-  l = [mii() for _ in range(n)]
-
-  stats = [0] * k
-
-  for to_lock, to_unlock in l:
-    chk = [True] * k
-
-    if to_unlock > 0:
-      # 최대한 열려있는 것을 계속 열려있게 함.
-      for i in range(k):
-        if not chk[i]:
-          continue
-        
-        if to_unlock > 0 and stats[i]:
-          stats[i] = 1
-          to_unlock -= 1
-          chk[i] = False
-      
-    if to_unlock > 0:
-      # 잠겨있는 것을 열어야 한다.
-      for i in range(k):
-        if not chk[i]:
-          continue
-        
-        if to_unlock > 0 and stats[i] == 0:
-          stats[i] = 1
-          to_unlock -= 1
-          chk[i] = False
+  while 1:
+    try:
+      s = inp()
+    except EOFError:
+      break
     
-    if to_lock > 0:
-      # 최대한 열려있던 것을 잠가야 한다.
-      for i in range(k):
-        if not chk[i]:
-          continue
-        
-        if to_lock > 0 and stats[i] == 1:
-          stats[i] = 0
-          to_lock -= 1
-          chk[i] = False
-  
-  print(k - sum(stats))
+    if " " in s:
+      # 속도 변경 쿼리
+      time, speed = s.split()
+      time = to_num(time)
+      speed = int(speed) / 3600
 
+      if last_time == 0:
+        # 첫 쿼리인 경우
+        last_time = time
+        current_speed = speed
+        continue
+
+      distance += (time - last_time) * current_speed
+      current_speed = speed
+      last_time = time
+    else:
+      # 현재까지 이동 거리 조회
+      p(s, f"{distance + (to_num(s) - last_time) * current_speed:.2f} km")
 
 if __name__ == "__main__":
   tc = 1

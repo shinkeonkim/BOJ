@@ -1,8 +1,8 @@
 """
-[33646: Pencil Crayons](https://www.acmicpc.net/problem/33646)
+[34917: M](https://www.acmicpc.net/problem/34917)
 
-Tier: Bronze 1 
-Category: greedy, implementation
+Tier: Bronze 3 
+Category: implementation
 """
 
 
@@ -16,6 +16,7 @@ from heapq import heappush, heappop, heapify
 from functools import reduce, lru_cache
 from operator import itemgetter, attrgetter, mul, add, sub, truediv
 from typing import List, Tuple, Dict, Set, Any, Union
+from fractions import Fraction
 
 SYS_INPUT = True
 RECURSION_LIMIT = 10 ** 7
@@ -38,22 +39,23 @@ def lcm(a, b): return a * b // gcd(a, b)
 def round_up_half(n): return floor(n + 0.5)
 def rotate90(l): return [''.join(x) for x in zip(*l[::-1])]
 
+def f(n):
+  l = [['#', *'.' * (n - 2), '#'] for _ in range(n)]
+  
+  for i in range(1, n // 2 + 1):
+    l[i][i] = '#'
+    l[i][n - i - 1] = '#'
+  
+  for i in range(0, n):
+    for j in range(0, n):
+      p(l[i][j], end = '')
+    p()
+  
 
 def solve():
-  n, k = mii()
-
-  l = [isplit() for _ in range(n)]
-
-  ans = 0
-  for i in l:
-    c = Counter()
-    for j in i:
-      c[j] += 1
-    
-    for v in c.values():
-      ans += v - 1
-    
-  print(ans)
+  n = ii()
+  for _ in range(n):
+    f(ii())
 
 
 if __name__ == "__main__":

@@ -1,8 +1,8 @@
 """
-[21402: Фитнесс-клуб](https://www.acmicpc.net/problem/21402)
+[9919: Route](https://www.acmicpc.net/problem/9919)
 
 Tier: Bronze 1 
-Category: greedy
+Category: implementation
 """
 
 
@@ -16,6 +16,7 @@ from heapq import heappush, heappop, heapify
 from functools import reduce, lru_cache
 from operator import itemgetter, attrgetter, mul, add, sub, truediv
 from typing import List, Tuple, Dict, Set, Any, Union
+from fractions import Fraction
 
 SYS_INPUT = True
 RECURSION_LIMIT = 10 ** 7
@@ -35,53 +36,49 @@ p = print
 
 def gcd(a, b): return gcd(b, a % b) if b > 0 else a
 def lcm(a, b): return a * b // gcd(a, b)
+def round_up_half(n): return floor(n + 0.5)
+def rotate90(l): return [''.join(x) for x in zip(*l[::-1])]
 
+def stat(a, b):
+  if a == b:
+    return 0
+  elif a < b:
+    return 1
+  else:
+    return 2
 
 def solve():
-  n, k = mii()
-
-  l = [mii() for _ in range(n)]
-
-  stats = [0] * k
-
-  for to_lock, to_unlock in l:
-    chk = [True] * k
-
-    if to_unlock > 0:
-      # 최대한 열려있는 것을 계속 열려있게 함.
-      for i in range(k):
-        if not chk[i]:
-          continue
-        
-        if to_unlock > 0 and stats[i]:
-          stats[i] = 1
-          to_unlock -= 1
-          chk[i] = False
-      
-    if to_unlock > 0:
-      # 잠겨있는 것을 열어야 한다.
-      for i in range(k):
-        if not chk[i]:
-          continue
-        
-        if to_unlock > 0 and stats[i] == 0:
-          stats[i] = 1
-          to_unlock -= 1
-          chk[i] = False
-    
-    if to_lock > 0:
-      # 최대한 열려있던 것을 잠가야 한다.
-      for i in range(k):
-        if not chk[i]:
-          continue
-        
-        if to_lock > 0 and stats[i] == 1:
-          stats[i] = 0
-          to_lock -= 1
-          chk[i] = False
+  n = int(input())
+  l = [int(input()) for _ in range(n)]
+  l = l + [l[0]]
   
-  print(k - sum(stats))
+  stats = []
+  current = stat(l[0], l[1])
+  current_count = 1
+  
+  for i in range(1, n):
+    next_stat = stat(l[i], l[i + 1])
+    if next_stat == current:
+      continue
 
+    stats.append(current)
+    current = next_stat
+
+  stats.append(current)
+
+  unique_group_stats = [stats[0]]
+  
+  for i in range(1, len(stats)):
+    if stats[i] != stats[i-1]:
+      unique_group_stats.append(stats[i])
+  
+  # if unique_group_stats[-1] == unique_group_stats[0] and len(unique_group_stats) > 1:
+  #   unique_group_stats.pop()
+
+  count = Counter(unique_group_stats)
+  
+  for i in range(3):
+    print(count[i], end=' ')
 
 if __name__ == "__main__":
   tc = 1

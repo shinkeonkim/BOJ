@@ -1,8 +1,8 @@
 """
-[33646: Pencil Crayons](https://www.acmicpc.net/problem/33646)
+[6553: Diplomatic License](https://www.acmicpc.net/problem/6553)
 
 Tier: Bronze 1 
-Category: greedy, implementation
+Category: geometry
 """
 
 
@@ -17,7 +17,7 @@ from functools import reduce, lru_cache
 from operator import itemgetter, attrgetter, mul, add, sub, truediv
 from typing import List, Tuple, Dict, Set, Any, Union
 
-SYS_INPUT = True
+SYS_INPUT = False
 RECURSION_LIMIT = 10 ** 7
 SET_RECURSION = False
 BLANK = " "
@@ -35,25 +35,28 @@ p = print
 
 def gcd(a, b): return gcd(b, a % b) if b > 0 else a
 def lcm(a, b): return a * b // gcd(a, b)
-def round_up_half(n): return floor(n + 0.5)
-def rotate90(l): return [''.join(x) for x in zip(*l[::-1])]
 
 
 def solve():
-  n, k = mii()
+  while 1:
+    try:
+      n, *l = mii()
+    except EOFError:
+      break
+    axis = [(l[i], l[i+1]) for i in range(0, len(l), 2)]
 
-  l = [isplit() for _ in range(n)]
+    ans = []
+    for i in range(n):
+      fi = axis[i]
+      se = axis[(i + 1) % n]
 
-  ans = 0
-  for i in l:
-    c = Counter()
-    for j in i:
-      c[j] += 1
-    
-    for v in c.values():
-      ans += v - 1
-    
-  print(ans)
+      ans.append((fi[0] + se[0]) / 2)
+      ans.append((fi[1] + se[1]) / 2)
+
+    print(n, end=" ")
+    for i in ans:
+      print(f"{i:.6f}", end=" ")
+    print()
 
 
 if __name__ == "__main__":

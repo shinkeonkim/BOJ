@@ -1,8 +1,8 @@
 """
-[21402: Фитнесс-клуб](https://www.acmicpc.net/problem/21402)
+[31257: СИМЕТРИЧНА РЕДИЦА](https://www.acmicpc.net/problem/31257)
 
 Tier: Bronze 1 
-Category: greedy
+Category: bruteforcing, implementation, string
 """
 
 
@@ -37,50 +37,25 @@ def gcd(a, b): return gcd(b, a % b) if b > 0 else a
 def lcm(a, b): return a * b // gcd(a, b)
 
 
+def is_palindrome(s: str) -> bool:
+  return s == s[::-1]
+
 def solve():
-  n, k = mii()
+  n = ii()
+  s = inp()
 
-  l = [mii() for _ in range(n)]
+  if is_palindrome(s):
+    p(0)
+    return
 
-  stats = [0] * k
+  for i in range(1, n):
+    crt = s[:i][::-1]
+    k = s + crt
 
-  for to_lock, to_unlock in l:
-    chk = [True] * k
-
-    if to_unlock > 0:
-      # 최대한 열려있는 것을 계속 열려있게 함.
-      for i in range(k):
-        if not chk[i]:
-          continue
-        
-        if to_unlock > 0 and stats[i]:
-          stats[i] = 1
-          to_unlock -= 1
-          chk[i] = False
-      
-    if to_unlock > 0:
-      # 잠겨있는 것을 열어야 한다.
-      for i in range(k):
-        if not chk[i]:
-          continue
-        
-        if to_unlock > 0 and stats[i] == 0:
-          stats[i] = 1
-          to_unlock -= 1
-          chk[i] = False
-    
-    if to_lock > 0:
-      # 최대한 열려있던 것을 잠가야 한다.
-      for i in range(k):
-        if not chk[i]:
-          continue
-        
-        if to_lock > 0 and stats[i] == 1:
-          stats[i] = 0
-          to_lock -= 1
-          chk[i] = False
-  
-  print(k - sum(stats))
+    if is_palindrome(k):
+      p(i)
+      p(crt)
+      return
 
 
 if __name__ == "__main__":

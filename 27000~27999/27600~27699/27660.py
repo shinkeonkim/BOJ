@@ -1,8 +1,8 @@
 """
-[21402: Фитнесс-клуб](https://www.acmicpc.net/problem/21402)
+[27660: Queue skipping (Hard)](https://www.acmicpc.net/problem/27660)
 
 Tier: Bronze 1 
-Category: greedy
+Category: implementation
 """
 
 
@@ -38,52 +38,28 @@ def lcm(a, b): return a * b // gcd(a, b)
 
 
 def solve():
-  n, k = mii()
+  input()
 
-  l = [mii() for _ in range(n)]
+  n, e = mii()
+  l = [ii() for _ in range(e)]
 
-  stats = [0] * k
+  d = {}
 
-  for to_lock, to_unlock in l:
-    chk = [True] * k
+  for i in range(1, n + 1):
+    d[i] = i
 
-    if to_unlock > 0:
-      # 최대한 열려있는 것을 계속 열려있게 함.
-      for i in range(k):
-        if not chk[i]:
-          continue
-        
-        if to_unlock > 0 and stats[i]:
-          stats[i] = 1
-          to_unlock -= 1
-          chk[i] = False
-      
-    if to_unlock > 0:
-      # 잠겨있는 것을 열어야 한다.
-      for i in range(k):
-        if not chk[i]:
-          continue
-        
-        if to_unlock > 0 and stats[i] == 0:
-          stats[i] = 1
-          to_unlock -= 1
-          chk[i] = False
-    
-    if to_lock > 0:
-      # 최대한 열려있던 것을 잠가야 한다.
-      for i in range(k):
-        if not chk[i]:
-          continue
-        
-        if to_lock > 0 and stats[i] == 1:
-          stats[i] = 0
-          to_lock -= 1
-          chk[i] = False
-  
-  print(k - sum(stats))
+  k = 0
 
+  for i in l:
+    d[i] = k
+    k -= 1
+
+  return sorted(d.items(), key = lambda t : (-t[1]))[0][0]
 
 if __name__ == "__main__":
-  tc = 1
+  tc = ii()
+
   for t in range(1, tc+1):
     ret = solve()
+
+    p(ret)

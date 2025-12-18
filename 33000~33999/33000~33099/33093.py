@@ -1,8 +1,8 @@
 """
-[21402: Фитнесс-клуб](https://www.acmicpc.net/problem/21402)
+[33093: Golden Tickets](https://www.acmicpc.net/problem/33093)
 
 Tier: Bronze 1 
-Category: greedy
+Category: bruteforcing, data_structures, hash_set, implementation, string, set
 """
 
 
@@ -16,6 +16,7 @@ from heapq import heappush, heappop, heapify
 from functools import reduce, lru_cache
 from operator import itemgetter, attrgetter, mul, add, sub, truediv
 from typing import List, Tuple, Dict, Set, Any, Union
+from fractions import Fraction
 
 SYS_INPUT = True
 RECURSION_LIMIT = 10 ** 7
@@ -35,52 +36,35 @@ p = print
 
 def gcd(a, b): return gcd(b, a % b) if b > 0 else a
 def lcm(a, b): return a * b // gcd(a, b)
+def round_up_half(n): return floor(n + 0.5)
+def rotate90(l): return [''.join(x) for x in zip(*l[::-1])]
 
 
 def solve():
-  n, k = mii()
-
-  l = [mii() for _ in range(n)]
-
-  stats = [0] * k
-
-  for to_lock, to_unlock in l:
-    chk = [True] * k
-
-    if to_unlock > 0:
-      # 최대한 열려있는 것을 계속 열려있게 함.
-      for i in range(k):
-        if not chk[i]:
-          continue
-        
-        if to_unlock > 0 and stats[i]:
-          stats[i] = 1
-          to_unlock -= 1
-          chk[i] = False
-      
-    if to_unlock > 0:
-      # 잠겨있는 것을 열어야 한다.
-      for i in range(k):
-        if not chk[i]:
-          continue
-        
-        if to_unlock > 0 and stats[i] == 0:
-          stats[i] = 1
-          to_unlock -= 1
-          chk[i] = False
-    
-    if to_lock > 0:
-      # 최대한 열려있던 것을 잠가야 한다.
-      for i in range(k):
-        if not chk[i]:
-          continue
-        
-        if to_lock > 0 and stats[i] == 1:
-          stats[i] = 0
-          to_lock -= 1
-          chk[i] = False
+  n, m, k = map(int, input().split())
   
-  print(k - sum(stats))
+  teams = [input().split() for _ in range(n)]
+  
+  winner_orgs = set()
+  
+  for team_name, org_name in teams[:m]:
+    winner_orgs.add(org_name)
+  
+  golden_ticket_teams = []
+  
+  cnt = 0
+  for team_name, org_name in teams[m:]:
+    if cnt == k:
+      break
+    if org_name in winner_orgs:
+      continue
+
+    golden_ticket_teams.append(team_name)
+    winner_orgs.add(org_name)
+    cnt += 1
+  
+  print(len(golden_ticket_teams))
+  print(*golden_ticket_teams, sep="\n")
 
 
 if __name__ == "__main__":

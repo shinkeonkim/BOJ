@@ -1,8 +1,8 @@
 """
-[21402: Фитнесс-клуб](https://www.acmicpc.net/problem/21402)
+[29362: Дом семьи Гарнетт](https://www.acmicpc.net/problem/29362)
 
 Tier: Bronze 1 
-Category: greedy
+Category: math, arithmetic
 """
 
 
@@ -38,49 +38,42 @@ def lcm(a, b): return a * b // gcd(a, b)
 
 
 def solve():
-  n, k = mii()
-
+  n, m = mii()
   l = [mii() for _ in range(n)]
+  points = []
 
-  stats = [0] * k
-
-  for to_lock, to_unlock in l:
-    chk = [True] * k
-
-    if to_unlock > 0:
-      # 최대한 열려있는 것을 계속 열려있게 함.
-      for i in range(k):
-        if not chk[i]:
-          continue
-        
-        if to_unlock > 0 and stats[i]:
-          stats[i] = 1
-          to_unlock -= 1
-          chk[i] = False
-      
-    if to_unlock > 0:
-      # 잠겨있는 것을 열어야 한다.
-      for i in range(k):
-        if not chk[i]:
-          continue
-        
-        if to_unlock > 0 and stats[i] == 0:
-          stats[i] = 1
-          to_unlock -= 1
-          chk[i] = False
-    
-    if to_lock > 0:
-      # 최대한 열려있던 것을 잠가야 한다.
-      for i in range(k):
-        if not chk[i]:
-          continue
-        
-        if to_lock > 0 and stats[i] == 1:
-          stats[i] = 0
-          to_lock -= 1
-          chk[i] = False
+  for i in range(n):
+    for j in range(m):
+      if l[i][j] == 1:
+        points.append((i, j))
   
-  print(k - sum(stats))
+  ans = 0
+
+  if points[0][0] != points[1][0]:
+    mx = max(points[0][0], points[1][0])
+    mn = min(points[0][0], points[1][0])
+
+    k = (mn + 1) * m
+    ans = max(ans, k)
+    ans = max(ans, n * m - k)
+
+    k = mx * m
+    ans = max(ans, k)
+    ans = max(ans, n * m - k)
+  
+  if points[0][1] != points[1][1]:
+    mx = max(points[0][1], points[1][1])
+    mn = min(points[0][1], points[1][1])
+
+    k = (mn + 1) * n
+    ans = max(ans, k)
+    ans = max(ans, n * m - k)
+
+    k = mx * n
+    ans = max(ans, k)
+    ans = max(ans, n * m - k)
+
+  print(ans)
 
 
 if __name__ == "__main__":

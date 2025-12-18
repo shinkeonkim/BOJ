@@ -1,8 +1,8 @@
 """
-[21402: Фитнесс-клуб](https://www.acmicpc.net/problem/21402)
+[6966: Cross-Number Puzzle](https://www.acmicpc.net/problem/6966)
 
 Tier: Bronze 1 
-Category: greedy
+Category: bruteforcing, precomputation
 """
 
 
@@ -38,49 +38,24 @@ def lcm(a, b): return a * b // gcd(a, b)
 
 
 def solve():
-  n, k = mii()
+  sm = [0] * 10000
 
-  l = [mii() for _ in range(n)]
-
-  stats = [0] * k
-
-  for to_lock, to_unlock in l:
-    chk = [True] * k
-
-    if to_unlock > 0:
-      # 최대한 열려있는 것을 계속 열려있게 함.
-      for i in range(k):
-        if not chk[i]:
-          continue
-        
-        if to_unlock > 0 and stats[i]:
-          stats[i] = 1
-          to_unlock -= 1
-          chk[i] = False
-      
-    if to_unlock > 0:
-      # 잠겨있는 것을 열어야 한다.
-      for i in range(k):
-        if not chk[i]:
-          continue
-        
-        if to_unlock > 0 and stats[i] == 0:
-          stats[i] = 1
-          to_unlock -= 1
-          chk[i] = False
-    
-    if to_lock > 0:
-      # 최대한 열려있던 것을 잠가야 한다.
-      for i in range(k):
-        if not chk[i]:
-          continue
-        
-        if to_lock > 0 and stats[i] == 1:
-          stats[i] = 0
-          to_lock -= 1
-          chk[i] = False
+  for i in range(1, 10000):
+    for j in range(i + i, 10000, i):
+      sm[j] += i
   
-  print(k - sum(stats))
+  for i in range(1000, 10000):
+    if i == sm[i]:
+      print(i, end=' ')
+  print()
+  for i in range(100, 1000):
+    a, b, c = i // 100, (i // 10) % 10, i % 10
+
+    if i == a ** 3 + b ** 3 + c ** 3:
+      print(i, end=' ')
+
+  # 8128 
+  # 153 370 371 407 
 
 
 if __name__ == "__main__":

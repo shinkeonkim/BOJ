@@ -1,8 +1,8 @@
 """
-[21402: Фитнесс-клуб](https://www.acmicpc.net/problem/21402)
+[26947: Klockan](https://www.acmicpc.net/problem/26947)
 
 Tier: Bronze 1 
-Category: greedy
+Category: bruteforcing, math
 """
 
 
@@ -38,49 +38,26 @@ def lcm(a, b): return a * b // gcd(a, b)
 
 
 def solve():
-  n, k = mii()
-
-  l = [mii() for _ in range(n)]
-
-  stats = [0] * k
-
-  for to_lock, to_unlock in l:
-    chk = [True] * k
-
-    if to_unlock > 0:
-      # 최대한 열려있는 것을 계속 열려있게 함.
-      for i in range(k):
-        if not chk[i]:
-          continue
-        
-        if to_unlock > 0 and stats[i]:
-          stats[i] = 1
-          to_unlock -= 1
-          chk[i] = False
-      
-    if to_unlock > 0:
-      # 잠겨있는 것을 열어야 한다.
-      for i in range(k):
-        if not chk[i]:
-          continue
-        
-        if to_unlock > 0 and stats[i] == 0:
-          stats[i] = 1
-          to_unlock -= 1
-          chk[i] = False
-    
-    if to_lock > 0:
-      # 최대한 열려있던 것을 잠가야 한다.
-      for i in range(k):
-        if not chk[i]:
-          continue
-        
-        if to_lock > 0 and stats[i] == 1:
-          stats[i] = 0
-          to_lock -= 1
-          chk[i] = False
+  n = ii()
   
-  print(k - sum(stats))
+  H = 0
+  M = 0
+  
+  for h in range(0, 12):
+    H = h * 300
+    M = 0
+    for m in range(0, 60):
+      if H < M:
+        k = M - H
+      else:
+        k = 3600 - (H - M)
+      
+      if k == n:
+        p(f"{h:02d}:{m:02d}")
+        return
+  
+      M += 60
+      H += 5
 
 
 if __name__ == "__main__":
