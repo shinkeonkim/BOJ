@@ -1,7 +1,3 @@
-# [{problem_number}: {title}](https://www.acmicpc.net/problem/{problem_number})
-# Tier: {tier} 
-# Category: {tags}
-
 # frozen_string_literal: true
 
 require 'set'

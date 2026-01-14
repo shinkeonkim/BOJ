@@ -2,6 +2,7 @@
 from requests import get
 import sys
 from os import path, getcwd
+from typing import Optional
 
 LANGUAGE_MAPPING = {
   0: 'cpp',
@@ -9,48 +10,69 @@ LANGUAGE_MAPPING = {
   2: 'rb',
 }
 
-def get_template(file_path, problem_number, title, tier, tags) -> str:
+def get_problem_header(language, problem_number, title, tier, tags) -> str:
+  """문제 정보 헤더를 생성합니다."""
+  if language == 'cpp':
+    return f"""/*
+[{problem_number}: {title}](https://www.acmicpc.net/problem/{problem_number})
+
+Tier: {tier}
+Category: {tags}
+*/
+
+
+"""
+  elif language == 'py':
+    return f'''"""
+[{problem_number}: {title}](https://www.acmicpc.net/problem/{problem_number})
+
+Tier: {tier}
+Category: {tags}
+"""
+
+
+'''
+  elif language == 'rb':
+    return f"""# [{problem_number}: {title}](https://www.acmicpc.net/problem/{problem_number})
+# Tier: {tier}
+# Category: {tags}
+
+"""
+  return ""
+
+
+def get_template(file_path) -> str:
+  """템플릿 파일을 읽어옵니다."""
   f = open(file_path, 'r')
   template = "".join(f.readlines())
-
-  template = template.format(
-    title = title,
-    problem_number = problem_number,
-    tier = tier,
-    tags = tags
-  )
   f.close()
-
   return template
 
 
-def get_templates_by_language(language, problem_number, title, tier, tags) -> dict:
-  return {
-    'cpp': get_template(
-      file_path='./templates/cpp_template.txt',
-      problem_number=problem_number,
-      title=title,
-      tier=tier,
-      tags=tags
-    ),
-    'py': get_template(
-      file_path='./templates/python_template.txt',
-      problem_number=problem_number,
-      title=title,
-      tier=tier,
-      tags=tags
-    ),
-    'rb': get_template(
-      file_path='./templates/ruby_template.txt',
-      problem_number=problem_number,
-      title=title,
-      tier=tier,
-      tags=tags
-    )
-  }[language]
+def get_templates_by_language(language: str, problem_number: Optional[int] = None, title: Optional[str] = None, tier: Optional[str] = None, tags: Optional[str] = None) -> str:
+  """언어별 템플릿을 가져옵니다. problem_number가 있으면 문제 정보 헤더를 포함합니다."""
+  template_paths = {
+    'cpp': './templates/cpp_template.txt',
+    'py': './templates/python_template.txt',
+    'rb': './templates/ruby_template.txt'
+  }
+
+  template = get_template(template_paths[language])
+
+  # problem_number가 없으면(0이면) 헤더 없이 반환
+  if problem_number is None or problem_number == 0:
+    return template
+
+  # problem_number가 있으면 헤더 추가
+  header = get_problem_header(language, problem_number, title, tier, tags)
+  return header + template
 
 
 def get_problem_directory(problem_number: int) -> str:
+  # problem_number가 0이면 etc 폴더 사용
+  if problem_number == 0:
+    return path.join(getcwd(), 'etc')
+
   first_depth_start = problem_number // 1000 * 1000
   first_depth_end = first_depth_start + 999
   second_depth_start = problem_number // 100 * 100
@@ -63,11 +85,14 @@ def get_problem_directory(problem_number: int) -> str:
   )
 
 
-def get_file_path(problem_number: int, language: int) -> str:
-  return path.join(
-    get_problem_directory(problem_number),
-    f'{problem_number}.{LANGUAGE_MAPPING[language]}'
-  )
+def get_file_path(problem_number: int, language: int, filename: Optional[str] = None) -> str:
+  directory = get_problem_directory(problem_number)
+
+  # filename이 지정되면 해당 이름 사용, 아니면 problem_number 사용
+  if filename is not None:
+    return path.join(directory, f'{filename}.{LANGUAGE_MAPPING[language]}')
+  else:
+    return path.join(directory, f'{problem_number}.{LANGUAGE_MAPPING[language]}')
 
 
 def is_already_exist_file(file_path: str) -> bool:
@@ -117,12 +142,18 @@ def create_file(file_path, content):
 
 
 if __name__ == '__main__':
-  problem_number = int(input('BOJ 문제 번호를 입력해주세요.: '))
+  problem_number = int(input('BOJ 문제 번호를 입력해주세요. (etc 폴더에 생성하려면 0 입력): '))
   language = int(input('언어를 선택해주세요. (cpp: 0, python: 1, ruby: 2): '))
+
+  # problem_number가 0이면 파일명 입력받기
+  filename = None
+  if problem_number == 0:
+    filename = input('파일명을 입력해주세요. (확장자 제외): ')
 
   file_path = get_file_path(
     problem_number=problem_number,
-    language=language
+    language=language,
+    filename=filename
   )
 
   if is_already_exist_file(file_path):
@@ -131,15 +162,22 @@ if __name__ == '__main__':
     if chk != 'y':
       sys.exit()
 
-  problem_info = get_problem_info(problem_number)
-
-  template = get_templates_by_language(
-    language=LANGUAGE_MAPPING[language],
-    problem_number=problem_number,
-    title=problem_info['title'],
-    tier=problem_info['tier'],
-    tags=", ".join(problem_info['tags'])
-  )
+  # problem_number가 0이 아닐 때만 문제 정보 가져오기
+  if problem_number != 0:
+    problem_info = get_problem_info(problem_number)
+    template = get_templates_by_language(
+      language=LANGUAGE_MAPPING[language],
+      problem_number=problem_number,
+      title=problem_info['title'],
+      tier=problem_info['tier'],
+      tags=", ".join(problem_info['tags'])
+    )
+  else:
+    # problem_number가 0이면 헤더 없이 템플릿만 사용
+    template = get_templates_by_language(
+      language=LANGUAGE_MAPPING[language],
+      problem_number=0
+    )
 
   create_file(
     file_path=file_path,
