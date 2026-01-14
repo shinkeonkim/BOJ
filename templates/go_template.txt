@@ -1,0 +1,26 @@
+package main
+
+import (
+	"bufio"
+	"fmt"
+	"os"
+)
+
+var writer *bufio.Writer
+var reader *bufio.Reader
+
+func Print(a ...interface{}) {
+	fmt.Fprintln(writer, a...)
+}
+
+func Solve() {
+
+}
+
+func main() {
+	writer = bufio.NewWriter(os.Stdout)
+	reader = bufio.NewReader(os.Stdin)
+	defer writer.Flush()
+
+	Solve()
+}

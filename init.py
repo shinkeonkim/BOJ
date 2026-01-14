@@ -1,13 +1,19 @@
 # requriements: pip install requests
-from requests import get
-import sys
-from os import path, getcwd
-from typing import Optional
+
+try:
+  import sys
+  from os import path, getcwd
+  from typing import Optional
+  from requests import get
+except ImportError as e:
+  print("필요한 모듈이 설치되어 있지 않습니다", e)
+  sys.exit(1)
 
 LANGUAGE_MAPPING = {
   0: 'cpp',
   1: 'py',
   2: 'rb',
+  3: 'go',
 }
 
 def get_problem_header(language, problem_number, title, tier, tags) -> str:
@@ -38,6 +44,15 @@ Category: {tags}
 # Category: {tags}
 
 """
+  elif language == 'go':
+    return f"""/*
+[{problem_number}: {title}](https://www.acmicpc.net/problem/{problem_number})
+
+Tier: {tier}
+Category: {tags}
+*/
+
+"""
   return ""
 
 
@@ -54,7 +69,8 @@ def get_templates_by_language(language: str, problem_number: Optional[int] = Non
   template_paths = {
     'cpp': './templates/cpp_template.txt',
     'py': './templates/python_template.txt',
-    'rb': './templates/ruby_template.txt'
+    'rb': './templates/ruby_template.txt',
+    'go': './templates/go_template.txt'
   }
 
   template = get_template(template_paths[language])
@@ -141,47 +157,46 @@ def create_file(file_path, content):
   f.close()
 
 
-if __name__ == '__main__':
-  problem_number = int(input('BOJ 문제 번호를 입력해주세요. (etc 폴더에 생성하려면 0 입력): '))
-  language = int(input('언어를 선택해주세요. (cpp: 0, python: 1, ruby: 2): '))
+problem_number = int(input('BOJ 문제 번호를 입력해주세요. (etc 폴더에 생성하려면 0 입력): '))
+language = int(input('언어를 선택해주세요. (cpp: 0, python: 1, ruby: 2, go: 3): '))
 
-  # problem_number가 0이면 파일명 입력받기
-  filename = None
-  if problem_number == 0:
-    filename = input('파일명을 입력해주세요. (확장자 제외): ')
+# problem_number가 0이면 파일명 입력받기
+filename = None
+if problem_number == 0:
+  filename = input('파일명을 입력해주세요. (확장자 제외): ')
 
-  file_path = get_file_path(
+file_path = get_file_path(
+  problem_number=problem_number,
+  language=language,
+  filename=filename
+)
+
+if is_already_exist_file(file_path):
+  chk = input('이미 파일이 존재합니다. 덮어씌우시겠습니까? (y/n): ')
+
+  if chk != 'y':
+    sys.exit()
+
+# problem_number가 0이 아닐 때만 문제 정보 가져오기
+if problem_number != 0:
+  problem_info = get_problem_info(problem_number)
+  template = get_templates_by_language(
+    language=LANGUAGE_MAPPING[language],
     problem_number=problem_number,
-    language=language,
-    filename=filename
+    title=problem_info['title'],
+    tier=problem_info['tier'],
+    tags=", ".join(problem_info['tags'])
+  )
+else:
+  # problem_number가 0이면 헤더 없이 템플릿만 사용
+  template = get_templates_by_language(
+    language=LANGUAGE_MAPPING[language],
+    problem_number=0
   )
 
-  if is_already_exist_file(file_path):
-    chk = input('이미 파일이 존재합니다. 덮어씌우시겠습니까? (y/n): ')
+create_file(
+  file_path=file_path,
+  content=template
+)
 
-    if chk != 'y':
-      sys.exit()
-
-  # problem_number가 0이 아닐 때만 문제 정보 가져오기
-  if problem_number != 0:
-    problem_info = get_problem_info(problem_number)
-    template = get_templates_by_language(
-      language=LANGUAGE_MAPPING[language],
-      problem_number=problem_number,
-      title=problem_info['title'],
-      tier=problem_info['tier'],
-      tags=", ".join(problem_info['tags'])
-    )
-  else:
-    # problem_number가 0이면 헤더 없이 템플릿만 사용
-    template = get_templates_by_language(
-      language=LANGUAGE_MAPPING[language],
-      problem_number=0
-    )
-
-  create_file(
-    file_path=file_path,
-    content=template
-  )
-
-  print(file_path)
+print(file_path)
