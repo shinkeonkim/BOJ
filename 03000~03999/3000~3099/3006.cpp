@@ -1,0 +1,164 @@
+/*
+[3006: 터보소트](https://www.acmicpc.net/problem/3006)
+
+Tier: Platinum 4 
+Category: data_structures, segtree
+*/
+
+#include <bits/stdc++.h>
+
+using namespace std;
+
+#define for1(s, e) for(int i = s; i < e; i++)
+#define for1j(s, e) for(int j = s; j < e; j++)
+#define forEach(k) for(auto i : k)
+#define forEachj(k) for(auto j : k)
+#define sz(vct) vct.size()
+#define all(vct) vct.begin(), vct.end()
+#define sortv(vct) sort(vct.begin(), vct.end())
+#define uniq(vct) sort(all(vct));vct.erase(unique(all(vct)), vct.end())
+#define fi first
+#define se second
+#define INF (1ll << 60ll)
+
+typedef unsigned long long ull;
+typedef long long ll;
+typedef ll llint;
+typedef unsigned int uint;
+typedef unsigned long long int ull;
+typedef ull ullint;
+
+typedef pair<int, int> pii;
+typedef pair<ll, ll> pll;
+typedef pair<double, double> pdd;
+typedef pair<double, int> pdi;
+typedef pair<string, string> pss;
+
+typedef vector<int> iv1;
+typedef vector<iv1> iv2;
+typedef vector<ll> llv1;
+typedef vector<llv1> llv2;
+
+typedef vector<pii> piiv1;
+typedef vector<piiv1> piiv2;
+typedef vector<pll> pllv1;
+typedef vector<pllv1> pllv2;
+typedef vector<pdd> pddv1;
+typedef vector<pddv1> pddv2;
+
+const double EPS = 1e-8;
+const double PI = acos(-1);
+
+template<typename T>
+T sq(T x) { return x * x; }
+
+int sign(ll x) { return x < 0 ? -1 : x > 0 ? 1 : 0; }
+int sign(int x) { return x < 0 ? -1 : x > 0 ? 1 : 0; }
+int sign(double x) { return abs(x) < EPS ? 0 : x < 0 ? -1 : 1; }
+
+llv1 position;
+
+struct SegTree {
+  ll n;
+  llv1 tree;
+
+  SegTree(ll n) {
+    this->n = n;
+    tree.resize(4 * n + 5);
+  }
+
+  void init(ll left, ll right, ll idx) {
+    if(left == right) {
+      tree[idx] = 1;
+      return;
+    }
+
+    ll mid = (left + right) / 2;
+    
+    init(left, mid, idx * 2);
+    init(mid + 1, right, idx * 2 + 1);
+
+    tree[idx] = tree[idx * 2] + tree[idx * 2 + 1];
+  }
+
+  void update(ll left, ll right, ll idx, ll k, ll diff) {
+    if(k < left || right < k) {
+      return;
+    }
+
+    if(left == right) {
+      tree[idx] += diff;
+      return;
+    }
+
+    ll mid = (left + right) / 2;
+
+    update(left, mid, idx * 2, k, diff);
+    update(mid + 1, right, idx * 2 + 1, k, diff);
+
+    tree[idx] = tree[idx * 2] + tree[idx * 2 + 1];
+  }
+
+  void update(ll k, ll diff) {
+    update(1, n, 1, k, diff);
+  }
+
+  ll query(ll left, ll right, ll idx, ll q_start, ll q_end) {
+    if(q_end < left || right < q_start) return 0;
+
+    if(q_start <= left && right <= q_end) return tree[idx];
+    
+    ll mid = (left + right) / 2;
+
+    ll l_ret = query(left, mid, idx * 2, q_start, q_end);
+    ll r_ret = query(mid + 1, right, idx * 2 + 1, q_start, q_end);
+
+    return l_ret + r_ret;
+  }
+
+  ll query(ll q_start, ll q_end) {
+    return query(1, n, 1, q_start, q_end);
+  }
+};
+
+void solve() {
+  ll n;
+  cin >> n;
+  position.resize(n + 1);
+
+  SegTree tree(n);
+
+  ll a, b; 
+  for1(1, n + 1) {
+    cin >> a;
+    position[a] = i;
+  }
+
+  tree.init(1, n, 1);
+
+  a = 1;
+  b = n;
+
+  for(int iter = 0; iter < n; iter++) {
+    if(iter % 2 == 0) {
+      // 앞으로 옮기기
+      ll pos = position[a];
+      cout << tree.query(1, pos - 1) << "\n";
+      tree.update(pos, -1);
+      a += 1;
+    } else {
+      ll pos = position[b];
+      cout << tree.query(pos + 1, n) << "\n";
+      tree.update(pos, -1);
+      b -= 1;
+    }
+  }
+}
+
+int main() {
+  ios::sync_with_stdio(0);
+  cin.tie(NULL);cout.tie(NULL);
+  int tc = 1; // cin >> tc;
+  while(tc--) solve();
+
+}
